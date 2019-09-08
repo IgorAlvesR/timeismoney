@@ -1,0 +1,38 @@
+ion-toolbar{
+    --background: var(--ion-color-padraoApp);
+    color: white;
+}
+
+ion-row{
+    border-bottom: 1px solid rgb(206, 206, 206);
+    color: black;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+}
+
+span{
+    color: gray;
+    font-size: 10pt;
+}
+
+.total{
+    color: rgb(1, 116, 1);
+}
+
+.horaPendente{
+    color: rgb(233, 47, 47);
+}
+
+.header-top{
+    display: flex;
+    align-items: center;
+    p{
+        margin-left: 10%;
+    }
+}
+
+ion-icon{
+    width: 30px;
+    height: 30px;
+}

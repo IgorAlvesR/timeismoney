@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar class="header-top">
+    <div class="header-top">
+      <ion-icon name="arrow-round-back" button [routerLink]="['/registro-hora-extra']"></ion-icon>
+      <p text-center>REGISTRO FINAL</p>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <div class="relogio">
+    <div class="ion-padding horaData">
+      <h1 class="horaData">{{this.hora}}</h1>
+      <h5 class="horaData">{{this.data}}</h5>
+    </div>
+  </div>
+  
+
+  <div>
+      <ion-select  [interfaceOptions]="customAlertOptions" placeholder="Selecione a cidade..." [(ngModel)]="horaExtraFinal.localizacao">
+        <ion-select-option value="Tubarão">Tubarão</ion-select-option>
+        <ion-select-option value="Imbituba">Imbituba</ion-select-option>
+        <ion-select-option value="Orleans">Orleans</ion-select-option>
+        <ion-select-option value="Cricíuma">Cricíuma</ion-select-option>
+      </ion-select>
+    <ion-textarea rows="6" cols="20" placeholder="Descrição..." [(ngModel)]="horaExtraFinal.descricao"></ion-textarea>
+  </div>
+
+  <div class="ion-text-center ion-padding digitalHora">
+    <img src="../../../assets/imagens/digitalRegistro.svg" (click)="registrarFinalHoraExtra()">
+    <p class="finalizarHora"><strong>Toque para finalizar  hora extra</strong></p>
+  </div>
+
+</ion-content>

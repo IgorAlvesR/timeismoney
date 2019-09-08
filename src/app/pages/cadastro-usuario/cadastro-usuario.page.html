@@ -1,0 +1,17 @@
+<ion-content class="conteudo ion-margin-bottom" id="conteudo" >
+  <ion-icon name="arrow-round-back" button [routerLink]="['/entrar']"></ion-icon>
+  <div class="ion-text-center logo" [hidden]="keyboard.isVisible">
+    <img src="../../../assets/imagens/logoInicial.svg">
+  </div>
+  <div class="ion-text-center cadastro">
+    <h6>Faça seu cadastro</h6>
+    <ion-input class="inputLogin ion-padding" type="text" placeholder="Nome"  [(ngModel)]="funcionario.nome"></ion-input>
+    <ion-input class="inputLogin ion-padding" type="text" placeholder="Função"  [(ngModel)]="funcionario.funcao"></ion-input>
+    <ion-input class="inputLogin ion-padding" type="number" placeholder="Salario Bruto"  [(ngModel)]="funcionario.salarioBruto"></ion-input>
+    <ion-input class="inputLogin ion-padding" type="text" placeholder="Email" [(ngModel)]="funcionario.email">
+    </ion-input>
+    <ion-input class="inputLogin ion-padding" type="password" placeholder="Senha" [(ngModel)]="funcionario.senha">
+    </ion-input>
+    <ion-input class="inputLoginSubmit " type="submit" value="Cadastrar" (click)="registrarFuncionario()"></ion-input>
+  </div>
+</ion-content>

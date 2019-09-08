@@ -1,0 +1,19 @@
+<ion-content class="ion-margin-bottom" id="conteudo">
+  <div class="ion-text-center logo" [hidden]="keyboard.idVisible">
+    <img src="../../../assets/imagens/logoInicial.svg">
+  </div>
+
+  <div class="ion-text-center login">
+    <h6>Faça seu login</h6>
+    <ion-input  class="inputLogin ion-padding"  type="text" placeholder="Email" [(ngModel)]="funcionario.email"></ion-input>
+    <ion-input class="inputLogin ion-padding" type="password" placeholder="Senha" [(ngModel)]="funcionario.senha"></ion-input>
+    <ion-input class="inputLoginSubmit" type="submit" value="Entrar" (click)="login()"></ion-input>
+    <h6>Esqueceu sua senha?</h6>
+  </div>
+
+  <div class="ion-text-center " id="divCadastro" [hidden]="keyboard.isVisible">
+    <h6>Não perca mais dinheiro!</h6>
+    <p class="cadastrar" button [routerLink]="['/cadastro-usuario']"><i>Cadastre-se agora</i></p>
+  </div>
+
+</ion-content>

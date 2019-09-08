@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar>
+    <p class="ion-text-center">REGISTRO INÍCIO <span (click)='logout()'>SAIR</span></p>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+
+  <div class="ion-padding horaData">
+    <h1 class="horaData">{{this.hora}}</h1>
+    <h5 class="horaData">{{this.data}}</h5>
+  </div>
+
+
+  <div class="ion-text-center ion-padding ">
+    <img class="logoRegistro" src="../../../assets/imagens/logoRegistroHora.svg">
+  </div>
+
+  <div class="ion-text-center ion-padding digitalHora">
+    <img src="../../../assets/imagens/digitalRegistro.svg" (click)="registrarInicioHoraExtra()">
+    <p class="finalizarHora"><strong>Toque para iniciar hora extra</strong></p>
+  </div>
+
+</ion-content>
+
+
+<ion-toolbar class="footer">
+  <div class="menu">
+    <ion-icon name="clock" [routerLink]="['/relatorio-hora-extra']"></ion-icon>
+    <ion-icon name="watch" (click)="registrarHoraFinalPendente()"></ion-icon>
+    <ion-icon name="navigate" ></ion-icon>
+  </div>
+</ion-toolbar>

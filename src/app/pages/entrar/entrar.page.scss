@@ -1,0 +1,45 @@
+ion-content{
+    --background: url('../../../assets/imagens/superior.svg') no-repeat top / 100% ,url('../../../assets/imagens/inferior.svg') no-repeat bottom / 100%;
+}
+
+.logo{
+    margin-top: 20%; 
+}
+
+.inputLogin{
+    border: 2px solid #4F9AF5;
+    border-radius: 30px;
+    width: 60%;
+    margin: 5px auto;
+    text-align: left;
+    height: 35px;
+}
+
+.inputLoginSubmit{
+    background-color: #4F9AF5;
+    border-radius: 30px;
+    width: 60%;
+    margin: 5px auto;
+    color: white;
+}
+
+h6{
+    color: #4F9AF5;
+}
+
+.cadastrar{
+    padding: 7px;
+    border-radius: 20px;
+    color: var(--ion-color-padraoApp);
+    border: 2px solid #4F9AF5;
+    width: 50%;
+    margin: 5px auto;
+}
+
+#divCadastro{
+    margin-top: 15%;
+}
+
+.login{
+    margin-top: 20%;
+}

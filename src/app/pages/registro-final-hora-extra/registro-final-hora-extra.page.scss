@@ -1,0 +1,65 @@
+
+ion-toolbar{
+    --background: var(--ion-color-padraoApp);
+    color: white;
+}
+
+ion-select{
+    border: 2px solid #4F9AF5;
+    border-radius: 30px;
+    width: 80%;
+    margin: 5px auto;
+    text-align: left;
+    height: 40px;
+}
+
+
+ion-textarea{
+    border: 2px solid #4F9AF5;
+    padding: 5px;
+    border-radius: 15px;
+    width: 80%;
+    margin: 25px auto;
+}
+
+
+.header-top{
+    display: flex;
+    align-items: center;
+    p{
+        margin-left: 23%;
+    }
+}
+
+
+
+ion-icon{
+    width: 30px;
+    height: 30px;
+}
+
+.horaData{
+    text-align: center;
+    color: var(--ion-color-padraoApp);
+    margin: 0 auto;
+}
+
+.finalizarHora{
+    color: gray;
+    opacity: 0.8;
+    margin: 2px;
+}
+
+
+
+.digitalHora{
+    margin-top: 15%;
+}
+
+.relogio{
+    margin-top: 10%;
+    margin-bottom: 10%;
+}
+
+
+

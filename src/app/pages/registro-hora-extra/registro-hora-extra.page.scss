@@ -1,0 +1,55 @@
+
+ion-toolbar{
+    --background: var(--ion-color-padraoApp);
+    color: white;
+    
+    span{
+        margin-left: 20%;
+    }
+}
+
+
+.horaData{
+    text-align: center;
+    color: var(--ion-color-padraoApp);
+    margin: 0 auto;
+}
+
+h5{
+    color: var(--ion-color-padraoApp);
+}
+
+.finalizarHora{
+    color: gray;
+    opacity: 0.8;
+    margin: 2px;
+}
+
+
+.digitalHora{
+    margin-top: 15%;
+}
+
+.logoRegistro{
+    margin-top: 15%;
+    width: 25%;
+    height: 25%;
+    border: 1px solid var(--ion-color-padraoApp);
+    border-radius: 5px;
+}
+
+ion-icon{
+    width: 35px;
+    height: 35px;
+    margin-bottom: 5px;
+}
+
+.menu{
+    display: flex;
+    justify-content: space-around; 
+}
+
+.footer{
+    display: flex;
+    align-items: center;
+}
