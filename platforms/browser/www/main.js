@@ -440,6 +440,10 @@ var map = {
 		"./src/app/pages/entrar/entrar.module.ts",
 		"pages-entrar-entrar-module"
 	],
+	"./pages/registro-deslocamento/registro-deslocamento.module": [
+		"./src/app/pages/registro-deslocamento/registro-deslocamento.module.ts",
+		"pages-registro-deslocamento-registro-deslocamento-module"
+	],
 	"./pages/registro-final-hora-extra/registro-final-hora-extra.module": [
 		"./src/app/pages/registro-final-hora-extra/registro-final-hora-extra.module.ts",
 		"default~pages-registro-final-hora-extra-registro-final-hora-extra-module~pages-registro-hora-extra-r~7c17b9d2",
@@ -516,6 +520,11 @@ var routes = [
     {
         path: 'relatorio-hora-extra',
         loadChildren: './pages/relatorio-hora-extra/relatorio-hora-extra.module#RelatorioHoraExtraPageModule',
+        canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_4__["AuthGuard"]]
+    },
+    {
+        path: 'registro-deslocamento',
+        loadChildren: './pages/registro-deslocamento/registro-deslocamento.module#RegistroDeslocamentoPageModule',
         canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_4__["AuthGuard"]]
     },
 ];
@@ -624,6 +633,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/fire/firestore */ "./node_modules/@angular/fire/firestore/index.js");
 /* harmony import */ var src_app_servicos_autenticacao_service__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! src/app/servicos/autenticacao.service */ "./src/app/servicos/autenticacao.service.ts");
 /* harmony import */ var _servicos_hora_extra_service__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./servicos/hora-extra.service */ "./src/app/servicos/hora-extra.service.ts");
+/* harmony import */ var _ionic_native_google_maps__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @ionic-native/google-maps */ "./node_modules/@ionic-native/google-maps/index.js");
+/* harmony import */ var _ionic_native_native_geocoder_ngx__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @ionic-native/native-geocoder/ngx */ "./node_modules/@ionic-native/native-geocoder/ngx/index.js");
+/* harmony import */ var _ionic_native_geolocation_ngx__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @ionic-native/geolocation/ngx */ "./node_modules/@ionic-native/geolocation/ngx/index.js");
+
+
+
 
 
 
@@ -659,9 +674,13 @@ var AppModule = /** @class */ (function () {
                 _ionic_native_status_bar_ngx__WEBPACK_IMPORTED_MODULE_6__["StatusBar"],
                 _ionic_native_splash_screen_ngx__WEBPACK_IMPORTED_MODULE_5__["SplashScreen"],
                 { provide: _angular_router__WEBPACK_IMPORTED_MODULE_3__["RouteReuseStrategy"], useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["IonicRouteStrategy"] },
+                { provide: _angular_core__WEBPACK_IMPORTED_MODULE_1__["ErrorHandler"] },
                 _ionic_native_keyboard_ngx__WEBPACK_IMPORTED_MODULE_9__["Keyboard"],
                 src_app_servicos_autenticacao_service__WEBPACK_IMPORTED_MODULE_14__["AutenticacaoService"],
-                _servicos_hora_extra_service__WEBPACK_IMPORTED_MODULE_15__["HoraExtraService"]
+                _servicos_hora_extra_service__WEBPACK_IMPORTED_MODULE_15__["HoraExtraService"],
+                _ionic_native_google_maps__WEBPACK_IMPORTED_MODULE_16__["GoogleMaps"],
+                _ionic_native_native_geocoder_ngx__WEBPACK_IMPORTED_MODULE_17__["NativeGeocoder"],
+                _ionic_native_geolocation_ngx__WEBPACK_IMPORTED_MODULE_18__["Geolocation"]
             ],
             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_7__["AppComponent"]]
         })
@@ -733,23 +752,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LoginGuard", function() { return LoginGuard; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var _servicos_autenticacao_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../servicos/autenticacao.service */ "./src/app/servicos/autenticacao.service.ts");
+/* harmony import */ var _servicos_autenticacao_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../servicos/autenticacao.service */ "./src/app/servicos/autenticacao.service.ts");
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
 
 
 
 
 var LoginGuard = /** @class */ (function () {
-    function LoginGuard(servicoAutenticacao, rota) {
+    function LoginGuard(servicoAutenticacao, navCtrl) {
         this.servicoAutenticacao = servicoAutenticacao;
-        this.rota = rota;
+        this.navCtrl = navCtrl;
     }
     LoginGuard.prototype.canActivate = function () {
         var _this = this;
         return new Promise(function (resolve) {
             _this.servicoAutenticacao.getAuth().onAuthStateChanged(function (funcionario) {
                 if (funcionario) {
-                    _this.rota.navigate(['registro-hora-extra']);
+                    _this.navCtrl.navigateRoot('registro-hora-extra').then(function () {
+                        return window.location.reload();
+                    });
                 }
                 resolve(!funcionario ? true : false);
             });
@@ -759,8 +780,8 @@ var LoginGuard = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
             providedIn: 'root'
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_servicos_autenticacao_service__WEBPACK_IMPORTED_MODULE_3__["AutenticacaoService"],
-            _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_servicos_autenticacao_service__WEBPACK_IMPORTED_MODULE_2__["AutenticacaoService"],
+            _ionic_angular__WEBPACK_IMPORTED_MODULE_3__["NavController"]])
     ], LoginGuard);
     return LoginGuard;
 }());
@@ -844,9 +865,9 @@ var HoraExtraService = /** @class */ (function () {
         this.afs = afs;
         this.authService = authService;
         //cria uma referencia da coleção HoraExtraInicio e HoraExtraFinal
-        var userIdAtual = authService.getAuth().currentUser.uid;
+        var userId = authService.getAuth().currentUser.uid;
         this.colecaoHoraExtraRegistro = this.afs.collection('HoraExtra');
-        this.colecaoHoraExtra = this.afs.collection('HoraExtra', function (ref) { return ref.where('userId', '==', userIdAtual); });
+        this.colecaoHoraExtra = this.afs.collection('HoraExtra', function (ref) { return ref.where('userId', '==', userId); });
     }
     HoraExtraService.prototype.registrarHoraExtra = function (horaExtra) {
         return this.colecaoHoraExtraRegistro.add(horaExtra);
@@ -854,18 +875,16 @@ var HoraExtraService = /** @class */ (function () {
     HoraExtraService.prototype.getHorasExtras = function () {
         return this.horasExtras = this.colecaoHoraExtra.valueChanges();
     };
-    HoraExtraService.prototype.updateHoraExtra = function (ids, horaExtra) {
+    HoraExtraService.prototype.update = function (horaExtra) {
         var _this = this;
-        var horaInicial;
         var horasOb;
-        var snapshotResult = this.afs.collection('HoraExtra', function (ref) { return ref.where('id', '==', ids)
-            .limit(1); })
+        var userId = this.authService.getAuth().currentUser.uid;
+        var query = this.afs.collection('HoraExtra', function (ref) { return (ref.where('userId', '==', userId).limit(1).orderBy('cont', 'desc')); })
             .snapshotChanges()
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (horasOb) { return horasOb; }));
-        snapshotResult.subscribe(function (doc) {
-            horaInicial = horaExtra;
-            _this.horasExtrasReferencia = doc.payload.doc.ref;
-            return _this.horasExtrasReferencia.update(horaExtra);
+        query.subscribe(function (doc) {
+            _this.horas = doc.payload.doc.ref;
+            return _this.horas.update(horaExtra);
         });
     };
     HoraExtraService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
@@ -977,7 +996,7 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformB
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\Igor\Desktop\IFSC\IFSC 2019-2\TCC II\TCC-II Aplicativo Horas Extras\TimeIsMoneyApp\src\main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! C:\Users\Igor\Desktop\IFSC\IFSC 2019-2\TCC II\TCC-II Aplicativo Horas Extras\Timeismoneyapp\src\main.ts */"./src/main.ts");
 
 
 /***/ })

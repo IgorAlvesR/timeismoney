@@ -31,7 +31,5 @@ export class RelatorioHoraExtraPage implements OnInit {
       return this.horasExtras = dados
     }) 
   }
-
-
 }
 

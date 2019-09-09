@@ -5807,8 +5807,8 @@ window.__Zone_disable_customElements = true;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Igor\Desktop\IFSC\IFSC 2019-2\TCC II\TCC-II Aplicativo Horas Extras\TimeIsMoneyApp\src\polyfills.ts */"./src/polyfills.ts");
-module.exports = __webpack_require__(/*! C:\Users\Igor\Desktop\IFSC\IFSC 2019-2\TCC II\TCC-II Aplicativo Horas Extras\TimeIsMoneyApp\node_modules\@angular-devkit\build-angular\src\angular-cli-files\models\jit-polyfills.js */"./node_modules/@angular-devkit/build-angular/src/angular-cli-files/models/jit-polyfills.js");
+__webpack_require__(/*! C:\Users\Igor\Desktop\IFSC\IFSC 2019-2\TCC II\TCC-II Aplicativo Horas Extras\Timeismoneyapp\src\polyfills.ts */"./src/polyfills.ts");
+module.exports = __webpack_require__(/*! C:\Users\Igor\Desktop\IFSC\IFSC 2019-2\TCC II\TCC-II Aplicativo Horas Extras\Timeismoneyapp\node_modules\@angular-devkit\build-angular\src\angular-cli-files\models\jit-polyfills.js */"./node_modules/@angular-devkit/build-angular/src/angular-cli-files/models/jit-polyfills.js");
 
 
 /***/ })

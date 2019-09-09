@@ -22,6 +22,11 @@ const routes: Routes = [
     loadChildren: './pages/relatorio-hora-extra/relatorio-hora-extra.module#RelatorioHoraExtraPageModule',
     canActivate: [AuthGuard]
   },
+  { 
+    path: 'registro-deslocamento', 
+    loadChildren: './pages/registro-deslocamento/registro-deslocamento.module#RegistroDeslocamentoPageModule',
+    canActivate: [AuthGuard]
+  },
 ];
 
 @NgModule({

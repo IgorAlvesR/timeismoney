@@ -58,7 +58,7 @@ var RegistroHoraExtraPageModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\n  <ion-toolbar class=\"header-top\">\n    <div class=\"header-top\">\n      <p class=\"ion-padding\">REGISTRO INÍCIO</p>\n      <p class=\"ion-padding\" (click)='logout()'>SAIR</p>\n    </div>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content class=\"ion-padding\">\n\n  <ion-item>\n    <div class=\"ion-padding horaData\">\n      <h1 class=\"horaData\">{{this.horaExtraInicio.horaInicial}}</h1>\n      <h5 class=\"horaData\">{{this.horaExtraInicio.dataInicial}}</h5>\n    </div>\n  </ion-item>\n  <hr>\n\n\n\n  <div class=\"ion-text-center ion-padding \">\n    <img class=\"logoRegistro\" src=\"../../../assets/imagens/logoRegistroHora.svg\">\n  </div>\n\n  <div class=\"ion-text-center ion-padding digitalHora\">\n    <img src=\"../../../assets/imagens/digitalRegistro.svg\" (click)=\"registrarInicioHoraExtra()\">\n    <p class=\"finalizarHora\"><strong>Toque para finalizar hora extra</strong></p>\n  </div>\n\n</ion-content>\n\n\n<ion-toolbar class=\"footer\">\n  <div class=\"menu\">\n    <ion-icon name=\"clock\" [routerLink]=\"['/relatorio-hora-extra']\"></ion-icon>\n  </div>\n</ion-toolbar>"
+module.exports = "<ion-header>\n  <ion-toolbar>\n    <p class=\"ion-text-center\">REGISTRO INÍCIO <span (click)='logout()'>SAIR</span></p>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content class=\"ion-padding\">\n\n\n  <div class=\"ion-padding horaData\">\n    <h1 class=\"horaData\">{{this.hora}}</h1>\n    <h5 class=\"horaData\">{{this.data}}</h5>\n  </div>\n\n\n  <div class=\"ion-text-center ion-padding \">\n    <img class=\"logoRegistro\" src=\"../../../assets/imagens/logoRegistroHora.svg\">\n  </div>\n\n  <div class=\"ion-text-center ion-padding digitalHora\">\n    <img src=\"../../../assets/imagens/digitalRegistro.svg\" (click)=\"registrarInicioHoraExtra()\">\n    <p class=\"finalizarHora\"><strong>Toque para iniciar hora extra</strong></p>\n  </div>\n\n</ion-content>\n\n\n<ion-toolbar class=\"footer\">\n  <div class=\"menu\">\n    <ion-icon name=\"clock\" [routerLink]=\"['/relatorio-hora-extra']\"></ion-icon>\n    <ion-icon name=\"watch\" (click)=\"registrarHoraFinalPendente()\"></ion-icon>\n    <ion-icon name=\"navigate\" [routerLink]=\"['/registro-deslocamento']\" ></ion-icon>\n  </div>\n</ion-toolbar>"
 
 /***/ }),
 
@@ -69,7 +69,7 @@ module.exports = "<ion-header>\n  <ion-toolbar class=\"header-top\">\n    <div c
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "ion-toolbar {\n  --background: var(--ion-color-padraoApp);\n  color: white; }\n\n.header-top {\n  display: -webkit-box;\n  display: flex;\n  -webkit-box-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n          align-items: center; }\n\n.horaData {\n  text-align: center;\n  color: var(--ion-color-padraoApp);\n  margin: 0 auto; }\n\nh5 {\n  color: var(--ion-color-padraoApp); }\n\n.finalizarHora {\n  color: gray;\n  opacity: 0.8;\n  margin: 2px; }\n\n.digitalHora {\n  margin-top: 15%; }\n\n.logoRegistro {\n  margin-top: 15%;\n  width: 25%;\n  height: 25%;\n  border: 1px solid var(--ion-color-padraoApp);\n  border-radius: 5px; }\n\nion-icon {\n  width: 30px;\n  height: 30px;\n  margin-bottom: 5px; }\n\n.menu {\n  display: -webkit-box;\n  display: flex;\n  -webkit-box-pack: center;\n          justify-content: center; }\n\n.footer {\n  display: -webkit-box;\n  display: flex;\n  -webkit-box-align: center;\n          align-items: center; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcGFnZXMvcmVnaXN0cm8taG9yYS1leHRyYS9DOlxcVXNlcnNcXElnb3JcXERlc2t0b3BcXElGU0NcXElGU0MgMjAxOS0yXFxUQ0MgSUlcXFRDQy1JSSBBcGxpY2F0aXZvIEhvcmFzIEV4dHJhc1xcVGltZUlzTW9uZXlBcHAvc3JjXFxhcHBcXHBhZ2VzXFxyZWdpc3Ryby1ob3JhLWV4dHJhXFxyZWdpc3Ryby1ob3JhLWV4dHJhLnBhZ2Uuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFDQTtFQUNJLHdDQUFhO0VBQ2IsWUFBWSxFQUFBOztBQUdoQjtFQUNFLG9CQUFhO0VBQWIsYUFBYTtFQUNiLHlCQUE4QjtVQUE5Qiw4QkFBOEI7RUFDOUIseUJBQW1CO1VBQW5CLG1CQUFtQixFQUFBOztBQUlyQjtFQUNJLGtCQUFrQjtFQUNsQixpQ0FBaUM7RUFDakMsY0FBYyxFQUFBOztBQUdsQjtFQUNJLGlDQUFpQyxFQUFBOztBQUdyQztFQUNJLFdBQVc7RUFDWCxZQUFZO0VBQ1osV0FBVyxFQUFBOztBQUlmO0VBQ0ksZUFBZSxFQUFBOztBQUduQjtFQUNJLGVBQWU7RUFDZixVQUFVO0VBQ1YsV0FBVztFQUNYLDRDQUE0QztFQUM1QyxrQkFBa0IsRUFBQTs7QUFHdEI7RUFDSSxXQUFXO0VBQ1gsWUFBWTtFQUNaLGtCQUFrQixFQUFBOztBQUd0QjtFQUNJLG9CQUFhO0VBQWIsYUFBYTtFQUNiLHdCQUF1QjtVQUF2Qix1QkFBdUIsRUFBQTs7QUFHM0I7RUFDSSxvQkFBYTtFQUFiLGFBQWE7RUFDYix5QkFBbUI7VUFBbkIsbUJBQW1CLEVBQUEiLCJmaWxlIjoic3JjL2FwcC9wYWdlcy9yZWdpc3Ryby1ob3JhLWV4dHJhL3JlZ2lzdHJvLWhvcmEtZXh0cmEucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiXHJcbmlvbi10b29sYmFye1xyXG4gICAgLS1iYWNrZ3JvdW5kOiB2YXIoLS1pb24tY29sb3ItcGFkcmFvQXBwKTtcclxuICAgIGNvbG9yOiB3aGl0ZTsgICAgXHJcbn1cclxuXHJcbi5oZWFkZXItdG9we1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAganVzdGlmeS1jb250ZW50OiBzcGFjZS1iZXR3ZWVuO1xyXG4gIGFsaWduLWl0ZW1zOiBjZW50ZXI7ICAgIFxyXG4gIFxyXG59XHJcblxyXG4uaG9yYURhdGF7XHJcbiAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XHJcbiAgICBjb2xvcjogdmFyKC0taW9uLWNvbG9yLXBhZHJhb0FwcCk7XHJcbiAgICBtYXJnaW46IDAgYXV0bztcclxufVxyXG5cclxuaDV7XHJcbiAgICBjb2xvcjogdmFyKC0taW9uLWNvbG9yLXBhZHJhb0FwcCk7XHJcbn1cclxuXHJcbi5maW5hbGl6YXJIb3Jhe1xyXG4gICAgY29sb3I6IGdyYXk7XHJcbiAgICBvcGFjaXR5OiAwLjg7XHJcbiAgICBtYXJnaW46IDJweDtcclxufVxyXG5cclxuXHJcbi5kaWdpdGFsSG9yYXtcclxuICAgIG1hcmdpbi10b3A6IDE1JTtcclxufVxyXG5cclxuLmxvZ29SZWdpc3Ryb3tcclxuICAgIG1hcmdpbi10b3A6IDE1JTtcclxuICAgIHdpZHRoOiAyNSU7XHJcbiAgICBoZWlnaHQ6IDI1JTtcclxuICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWlvbi1jb2xvci1wYWRyYW9BcHApO1xyXG4gICAgYm9yZGVyLXJhZGl1czogNXB4O1xyXG59XHJcblxyXG5pb24taWNvbntcclxuICAgIHdpZHRoOiAzMHB4O1xyXG4gICAgaGVpZ2h0OiAzMHB4O1xyXG4gICAgbWFyZ2luLWJvdHRvbTogNXB4O1xyXG59XHJcblxyXG4ubWVudXtcclxuICAgIGRpc3BsYXk6IGZsZXg7XHJcbiAgICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjsgXHJcbn1cclxuXHJcbi5mb290ZXJ7XHJcbiAgICBkaXNwbGF5OiBmbGV4O1xyXG4gICAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxufSJdfQ== */"
+module.exports = "ion-toolbar {\n  --background: var(--ion-color-padraoApp);\n  color: white; }\n  ion-toolbar span {\n    margin-left: 20%; }\n  .horaData {\n  text-align: center;\n  color: var(--ion-color-padraoApp);\n  margin: 0 auto; }\n  h5 {\n  color: var(--ion-color-padraoApp); }\n  .finalizarHora {\n  color: gray;\n  opacity: 0.8;\n  margin: 2px; }\n  .digitalHora {\n  margin-top: 15%; }\n  .logoRegistro {\n  margin-top: 15%;\n  width: 25%;\n  height: 25%;\n  border: 1px solid var(--ion-color-padraoApp);\n  border-radius: 5px; }\n  ion-icon {\n  width: 35px;\n  height: 35px;\n  margin-bottom: 5px; }\n  .menu {\n  display: -webkit-box;\n  display: flex;\n  justify-content: space-around; }\n  .footer {\n  display: -webkit-box;\n  display: flex;\n  -webkit-box-align: center;\n          align-items: center; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcGFnZXMvcmVnaXN0cm8taG9yYS1leHRyYS9DOlxcVXNlcnNcXElnb3JcXERlc2t0b3BcXElGU0NcXElGU0MgMjAxOS0yXFxUQ0MgSUlcXFRDQy1JSSBBcGxpY2F0aXZvIEhvcmFzIEV4dHJhc1xcVGltZWlzbW9uZXlhcHAvc3JjXFxhcHBcXHBhZ2VzXFxyZWdpc3Ryby1ob3JhLWV4dHJhXFxyZWdpc3Ryby1ob3JhLWV4dHJhLnBhZ2Uuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFDQTtFQUNJLHdDQUFhO0VBQ2IsWUFBWSxFQUFBO0VBRmhCO0lBS1EsZ0JBQWdCLEVBQUE7RUFLeEI7RUFDSSxrQkFBa0I7RUFDbEIsaUNBQWlDO0VBQ2pDLGNBQWMsRUFBQTtFQUdsQjtFQUNJLGlDQUFpQyxFQUFBO0VBR3JDO0VBQ0ksV0FBVztFQUNYLFlBQVk7RUFDWixXQUFXLEVBQUE7RUFJZjtFQUNJLGVBQWUsRUFBQTtFQUduQjtFQUNJLGVBQWU7RUFDZixVQUFVO0VBQ1YsV0FBVztFQUNYLDRDQUE0QztFQUM1QyxrQkFBa0IsRUFBQTtFQUd0QjtFQUNJLFdBQVc7RUFDWCxZQUFZO0VBQ1osa0JBQWtCLEVBQUE7RUFHdEI7RUFDSSxvQkFBYTtFQUFiLGFBQWE7RUFDYiw2QkFBNkIsRUFBQTtFQUdqQztFQUNJLG9CQUFhO0VBQWIsYUFBYTtFQUNiLHlCQUFtQjtVQUFuQixtQkFBbUIsRUFBQSIsImZpbGUiOiJzcmMvYXBwL3BhZ2VzL3JlZ2lzdHJvLWhvcmEtZXh0cmEvcmVnaXN0cm8taG9yYS1leHRyYS5wYWdlLnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyJcclxuaW9uLXRvb2xiYXJ7XHJcbiAgICAtLWJhY2tncm91bmQ6IHZhcigtLWlvbi1jb2xvci1wYWRyYW9BcHApO1xyXG4gICAgY29sb3I6IHdoaXRlO1xyXG4gICAgXHJcbiAgICBzcGFue1xyXG4gICAgICAgIG1hcmdpbi1sZWZ0OiAyMCU7XHJcbiAgICB9XHJcbn1cclxuXHJcblxyXG4uaG9yYURhdGF7XHJcbiAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XHJcbiAgICBjb2xvcjogdmFyKC0taW9uLWNvbG9yLXBhZHJhb0FwcCk7XHJcbiAgICBtYXJnaW46IDAgYXV0bztcclxufVxyXG5cclxuaDV7XHJcbiAgICBjb2xvcjogdmFyKC0taW9uLWNvbG9yLXBhZHJhb0FwcCk7XHJcbn1cclxuXHJcbi5maW5hbGl6YXJIb3Jhe1xyXG4gICAgY29sb3I6IGdyYXk7XHJcbiAgICBvcGFjaXR5OiAwLjg7XHJcbiAgICBtYXJnaW46IDJweDtcclxufVxyXG5cclxuXHJcbi5kaWdpdGFsSG9yYXtcclxuICAgIG1hcmdpbi10b3A6IDE1JTtcclxufVxyXG5cclxuLmxvZ29SZWdpc3Ryb3tcclxuICAgIG1hcmdpbi10b3A6IDE1JTtcclxuICAgIHdpZHRoOiAyNSU7XHJcbiAgICBoZWlnaHQ6IDI1JTtcclxuICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWlvbi1jb2xvci1wYWRyYW9BcHApO1xyXG4gICAgYm9yZGVyLXJhZGl1czogNXB4O1xyXG59XHJcblxyXG5pb24taWNvbntcclxuICAgIHdpZHRoOiAzNXB4O1xyXG4gICAgaGVpZ2h0OiAzNXB4O1xyXG4gICAgbWFyZ2luLWJvdHRvbTogNXB4O1xyXG59XHJcblxyXG4ubWVudXtcclxuICAgIGRpc3BsYXk6IGZsZXg7XHJcbiAgICBqdXN0aWZ5LWNvbnRlbnQ6IHNwYWNlLWFyb3VuZDsgXHJcbn1cclxuXHJcbi5mb290ZXJ7XHJcbiAgICBkaXNwbGF5OiBmbGV4O1xyXG4gICAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxufSJdfQ== */"
 
 /***/ }),
 
@@ -90,10 +90,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var src_app_servicos_autenticacao_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/servicos/autenticacao.service */ "./src/app/servicos/autenticacao.service.ts");
 /* harmony import */ var src_app_servicos_hora_extra_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/servicos/hora-extra.service */ "./src/app/servicos/hora-extra.service.ts");
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
-/* harmony import */ var _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/fire/firestore */ "./node_modules/@angular/fire/firestore/index.js");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-
-
 
 
 
@@ -101,28 +97,55 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var RegistroHoraExtraPage = /** @class */ (function () {
-    function RegistroHoraExtraPage(authService, horaSevice, loadingCtrl, toastCtrl, navCtrl, afs, router) {
+    function RegistroHoraExtraPage(authService, horaSevice, loadingCtrl, toastCtrl, navCtrl, alertController) {
         this.authService = authService;
         this.horaSevice = horaSevice;
         this.loadingCtrl = loadingCtrl;
         this.toastCtrl = toastCtrl;
         this.navCtrl = navCtrl;
-        this.afs = afs;
-        this.router = router;
+        this.alertController = alertController;
         this.horaExtraInicio = {};
-        this.navigationExtras = {};
-        this.navigationExtras = {
-            state: {
-                horaExtra: this.horaExtraInicio
-            }
-        };
+        this.criarRelógio();
     }
-    RegistroHoraExtraPage.prototype.ngOnInit = function () {
+    RegistroHoraExtraPage.prototype.criarRelógio = function () {
         var _this = this;
         setInterval(function () {
-            _this.horaExtraInicio.horaInicial = moment__WEBPACK_IMPORTED_MODULE_2__().locale('pt-br').format('LTS');
-            _this.horaExtraInicio.dataInicial = moment__WEBPACK_IMPORTED_MODULE_2__().locale('pt-br').format('LL');
+            _this.hora = moment__WEBPACK_IMPORTED_MODULE_2__().locale('pt-br').format('LTS');
+            _this.data = moment__WEBPACK_IMPORTED_MODULE_2__().locale('pt-br').format('LL');
         }, 1000);
+    };
+    RegistroHoraExtraPage.prototype.ngOnInit = function () {
+        this.presentAlert();
+    };
+    RegistroHoraExtraPage.prototype.presentAlert = function () {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var alert;
+            var _this = this;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.alertController.create({
+                            header: 'Lembrete',
+                            subHeader: 'Possui alguma hora extra para finalizar?',
+                            buttons: [
+                                {
+                                    text: 'Sim',
+                                    handler: function (blah) {
+                                        _this.navCtrl.navigateRoot('registro-final-hora-extra');
+                                    }
+                                }, {
+                                    text: 'Não'
+                                }
+                            ]
+                        })];
+                    case 1:
+                        alert = _a.sent();
+                        return [4 /*yield*/, alert.present()];
+                    case 2:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
     };
     RegistroHoraExtraPage.prototype.registrarInicioHoraExtra = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
@@ -136,26 +159,25 @@ var RegistroHoraExtraPage = /** @class */ (function () {
                         minutos = moment__WEBPACK_IMPORTED_MODULE_2__().minute();
                         this.horaExtraInicio.horaCalculoInicial = horas;
                         this.horaExtraInicio.minutoCalculoInicial = minutos;
-                        this.horaExtraInicio.horaInicial;
+                        this.horaExtraInicio.horaInicial = this.hora;
                         this.horaExtraInicio.userId = this.authService.getAuth().currentUser.uid;
                         this.horaExtraInicio.dataInicial = moment__WEBPACK_IMPORTED_MODULE_2__().locale('pt-br').format('L');
-                        this.horaExtraInicio.id = this.afs.createId();
+                        this.horaExtraInicio.cont = new Date().getTime();
                         _a.label = 2;
                     case 2:
                         _a.trys.push([2, 6, , 7]);
                         return [4 /*yield*/, this.horaSevice.registrarHoraExtra(this.horaExtraInicio)];
                     case 3:
                         _a.sent();
-                        return [4 /*yield*/, this.carregando.dismiss()];
+                        return [4 /*yield*/, this.navCtrl.navigateRoot('registro-final-hora-extra')];
                     case 4:
                         _a.sent();
-                        return [4 /*yield*/, this.router.navigate(['registro-final-hora-extra'], this.navigationExtras)];
+                        return [4 /*yield*/, this.carregando.dismiss()];
                     case 5:
                         _a.sent();
                         return [3 /*break*/, 7];
                     case 6:
                         error_1 = _a.sent();
-                        console.error(error_1);
                         this.presentToast(error_1);
                         this.carregando.dismiss();
                         return [3 /*break*/, 7];
@@ -164,9 +186,35 @@ var RegistroHoraExtraPage = /** @class */ (function () {
             });
         });
     };
-    RegistroHoraExtraPage.prototype.logout = function () {
+    RegistroHoraExtraPage.prototype.registrarHoraFinalPendente = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
             var error_2;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 4, , 5]);
+                        return [4 /*yield*/, this.presentLoading()];
+                    case 1:
+                        _a.sent();
+                        return [4 /*yield*/, this.carregando.dismiss()];
+                    case 2:
+                        _a.sent();
+                        return [4 /*yield*/, this.navCtrl.navigateRoot('registro-final-hora-extra')];
+                    case 3:
+                        _a.sent();
+                        return [3 /*break*/, 5];
+                    case 4:
+                        error_2 = _a.sent();
+                        console.log(error_2);
+                        return [3 /*break*/, 5];
+                    case 5: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    RegistroHoraExtraPage.prototype.logout = function () {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var error_3;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.presentLoading()];
@@ -183,8 +231,8 @@ var RegistroHoraExtraPage = /** @class */ (function () {
                         _a.sent();
                         return [3 /*break*/, 6];
                     case 5:
-                        error_2 = _a.sent();
-                        this.presentToast(error_2);
+                        error_3 = _a.sent();
+                        this.presentToast(error_3);
                         return [3 /*break*/, 6];
                     case 6: return [2 /*return*/];
                 }
@@ -198,7 +246,7 @@ var RegistroHoraExtraPage = /** @class */ (function () {
                 switch (_b.label) {
                     case 0:
                         _a = this;
-                        return [4 /*yield*/, this.loadingCtrl.create({ message: 'Por favor, aguarde...' })];
+                        return [4 /*yield*/, this.loadingCtrl.create({ message: 'Por favor, aguarde...', spinner: "circles" })];
                     case 1:
                         _a.carregando = _b.sent();
                         return [2 /*return*/, this.carregando.present()];
@@ -231,8 +279,7 @@ var RegistroHoraExtraPage = /** @class */ (function () {
             _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["LoadingController"],
             _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["ToastController"],
             _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["NavController"],
-            _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_6__["AngularFirestore"],
-            _angular_router__WEBPACK_IMPORTED_MODULE_7__["Router"]])
+            _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["AlertController"]])
     ], RegistroHoraExtraPage);
     return RegistroHoraExtraPage;
 }());

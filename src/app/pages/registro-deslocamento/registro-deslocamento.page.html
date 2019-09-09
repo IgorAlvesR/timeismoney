@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-toolbar>
+    <div class="header">
+      <ion-icon name="arrow-round-back" button [routerLink]="['/registro-hora-extra']"></ion-icon>
+      <p class="ion-text-center">REGISTRO DESLOCAMENTOS</p>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div #map></div>
+  <div class="ion-text-center">
+    <ion-textarea rows="6" cols="20" placeholder="Descrição..."></ion-textarea>
+    <ion-button color="primary" (click)='reverseGeolocation()'>Registrar Deslocamento</ion-button>
+  </div>
+</ion-content>

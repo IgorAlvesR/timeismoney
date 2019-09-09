@@ -1,0 +1,40 @@
+ion-toolbar{
+    --background: var(--ion-color-padraoApp);
+    color: white;
+}
+
+
+ion-icon{
+    width: 30px;
+    height: 30px;
+    color: white;
+}
+
+.header{
+    display: flex;
+    align-items: center;
+    
+    p{
+        margin-left: 25px;
+    }
+}
+
+
+.map{
+    width: 50%;
+    height: 50%;
+}
+
+ion-textarea{
+    border: 2px solid #4F9AF5;
+    padding: 5px;
+    border-radius: 15px;
+    width: 80%;
+    margin: 25px auto;
+    text-align: left;
+}
+
+ion-button{
+    border-radius: 20%;
+    width: 80%;
+}

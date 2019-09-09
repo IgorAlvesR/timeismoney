@@ -15,6 +15,10 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AutenticacaoService } from 'src/app/servicos/autenticacao.service';
 import { HoraExtraService } from './servicos/hora-extra.service';
+import { GoogleMaps } from '@ionic-native/google-maps';
+import { NativeGeocoder } from '@ionic-native/native-geocoder/ngx';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -33,7 +37,10 @@ import { HoraExtraService } from './servicos/hora-extra.service';
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     Keyboard,
     AutenticacaoService,
-    HoraExtraService
+    HoraExtraService,
+    GoogleMaps,
+    NativeGeocoder,
+    Geolocation
   ],
   bootstrap: [AppComponent]
 })
