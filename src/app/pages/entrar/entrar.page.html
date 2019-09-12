@@ -1,10 +1,10 @@
 <ion-content class="ion-margin-bottom" id="conteudo">
-  <div class="ion-text-center logo" [hidden]="keyboard.idVisible">
+  <div class="ion-text-center logo" [hidden]="keyboard.isVisible">
     <img src="../../../assets/imagens/logoInicial.svg">
   </div>
 
-  <div class="ion-text-center login">
-    <h6>Faça seu login</h6>
+  <div class="ion-text-center login" >
+    <h6 [hidden]="keyboard.isVisible">Faça seu login</h6>
     <ion-input  class="inputLogin ion-padding"  type="text" placeholder="Email" [(ngModel)]="funcionario.email"></ion-input>
     <ion-input class="inputLogin ion-padding" type="password" placeholder="Senha" [(ngModel)]="funcionario.senha"></ion-input>
     <ion-input class="inputLoginSubmit" type="submit" value="Entrar" (click)="login()"></ion-input>

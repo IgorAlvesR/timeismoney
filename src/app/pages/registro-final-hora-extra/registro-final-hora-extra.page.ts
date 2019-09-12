@@ -72,7 +72,7 @@ export class RegistroFinalHoraExtraPage implements OnInit {
   }
 
   async presentLoading() {
-    this.carregando = await this.loadingCtrl.create({ message: 'Por favor, aguarde...', spinner: "circles" })
+    this.carregando = await this.loadingCtrl.create({ message: 'Por favor, aguarde...' })
     return this.carregando.present()
   }
 

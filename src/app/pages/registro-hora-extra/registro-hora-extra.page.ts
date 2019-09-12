@@ -4,6 +4,7 @@ import { AutenticacaoService } from 'src/app/servicos/autenticacao.service'
 import { HoraExtraService } from 'src/app/servicos/hora-extra.service'
 import { LoadingController, ToastController, NavController, AlertController } from '@ionic/angular'
 import { HoraExtra } from 'src/app/Models/hora-extra'
+import { ok } from 'assert'
 
 @Component({
   selector: 'app-registro-hora-extra',
@@ -37,24 +38,21 @@ export class RegistroHoraExtraPage implements OnInit {
   }
 
   ngOnInit() {
-    this.presentAlert()
+    let result = this.horaSevice.buscarHoraPendente()
+    result.subscribe(doc => {
+      if(doc.length != 0){
+        this.navCtrl.navigateRoot('registro-final-hora-extra')
+        this.presentAlert()
+      }
+    })
   }
 
 
   async presentAlert() {
     const alert = await this.alertController.create({
       header: 'Lembrete',
-      subHeader: 'Possui alguma hora extra para finalizar?',
-      buttons: [
-        {
-          text: 'Sim',
-          handler: (blah) => {
-            this.navCtrl.navigateRoot('registro-final-hora-extra')
-          }
-        }, {
-          text: 'Não'
-        }
-      ]
+      subHeader: 'Você possui uma hora extra para ser finalizada!',
+      buttons: ['OK']
     })
 
     await alert.present()
@@ -68,6 +66,7 @@ export class RegistroHoraExtraPage implements OnInit {
     this.horaExtraInicio.horaCalculoInicial = horas
     this.horaExtraInicio.minutoCalculoInicial = minutos
     this.horaExtraInicio.horaInicial = this.hora
+    this.horaExtraInicio.horaFinal = ''
     this.horaExtraInicio.userId = this.authService.getAuth().currentUser.uid
     this.horaExtraInicio.dataInicial = moment().locale('pt-br').format('L')
     this.horaExtraInicio.cont = new Date().getTime()
@@ -104,7 +103,7 @@ export class RegistroHoraExtraPage implements OnInit {
   }
 
   async presentLoading() {
-    this.carregando = await this.loadingCtrl.create({ message: 'Por favor, aguarde...', spinner: "circles" })
+    this.carregando = await this.loadingCtrl.create({ message: 'Por favor, aguarde...'})
     return this.carregando.present()
   }
 

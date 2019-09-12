@@ -12,6 +12,6 @@
     </ion-input>
     <ion-input class="inputLogin ion-padding" type="password" placeholder="Senha" [(ngModel)]="funcionario.senha">
     </ion-input>
-    <ion-input class="inputLoginSubmit " type="submit" value="Cadastrar" (click)="registrarFuncionario()"></ion-input>
+    <ion-input [hidden]="keyboard.isVisible" class="inputLoginSubmit " type="submit" value="Cadastrar" (click)="registrarFuncionario()"></ion-input>
   </div>
 </ion-content>
