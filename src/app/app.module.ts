@@ -18,6 +18,9 @@ import { HoraExtraService } from './servicos/hora-extra.service';
 import { GoogleMaps } from '@ionic-native/google-maps';
 import { NativeGeocoder } from '@ionic-native/native-geocoder/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
+import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
+
 
 
 @NgModule({
@@ -40,7 +43,9 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
     HoraExtraService,
     GoogleMaps,
     NativeGeocoder,
-    Geolocation
+    Geolocation,
+    LocationAccuracy,
+    AndroidPermissions
   ],
   bootstrap: [AppComponent]
 })

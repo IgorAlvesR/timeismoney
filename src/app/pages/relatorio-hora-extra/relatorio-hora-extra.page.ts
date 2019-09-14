@@ -18,36 +18,29 @@ export class RelatorioHoraExtraPage implements OnInit {
 
 
   constructor(private authService: AutenticacaoService, private horaService: HoraExtraService) {
-    this.getHoras()
-    this.calculoHoras()
   }
 
   ngOnInit() {
-    this.calculoHoras()
+    this.getHoras()
   }
 
   ngOnDestroy() {
     this.horasExtrasSubscription.unsubscribe()
   }
 
-  public getHoras() {
+  getHoras() {
     this.horasExtrasSubscription = this.horaService.getHorasExtras().subscribe(dados => {
+
+      dados.forEach(element => {
+        var horaFinal = element.horaFinal
+        var horaInicial = element.horaInicial
+        var ms = moment(horaFinal, "HH:mm:ss").diff(moment(horaInicial, "HH:mm:ss"));
+        var d = moment.duration(ms);
+        var s = Math.floor(d.asHours()) + moment.utc(ms).format(":mm:ss");
+        element.total = s
+      })
       return this.horasExtras = dados
     })
-  }
-
-
-  calculoHoras() {
-
-    this.horasExtras.forEach(element => {
-
-      var horaFinal = element.horaFinal
-      var horaInicial = element.horaInicial
-      var ms = moment(horaFinal, "HH:mm:ss").diff(moment(horaInicial, "HH:mm:ss"));
-      var d = moment.duration(ms);
-      var s = Math.floor(d.asHours()) + moment.utc(ms).format(":mm:ss");
-      element.total = s
-    });
   }
 }
 

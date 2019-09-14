@@ -58,7 +58,7 @@ var RelatorioHoraExtraPageModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\n  <ion-toolbar>\n      <div class=\"header-top\">\n          <ion-icon name=\"arrow-round-back\" button [routerLink]=\"['/registro-hora-extra']\"></ion-icon>\n          <p text-center>RELATÓRIO DE HORAS EXTRAS</p>\n        </div>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-grid>\n    <ion-row>\n      <ion-col >\n        <strong>Período/Data</strong>\n      </ion-col>\n      <ion-col class=\"ion-text-center\" >\n        <strong>Total</strong>\n      </ion-col>\n    </ion-row>\n    <ion-row *ngFor='let h of horasExtras'>\n        <ion-col *ngIf='h.horaFinal == null'>\n            {{h.horaInicial}} - <span class=\"horaPendente\">Hora Pendente</span>\n        </ion-col>\n        <ion-col *ngIf='h.horaFinal != null'>\n          {{h.horaInicial}} - {{h.horaFinal}} <br>\n          <span>{{h.dataInicial}}</span>\n        </ion-col>\n        <ion-col class=\"ion-text-center total\" *ngIf='h.horaFinal != null'>\n          {{h.horaCalculoFinal - h.horaCalculoInicial}}h : {{h.minutoCalculoFinal - h.minutoCalculoInicial}}m\n        </ion-col>\n    </ion-row>\n  </ion-grid>\n\n  <ion-button (click)='calculoHoras()'>click</ion-button>\n</ion-content>"
+module.exports = "<ion-header>\n  <ion-toolbar>\n      <div class=\"header-top\">\n          <ion-icon name=\"arrow-round-back\" button [routerLink]=\"['/registro-hora-extra']\"></ion-icon>\n          <p text-center>RELATÓRIO DE HORAS EXTRAS</p>\n        </div>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-grid>\n    <ion-row>\n      <ion-col >\n        <strong>Período/Data</strong>\n      </ion-col>\n      <ion-col class=\"ion-text-center\" >\n        <strong>Total</strong>\n      </ion-col>\n    </ion-row>\n    <ion-row *ngFor='let h of horasExtras'>\n        <ion-col *ngIf='h.horaFinal == null'>\n            {{h.horaInicial}} - <span class=\"horaPendente\">Hora Pendente</span>\n        </ion-col>\n        <ion-col *ngIf='h.horaFinal != null'>\n          {{h.horaInicial}} - {{h.horaFinal}} <br>\n          <span>{{h.dataInicial}}</span>\n        </ion-col>\n        <ion-col class=\"ion-text-center total\" *ngIf='h.horaFinal != null'>\n          {{h.total}}\n        </ion-col>\n    </ion-row>\n  </ion-grid>\n</ion-content>"
 
 /***/ }),
 
@@ -99,9 +99,9 @@ var RelatorioHoraExtraPage = /** @class */ (function () {
         this.authService = authService;
         this.horaService = horaService;
         this.horasExtras = new Array();
-        this.getHoras();
     }
     RelatorioHoraExtraPage.prototype.ngOnInit = function () {
+        this.getHoras();
     };
     RelatorioHoraExtraPage.prototype.ngOnDestroy = function () {
         this.horasExtrasSubscription.unsubscribe();
@@ -109,19 +109,15 @@ var RelatorioHoraExtraPage = /** @class */ (function () {
     RelatorioHoraExtraPage.prototype.getHoras = function () {
         var _this = this;
         this.horasExtrasSubscription = this.horaService.getHorasExtras().subscribe(function (dados) {
-            return _this.horasExtras = dados;
-        });
-    };
-    RelatorioHoraExtraPage.prototype.calculoHoras = function () {
-        this.horaService.getHorasExtras().subscribe(function (result) {
-            result.forEach(function (element) {
+            dados.forEach(function (element) {
                 var horaFinal = element.horaFinal;
                 var horaInicial = element.horaInicial;
                 var ms = moment__WEBPACK_IMPORTED_MODULE_4__(horaFinal, "HH:mm:ss").diff(moment__WEBPACK_IMPORTED_MODULE_4__(horaInicial, "HH:mm:ss"));
                 var d = moment__WEBPACK_IMPORTED_MODULE_4__["duration"](ms);
                 var s = Math.floor(d.asHours()) + moment__WEBPACK_IMPORTED_MODULE_4__["utc"](ms).format(":mm:ss");
-                console.log(s);
+                element.total = s;
             });
+            return _this.horasExtras = dados;
         });
     };
     RelatorioHoraExtraPage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([

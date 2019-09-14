@@ -1,11 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Platform, LoadingController, NavController, ToastController } from '@ionic/angular';
-import { Environment, GoogleMap, GoogleMaps, GoogleMapOptions, GoogleMapsEvent, MyLocation, GoogleMapsAnimation } from '@ionic-native/google-maps';
+import { GoogleMap, GoogleMaps, GoogleMapOptions, GoogleMapsEvent, MyLocation, GoogleMapsAnimation } from '@ionic-native/google-maps';
 import { NativeGeocoder, NativeGeocoderOptions, NativeGeocoderResult } from '@ionic-native/native-geocoder/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { DeslocamentoService } from 'src/app/servicos/deslocamento.service';
 import { Deslocamento } from 'src/app/Models/deslocamento';
-import * as moment  from 'moment'
+import * as moment from 'moment'
+import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
+import { AutenticacaoService } from 'src/app/servicos/autenticacao.service';
+import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
+
 
 @Component({
   selector: 'app-registro-deslocamento',
@@ -20,7 +24,6 @@ export class RegistroDeslocamentoPage implements OnInit {
   reserveGeocodingResults: string = ""
   private deslocamento: Deslocamento = {}
 
-
   constructor(
     private platform: Platform,
     private loadingCtrl: LoadingController,
@@ -28,7 +31,10 @@ export class RegistroDeslocamentoPage implements OnInit {
     public geolocation: Geolocation,
     private deslocamentoService: DeslocamentoService,
     private toastCtrl: ToastController,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private locationAccuracy: LocationAccuracy,
+    private authService: AutenticacaoService,
+    private androidPermissions: AndroidPermissions
   ) { }
 
   ngOnInit() {
@@ -57,39 +63,37 @@ export class RegistroDeslocamentoPage implements OnInit {
     })
     this.deslocamento.data = moment().locale('pt-br').format('L')
     this.deslocamento.hora = moment().locale('pt-br').format('LTS')
+    this.deslocamento.userId = this.authService.getAuth().currentUser.uid
 
     try {
       await this.deslocamentoService.registrar(this.deslocamento)
       await this.navCtrl.navigateRoot('registro-hora-extra')
       await this.loading.dismiss()
     } catch (error) {
-      this.toastCtrl.create({message: error, duration: 2000})
+      this.toastCtrl.create({ message: error, duration: 2000 })
     }
 
   }
-
-
 
   async loadMap() {
     this.loading = await this.loadingCtrl.create({ message: 'Por favor, aguarde...' })
     await this.loading.present()
 
-    Environment.setEnv({
+    /* Environment.setEnv({
       'API_KEY_FOR_BROWSER_RELEASE': 'AIzaSyClpig7cd7BKXZTeN93Xi7mUn57uzSFcqc',
       'API_KEY_FOR_BROWSER_DEBUG': 'AIzaSyClpig7cd7BKXZTeN93Xi7mUn57uzSFcqc'
-    });
+    }); */
 
     const mapOptions: GoogleMapOptions = {
       controls: {
         zoom: false
       }
     }
-
     this.map = await GoogleMaps.create(this.mapElement, mapOptions)
     try {
+      await this.checkGPSPermission()
       await this.map.one(GoogleMapsEvent.MAP_READY)
       await this.addOriginMarker()
-
     } catch (error) {
       console.error(error)
     }
@@ -115,4 +119,49 @@ export class RegistroDeslocamentoPage implements OnInit {
       this.loading.dismiss()
     }
   }
+
+
+
+  checkGPSPermission() {
+    this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION).then(
+      result => {
+        if (result.hasPermission) {
+
+          //If having permission show 'Turn On GPS' dialogue
+          this.askToTurnOnGPS();
+        } else {
+
+          //If not having permission ask for permission
+          this.requestGPSPermission();
+        }
+      },
+      err => {
+        alert(err);
+      }
+    );
+  }
+
+  requestGPSPermission() {
+    this.locationAccuracy.canRequest().then((canRequest: boolean) => {
+      if (canRequest) {
+        console.log("4");
+      } else {
+        //Show 'GPS Permission Request' dialogue
+        this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION)
+          .then(
+            () => {
+              this.askToTurnOnGPS();
+            }
+          );
+      }
+    });
+  }
+
+  askToTurnOnGPS() {
+    this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY)
+  }
+
+
+
+
 }

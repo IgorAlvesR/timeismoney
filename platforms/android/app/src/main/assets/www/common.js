@@ -375,6 +375,51 @@ function debounce(func, wait) {
 
 
 
+/***/ }),
+
+/***/ "./src/app/servicos/deslocamento.service.ts":
+/*!**************************************************!*\
+  !*** ./src/app/servicos/deslocamento.service.ts ***!
+  \**************************************************/
+/*! exports provided: DeslocamentoService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DeslocamentoService", function() { return DeslocamentoService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/fire/firestore */ "./node_modules/@angular/fire/firestore/index.js");
+/* harmony import */ var _autenticacao_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./autenticacao.service */ "./src/app/servicos/autenticacao.service.ts");
+
+
+
+
+var DeslocamentoService = /** @class */ (function () {
+    function DeslocamentoService(afs, authService) {
+        this.afs = afs;
+        this.authService = authService;
+        var userId = this.authService.getAuth().currentUser.uid;
+        this.deslocamento = this.afs.collection('Deslocamento');
+        this.colecaoDeslocamento = this.afs.collection('Deslocamento', function (ref) { return ref.where('userId', '==', userId); });
+    }
+    DeslocamentoService.prototype.registrar = function (deslocamento) {
+        return this.deslocamento.add(deslocamento);
+    };
+    DeslocamentoService.prototype.getDeslocamentos = function () {
+        return this.deslocamentos = this.colecaoDeslocamento.valueChanges();
+    };
+    DeslocamentoService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+            providedIn: 'root'
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_fire_firestore__WEBPACK_IMPORTED_MODULE_2__["AngularFirestore"], _autenticacao_service__WEBPACK_IMPORTED_MODULE_3__["AutenticacaoService"]])
+    ], DeslocamentoService);
+    return DeslocamentoService;
+}());
+
+
+
 /***/ })
 
 }]);

@@ -12,4 +12,5 @@ export interface HoraExtra {
     dataFinal?: any;
     cont?: number;
     total?:string;
+    diaSemana?:number;
 }

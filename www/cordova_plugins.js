@@ -290,6 +290,22 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
       "file": "plugins/cordova-plugin-googlemaps/www/js_CordovaGoogleMaps-for-android_ios.js",
       "pluginId": "cordova-plugin-googlemaps",
       "runs": true
+    },
+    {
+      "id": "cordova-plugin-android-permissions.Permissions",
+      "file": "plugins/cordova-plugin-android-permissions/www/permissions.js",
+      "pluginId": "cordova-plugin-android-permissions",
+      "clobbers": [
+        "cordova.plugins.permissions"
+      ]
+    },
+    {
+      "id": "cordova-plugin-request-location-accuracy.RequestLocationAccuracy",
+      "file": "plugins/cordova-plugin-request-location-accuracy/www/android/RequestLocationAccuracy.js",
+      "pluginId": "cordova-plugin-request-location-accuracy",
+      "clobbers": [
+        "cordova.plugins.locationAccuracy"
+      ]
     }
   ];
   module.exports.metadata = {
@@ -301,6 +317,8 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
     "cordova-plugin-whitelist": "1.3.3",
     "cordova-plugin-geolocation": "4.0.2",
     "cordova-plugin-nativegeocoder": "3.2.2",
-    "cordova-plugin-googlemaps": "2.6.2"
+    "cordova-plugin-googlemaps": "2.6.2",
+    "cordova-plugin-android-permissions": "1.0.0",
+    "cordova-plugin-request-location-accuracy": "2.3.0"
   };
 });

@@ -58,7 +58,7 @@ var EntrarPageModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-content class=\"ion-margin-bottom\" id=\"conteudo\">\n  <div class=\"ion-text-center logo\" [hidden]=\"keyboard.isVisible\">\n    <img src=\"../../../assets/imagens/logoInicial.svg\">\n  </div>\n\n  <div class=\"ion-text-center login\" >\n    <h6 [hidden]=\"keyboard.isVisible\">Faça seu login</h6>\n    <ion-input  class=\"inputLogin ion-padding\"  type=\"text\" placeholder=\"Email\" [(ngModel)]=\"funcionario.email\"></ion-input>\n    <ion-input class=\"inputLogin ion-padding\" type=\"password\" placeholder=\"Senha\" [(ngModel)]=\"funcionario.senha\"></ion-input>\n    <ion-input class=\"inputLoginSubmit\" type=\"submit\" value=\"Entrar\" (click)=\"login()\"></ion-input>\n    <h6>Esqueceu sua senha?</h6>\n  </div>\n\n  <div class=\"ion-text-center \" id=\"divCadastro\" [hidden]=\"keyboard.isVisible\">\n    <h6>Não perca mais dinheiro!</h6>\n    <p class=\"cadastrar\" button [routerLink]=\"['/cadastro-usuario']\"><i>Cadastre-se agora</i></p>\n  </div>\n\n</ion-content>\n"
+module.exports = "<ion-content class=\"ion-margin-bottom\" id=\"conteudo\">\n  <div class=\"ion-text-center logo\" [hidden]=\"keyboard.isVisible\">\n    <img src=\"../../../assets/imagens/logoInicial.svg\">\n  </div>\n\n  <div class=\"ion-text-center login\" >\n    <h6>Faça seu login</h6>\n    <ion-input  class=\"inputLogin ion-padding\"  type=\"text\" placeholder=\"Email\" [(ngModel)]=\"funcionario.email\"></ion-input>\n    <ion-input class=\"inputLogin ion-padding\" type=\"password\" placeholder=\"Senha\" [(ngModel)]=\"funcionario.senha\"></ion-input>\n    <ion-input class=\"inputLoginSubmit\" type=\"submit\" value=\"Entrar\" (click)=\"login()\"></ion-input>\n    <h6>Esqueceu sua senha?</h6>\n  </div>\n\n  <div class=\"ion-text-center \" id=\"divCadastro\" [hidden]=\"keyboard.isVisible\">\n    <h6>Não perca mais dinheiro!</h6>\n    <p class=\"cadastrar\" button [routerLink]=\"['/cadastro-usuario']\"><i>Cadastre-se agora</i></p>\n  </div>\n\n</ion-content>\n"
 
 /***/ }),
 
@@ -131,7 +131,7 @@ var EntrarPage = /** @class */ (function () {
                                 mensagem = 'Email inválido!';
                                 break;
                             case 'auth/argument-error':
-                                mensagem = 'Prencha todos os campos corretamente!';
+                                mensagem = 'Preencha todos os campos corretamente!';
                                 break;
                             default:
                                 mensagem = 'Não foi possível efetuar login...';

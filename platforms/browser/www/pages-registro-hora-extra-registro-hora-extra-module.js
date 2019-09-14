@@ -58,7 +58,7 @@ var RegistroHoraExtraPageModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\n  <ion-toolbar>\n    <p class=\"ion-text-center\">REGISTRO INÍCIO <span (click)='logout()'>SAIR</span></p>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content class=\"ion-padding\">\n\n\n  <div class=\"ion-padding horaData\">\n    <h1 class=\"horaData\">{{this.hora}}</h1>\n    <h5 class=\"horaData\">{{this.data}}</h5>\n  </div>\n\n\n  <div class=\"ion-text-center ion-padding \">\n    <img class=\"logoRegistro\" src=\"../../../assets/imagens/logoRegistroHora.svg\">\n  </div>\n\n  <div class=\"ion-text-center ion-padding digitalHora\">\n    <img src=\"../../../assets/imagens/digitalRegistro.svg\" (click)=\"registrarInicioHoraExtra()\">\n    <p class=\"finalizarHora\"><strong>Toque para iniciar hora extra</strong></p>\n  </div>\n\n</ion-content>\n\n\n<ion-toolbar class=\"footer\">\n  <div class=\"menu\">\n    <ion-icon name=\"clock\" [routerLink]=\"['/relatorio-hora-extra']\"></ion-icon>\n    <ion-icon name=\"watch\" (click)=\"registrarHoraFinalPendente()\"></ion-icon>\n    <ion-icon name=\"navigate\" ></ion-icon>\n  </div>\n</ion-toolbar>"
+module.exports = "<ion-header>\n  <ion-toolbar>\n    <p class=\"ion-text-center\">REGISTRO INÍCIO <span (click)='logout()'>SAIR</span></p>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content class=\"ion-padding\">\n\n\n  <div class=\"ion-padding horaData\">\n    <h1 class=\"horaData\">{{this.hora}}</h1>\n    <h5 class=\"horaData\">{{this.data}}</h5>\n  </div>\n\n\n  <div class=\"ion-text-center ion-padding \">\n    <img class=\"logoRegistro\" src=\"../../../assets/imagens/logoRegistroHora.svg\">\n  </div>\n\n  <div class=\"ion-text-center ion-padding digitalHora\">\n    <img src=\"../../../assets/imagens/digitalRegistro.svg\" (click)=\"registrarInicioHoraExtra()\">\n    <p class=\"finalizarHora\"><strong>Toque para iniciar hora extra</strong></p>\n  </div>\n\n</ion-content>\n\n\n<ion-toolbar class=\"footer\">\n  <div class=\"menu\">\n    <ion-icon name=\"clock\" [routerLink]=\"['/relatorio-hora-extra']\"></ion-icon>\n    <ion-icon name=\"watch\" (click)=\"registrarHoraFinalPendente()\"></ion-icon>\n    <ion-icon name=\"navigate\" [routerLink]=\"['/registro-deslocamento']\" ></ion-icon>\n  </div>\n</ion-toolbar>"
 
 /***/ }),
 
@@ -115,27 +115,23 @@ var RegistroHoraExtraPage = /** @class */ (function () {
         }, 1000);
     };
     RegistroHoraExtraPage.prototype.ngOnInit = function () {
-        this.presentAlert();
+        var _this = this;
+        var result = this.horaSevice.buscarHoraPendente();
+        result.subscribe(function (doc) {
+            if (doc.length != 0) {
+                _this.navCtrl.navigateRoot('registro-final-hora-extra');
+            }
+        });
     };
     RegistroHoraExtraPage.prototype.presentAlert = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
             var alert;
-            var _this = this;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.alertController.create({
                             header: 'Lembrete',
-                            subHeader: 'Possui alguma hora extra para finalizar?',
-                            buttons: [
-                                {
-                                    text: 'Sim',
-                                    handler: function (blah) {
-                                        _this.navCtrl.navigateRoot('registro-final-hora-extra');
-                                    }
-                                }, {
-                                    text: 'Não'
-                                }
-                            ]
+                            subHeader: 'Você possui uma hora extra para ser finalizada!',
+                            buttons: ['OK']
                         })];
                     case 1:
                         alert = _a.sent();
@@ -160,6 +156,7 @@ var RegistroHoraExtraPage = /** @class */ (function () {
                         this.horaExtraInicio.horaCalculoInicial = horas;
                         this.horaExtraInicio.minutoCalculoInicial = minutos;
                         this.horaExtraInicio.horaInicial = this.hora;
+                        this.horaExtraInicio.horaFinal = '';
                         this.horaExtraInicio.userId = this.authService.getAuth().currentUser.uid;
                         this.horaExtraInicio.dataInicial = moment__WEBPACK_IMPORTED_MODULE_2__().locale('pt-br').format('L');
                         this.horaExtraInicio.cont = new Date().getTime();
@@ -246,7 +243,7 @@ var RegistroHoraExtraPage = /** @class */ (function () {
                 switch (_b.label) {
                     case 0:
                         _a = this;
-                        return [4 /*yield*/, this.loadingCtrl.create({ message: 'Por favor, aguarde...', spinner: "circles" })];
+                        return [4 /*yield*/, this.loadingCtrl.create({ message: 'Por favor, aguarde...' })];
                     case 1:
                         _a.carregando = _b.sent();
                         return [2 /*return*/, this.carregando.present()];

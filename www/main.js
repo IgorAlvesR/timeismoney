@@ -442,23 +442,30 @@ var map = {
 	],
 	"./pages/registro-deslocamento/registro-deslocamento.module": [
 		"./src/app/pages/registro-deslocamento/registro-deslocamento.module.ts",
+		"default~pages-registro-deslocamento-registro-deslocamento-module~pages-registro-final-hora-extra-reg~0d748602",
+		"common",
 		"pages-registro-deslocamento-registro-deslocamento-module"
 	],
 	"./pages/registro-final-hora-extra/registro-final-hora-extra.module": [
 		"./src/app/pages/registro-final-hora-extra/registro-final-hora-extra.module.ts",
-		"default~pages-registro-final-hora-extra-registro-final-hora-extra-module~pages-registro-hora-extra-r~77448d14",
+		"default~pages-registro-deslocamento-registro-deslocamento-module~pages-registro-final-hora-extra-reg~0d748602",
 		"common",
 		"pages-registro-final-hora-extra-registro-final-hora-extra-module"
 	],
 	"./pages/registro-hora-extra/registro-hora-extra.module": [
 		"./src/app/pages/registro-hora-extra/registro-hora-extra.module.ts",
-		"default~pages-registro-final-hora-extra-registro-final-hora-extra-module~pages-registro-hora-extra-r~77448d14",
+		"default~pages-registro-deslocamento-registro-deslocamento-module~pages-registro-final-hora-extra-reg~0d748602",
 		"common",
 		"pages-registro-hora-extra-registro-hora-extra-module"
 	],
+	"./pages/relatorio-deslocamento/relatorio-deslocamento.module": [
+		"./src/app/pages/relatorio-deslocamento/relatorio-deslocamento.module.ts",
+		"common",
+		"pages-relatorio-deslocamento-relatorio-deslocamento-module"
+	],
 	"./pages/relatorio-hora-extra/relatorio-hora-extra.module": [
 		"./src/app/pages/relatorio-hora-extra/relatorio-hora-extra.module.ts",
-		"default~pages-registro-final-hora-extra-registro-final-hora-extra-module~pages-registro-hora-extra-r~77448d14",
+		"default~pages-registro-deslocamento-registro-deslocamento-module~pages-registro-final-hora-extra-reg~0d748602",
 		"common",
 		"pages-relatorio-hora-extra-relatorio-hora-extra-module"
 	]
@@ -529,6 +536,7 @@ var routes = [
         loadChildren: './pages/registro-deslocamento/registro-deslocamento.module#RegistroDeslocamentoPageModule',
         canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_4__["AuthGuard"]]
     },
+    { path: 'relatorio-deslocamento', loadChildren: './pages/relatorio-deslocamento/relatorio-deslocamento.module#RelatorioDeslocamentoPageModule' },
 ];
 var AppRoutingModule = /** @class */ (function () {
     function AppRoutingModule() {
@@ -638,6 +646,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ionic_native_google_maps__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @ionic-native/google-maps */ "./node_modules/@ionic-native/google-maps/index.js");
 /* harmony import */ var _ionic_native_native_geocoder_ngx__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @ionic-native/native-geocoder/ngx */ "./node_modules/@ionic-native/native-geocoder/ngx/index.js");
 /* harmony import */ var _ionic_native_geolocation_ngx__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @ionic-native/geolocation/ngx */ "./node_modules/@ionic-native/geolocation/ngx/index.js");
+/* harmony import */ var _ionic_native_android_permissions_ngx__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @ionic-native/android-permissions/ngx */ "./node_modules/@ionic-native/android-permissions/ngx/index.js");
+/* harmony import */ var _ionic_native_location_accuracy_ngx__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @ionic-native/location-accuracy/ngx */ "./node_modules/@ionic-native/location-accuracy/ngx/index.js");
+
+
 
 
 
@@ -681,7 +693,9 @@ var AppModule = /** @class */ (function () {
                 _servicos_hora_extra_service__WEBPACK_IMPORTED_MODULE_15__["HoraExtraService"],
                 _ionic_native_google_maps__WEBPACK_IMPORTED_MODULE_16__["GoogleMaps"],
                 _ionic_native_native_geocoder_ngx__WEBPACK_IMPORTED_MODULE_17__["NativeGeocoder"],
-                _ionic_native_geolocation_ngx__WEBPACK_IMPORTED_MODULE_18__["Geolocation"]
+                _ionic_native_geolocation_ngx__WEBPACK_IMPORTED_MODULE_18__["Geolocation"],
+                _ionic_native_location_accuracy_ngx__WEBPACK_IMPORTED_MODULE_20__["LocationAccuracy"],
+                _ionic_native_android_permissions_ngx__WEBPACK_IMPORTED_MODULE_19__["AndroidPermissions"]
             ],
             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_7__["AppComponent"]]
         })

@@ -40,7 +40,7 @@ export class EntrarPage implements OnInit {
           mensagem = 'Email inválido!'
           break
         case 'auth/argument-error':
-          mensagem = 'Prencha todos os campos corretamente!'
+          mensagem = 'Preencha todos os campos corretamente!'
           break
         default:
           mensagem = 'Não foi possível efetuar login...'

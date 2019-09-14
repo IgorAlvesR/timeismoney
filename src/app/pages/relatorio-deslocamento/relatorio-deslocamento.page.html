@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <div class="header-top">
+      <ion-icon name="arrow-round-back" button [routerLink]="['/registro-hora-extra']"></ion-icon>
+      <p text-center>RELATÓRIO DE DESLOCAMENTO</p>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <strong>Descrição/Data</strong>
+      </ion-col>
+      <ion-col class="ion-text-center">
+        <strong>Cidade</strong>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngFor='let d of deslocamentos'>
+      <ion-col class="dados">
+        {{d.descricao}}<br>
+        <span>{{d.data}}</span>
+      </ion-col>
+      <ion-col class="ion-text-center dados">
+        {{d.localizacao}}
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

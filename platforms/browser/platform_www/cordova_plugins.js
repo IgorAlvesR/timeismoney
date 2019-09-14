@@ -370,6 +370,14 @@ module.exports = [
         "id": "cordova-plugin-googlemaps.PluginEnvironment",
         "pluginId": "cordova-plugin-googlemaps",
         "runs": true
+    },
+    {
+        "file": "plugins/cordova-plugin-android-permissions/www/permissions-dummy.js",
+        "id": "cordova-plugin-android-permissions.Permissions",
+        "pluginId": "cordova-plugin-android-permissions",
+        "clobbers": [
+            "cordova.plugins.permissions"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -383,7 +391,9 @@ module.exports.metadata =
     "cordova-plugin-whitelist": "1.3.3",
     "cordova-plugin-geolocation": "4.0.2",
     "cordova-plugin-nativegeocoder": "3.2.2",
-    "cordova-plugin-googlemaps": "2.6.2"
+    "cordova-plugin-googlemaps": "2.6.2",
+    "cordova-plugin-android-permissions": "1.0.0",
+    "cordova-plugin-request-location-accuracy": "2.3.0"
 }
 // BOTTOM OF METADATA
 });

@@ -39,7 +39,7 @@ export class RegistroHoraExtraPage implements OnInit {
   ngOnInit() {
     let result = this.horaSevice.buscarHoraPendente()
     result.subscribe(doc => {
-      if (doc.length != 0) { 
+      if (doc.length != 0) {
         this.navCtrl.navigateRoot('registro-final-hora-extra')
       }
     })
@@ -68,20 +68,29 @@ export class RegistroHoraExtraPage implements OnInit {
     this.horaExtraInicio.userId = this.authService.getAuth().currentUser.uid
     this.horaExtraInicio.dataInicial = moment().locale('pt-br').format('L')
     this.horaExtraInicio.cont = new Date().getTime()
-    console.log(this.horaExtraInicio.horaCalculoInicial)
+    this.horaExtraInicio.diaSemana = moment().day()
+    this.horaExtraInicio.diaSemana = moment().day()
 
     try {
-      if(this.horaExtraInicio.horaCalculoInicial <= 12 || this.horaExtraInicio.horaCalculoInicial >= 13 ||
-         this.horaExtraInicio.horaCalculoInicial > 18){
+
+      if (this.horaExtraInicio.diaSemana != 6 && this.horaExtraInicio.diaSemana != 7) {
+        if (this.horaExtraInicio.horaCalculoInicial >= 12 || this.horaExtraInicio.horaCalculoInicial <= 13 
+          && this.horaExtraInicio.minutoCalculoInicial <= 30 ||
+          this.horaExtraInicio.horaCalculoInicial >= 18) {
           await this.horaSevice.registrarHoraExtra(this.horaExtraInicio)
           await this.navCtrl.navigateRoot('registro-final-hora-extra')
           await this.carregando.dismiss()
+        } else {
+          await this.presentToast("Não é possível realizar hora extra no período normal!")
+          await this.carregando.dismiss()
+        }
       }else {
-        await this.presentToast("Não é possível realizar hora extra no período normal!")
+        await this.horaSevice.registrarHoraExtra(this.horaExtraInicio)
+        await this.navCtrl.navigateRoot('registro-final-hora-extra')
         await this.carregando.dismiss()
       }
-      
-    
+
+
 
     } catch (error) {
       this.presentToast(error)
