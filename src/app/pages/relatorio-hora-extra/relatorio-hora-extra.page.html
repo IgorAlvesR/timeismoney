@@ -26,8 +26,11 @@
           <span>{{h.dataInicial}}</span>
         </ion-col>
         <ion-col class="ion-text-center total" *ngIf='h.horaFinal != null'>
-          {{h.horaCalculoFinal - h.horaCalculoInicial}}h : {{h.minutoCalculoFinal - h.minutoCalculoInicial}}m
+          <!-- {{h.horaCalculoFinal - h.horaCalculoInicial}}h : {{h.minutoCalculoFinal - h.minutoCalculoInicial}}m -->
+          {{h.total}}
         </ion-col>
     </ion-row>
   </ion-grid>
+
+  <ion-button (click)='calculoHoras()'>click</ion-button>
 </ion-content>

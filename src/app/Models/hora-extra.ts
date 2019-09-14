@@ -11,4 +11,5 @@ export interface HoraExtra {
     horaFinal?: any;
     dataFinal?: any;
     cont?: number;
+    total?:string;
 }

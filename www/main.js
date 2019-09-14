@@ -446,18 +446,20 @@ var map = {
 	],
 	"./pages/registro-final-hora-extra/registro-final-hora-extra.module": [
 		"./src/app/pages/registro-final-hora-extra/registro-final-hora-extra.module.ts",
-		"default~pages-registro-final-hora-extra-registro-final-hora-extra-module~pages-registro-hora-extra-r~7c17b9d2",
+		"default~pages-registro-final-hora-extra-registro-final-hora-extra-module~pages-registro-hora-extra-r~77448d14",
 		"common",
 		"pages-registro-final-hora-extra-registro-final-hora-extra-module"
 	],
 	"./pages/registro-hora-extra/registro-hora-extra.module": [
 		"./src/app/pages/registro-hora-extra/registro-hora-extra.module.ts",
-		"default~pages-registro-final-hora-extra-registro-final-hora-extra-module~pages-registro-hora-extra-r~7c17b9d2",
+		"default~pages-registro-final-hora-extra-registro-final-hora-extra-module~pages-registro-hora-extra-r~77448d14",
 		"common",
 		"pages-registro-hora-extra-registro-hora-extra-module"
 	],
 	"./pages/relatorio-hora-extra/relatorio-hora-extra.module": [
 		"./src/app/pages/relatorio-hora-extra/relatorio-hora-extra.module.ts",
+		"default~pages-registro-final-hora-extra-registro-final-hora-extra-module~pages-registro-hora-extra-r~77448d14",
+		"common",
 		"pages-relatorio-hora-extra-relatorio-hora-extra-module"
 	]
 };
@@ -885,6 +887,10 @@ var HoraExtraService = /** @class */ (function () {
             _this.horas = doc.payload.doc.ref;
             return _this.horas.update(horaExtra);
         });
+    };
+    HoraExtraService.prototype.buscarHoraPendente = function () {
+        var userId = this.authService.getAuth().currentUser.uid;
+        return this.afs.collection('HoraExtra', function (ref) { return (ref.where('userId', '==', userId).where('horaFinal', '==', '')); }).valueChanges();
     };
     HoraExtraService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({

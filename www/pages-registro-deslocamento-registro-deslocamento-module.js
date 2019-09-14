@@ -133,9 +133,8 @@ var RegistroDeslocamentoPage = /** @class */ (function () {
                             useLocale: true,
                             maxResults: 1
                         };
-                        return [4 /*yield*/, this.nativeGeocoder.reverseGeocode(latitude, longitude, options).then(function (results) {
-                                _this.reserveGeocodingResults = JSON.stringify(results[0].subAdministrativeArea);
-                            })];
+                        return [4 /*yield*/, this.nativeGeocoder.reverseGeocode(latitude, longitude, options)
+                                .then(function (result) { return _this.deslocamento.localizacao = result[0].subAdministrativeArea; })];
                     case 1:
                         _a.sent();
                         return [2 /*return*/];
@@ -160,12 +159,12 @@ var RegistroDeslocamentoPage = /** @class */ (function () {
                         return [4 /*yield*/, this.geolocation.getCurrentPosition().then(function (position) {
                                 var latitude = position.coords.latitude;
                                 var longitude = position.coords.longitude;
-                                _this.reverseGeocoding(latitude, longitude);
-                                _this.deslocamento.localizacao = _this.reserveGeocodingResults;
-                                _this.deslocamento.data = "teste";
+                                console.log(_this.reverseGeocoding(latitude, longitude));
                             })];
                     case 3:
                         _b.sent();
+                        this.deslocamento.data = "teste";
+                        console.log(this.deslocamento.localizacao);
                         _b.label = 4;
                     case 4:
                         _b.trys.push([4, 8, , 9]);
@@ -190,17 +189,17 @@ var RegistroDeslocamentoPage = /** @class */ (function () {
     };
     RegistroDeslocamentoPage.prototype.loadMap = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-            var _a, mapOptions, error_2;
-            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_b) {
-                switch (_b.label) {
+            var _a, mapOptions, _b, error_2;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_c) {
+                switch (_c.label) {
                     case 0:
                         _a = this;
                         return [4 /*yield*/, this.loadingCtrl.create({ message: 'Por favor, aguarde...' })];
                     case 1:
-                        _a.loading = _b.sent();
+                        _a.loading = _c.sent();
                         return [4 /*yield*/, this.loading.present()];
                     case 2:
-                        _b.sent();
+                        _c.sent();
                         _ionic_native_google_maps__WEBPACK_IMPORTED_MODULE_3__["Environment"].setEnv({
                             'API_KEY_FOR_BROWSER_RELEASE': 'AIzaSyClpig7cd7BKXZTeN93Xi7mUn57uzSFcqc',
                             'API_KEY_FOR_BROWSER_DEBUG': 'AIzaSyClpig7cd7BKXZTeN93Xi7mUn57uzSFcqc'
@@ -210,22 +209,25 @@ var RegistroDeslocamentoPage = /** @class */ (function () {
                                 zoom: false
                             }
                         };
-                        this.map = _ionic_native_google_maps__WEBPACK_IMPORTED_MODULE_3__["GoogleMaps"].create(this.mapElement, mapOptions);
-                        _b.label = 3;
+                        _b = this;
+                        return [4 /*yield*/, _ionic_native_google_maps__WEBPACK_IMPORTED_MODULE_3__["GoogleMaps"].create(this.mapElement, mapOptions)];
                     case 3:
-                        _b.trys.push([3, 6, , 7]);
-                        return [4 /*yield*/, this.map.one(_ionic_native_google_maps__WEBPACK_IMPORTED_MODULE_3__["GoogleMapsEvent"].MAP_READY)];
+                        _b.map = _c.sent();
+                        _c.label = 4;
                     case 4:
-                        _b.sent();
-                        return [4 /*yield*/, this.addOriginMarker()];
+                        _c.trys.push([4, 7, , 8]);
+                        return [4 /*yield*/, this.map.one(_ionic_native_google_maps__WEBPACK_IMPORTED_MODULE_3__["GoogleMapsEvent"].MAP_READY)];
                     case 5:
-                        _b.sent();
-                        return [3 /*break*/, 7];
+                        _c.sent();
+                        return [4 /*yield*/, this.addOriginMarker()];
                     case 6:
-                        error_2 = _b.sent();
+                        _c.sent();
+                        return [3 /*break*/, 8];
+                    case 7:
+                        error_2 = _c.sent();
                         console.error(error_2);
-                        return [3 /*break*/, 7];
-                    case 7: return [2 /*return*/];
+                        return [3 /*break*/, 8];
+                    case 8: return [2 /*return*/];
                 }
             });
         });

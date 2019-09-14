@@ -48,7 +48,8 @@ export class HoraExtraService {
 
 
    buscarHoraPendente() {
-    return this.afs.collection('HoraExtra', ref => (ref.where('horaFinal','==',''))).valueChanges() 
+    let userId = this.authService.getAuth().currentUser.uid
+    return this.afs.collection('HoraExtra', ref => (ref.where('userId','==',userId).where('horaFinal','==',''))).valueChanges() 
   }
 
 }

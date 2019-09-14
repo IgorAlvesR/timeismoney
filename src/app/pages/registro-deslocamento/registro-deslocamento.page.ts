@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Platform, LoadingController, NavController } from '@ionic/angular';
+import { Platform, LoadingController, NavController, ToastController } from '@ionic/angular';
 import { Environment, GoogleMap, GoogleMaps, GoogleMapOptions, GoogleMapsEvent, MyLocation, GoogleMapsAnimation } from '@ionic-native/google-maps';
-import { NativeGeocoder, NativeGeocoderOptions } from '@ionic-native/native-geocoder/ngx';
+import { NativeGeocoder, NativeGeocoderOptions, NativeGeocoderResult } from '@ionic-native/native-geocoder/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { DeslocamentoService } from 'src/app/servicos/deslocamento.service';
 import { Deslocamento } from 'src/app/Models/deslocamento';
+import * as moment  from 'moment'
 
 @Component({
   selector: 'app-registro-deslocamento',
@@ -26,6 +27,7 @@ export class RegistroDeslocamentoPage implements OnInit {
     public nativeGeocoder: NativeGeocoder,
     public geolocation: Geolocation,
     private deslocamentoService: DeslocamentoService,
+    private toastCtrl: ToastController,
     private navCtrl: NavController
   ) { }
 
@@ -36,46 +38,34 @@ export class RegistroDeslocamentoPage implements OnInit {
     this.loadMap()
   }
 
-
-  /*reverseGeolocation() {
-    this.geolocation.getCurrentPosition().then((position) => {
-      var latitude = position.coords.latitude
-      var longitude = position.coords.longitude
-      this.reverseGeocoding(latitude, longitude)
-      return this.reserveGeocodingResults
-    })
-  }*/
-
-
   async reverseGeocoding(latitude, longitude) {
     var options: NativeGeocoderOptions = {
       useLocale: true,
       maxResults: 1
     }
-    await this.nativeGeocoder.reverseGeocode(latitude, longitude, options).then((results) => {
-      return JSON.stringify(results[0].subAdministrativeArea)
-    })
+    await this.nativeGeocoder.reverseGeocode(latitude, longitude, options)
+      .then((result: NativeGeocoderResult[]) => this.deslocamento.localizacao = result[0].subAdministrativeArea)
   }
 
-  async registrarDeslocamento(){
+  async registrarDeslocamento() {
     this.loading = await this.loadingCtrl.create({ message: 'Por favor, aguarde...' })
     await this.loading.present()
     await this.geolocation.getCurrentPosition().then((position) => {
       var latitude = position.coords.latitude
       var longitude = position.coords.longitude
-      let result = this.reverseGeocoding(latitude, longitude)
-      this.deslocamento.localizacao = result
-      this.deslocamento.data = "teste"
+      this.reverseGeocoding(latitude, longitude)
     })
+    this.deslocamento.data = moment().locale('pt-br').format('L')
+    this.deslocamento.hora = moment().locale('pt-br').format('LTS')
 
-    try{
+    try {
       await this.deslocamentoService.registrar(this.deslocamento)
       await this.navCtrl.navigateRoot('registro-hora-extra')
       await this.loading.dismiss()
-    }catch(error){
-      console.log(error)
+    } catch (error) {
+      this.toastCtrl.create({message: error, duration: 2000})
     }
-    
+
   }
 
 
@@ -95,7 +85,7 @@ export class RegistroDeslocamentoPage implements OnInit {
       }
     }
 
-    this.map = GoogleMaps.create(this.mapElement, mapOptions)
+    this.map = await GoogleMaps.create(this.mapElement, mapOptions)
     try {
       await this.map.one(GoogleMapsEvent.MAP_READY)
       await this.addOriginMarker()

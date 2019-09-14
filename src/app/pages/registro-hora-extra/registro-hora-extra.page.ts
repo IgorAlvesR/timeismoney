@@ -4,7 +4,6 @@ import { AutenticacaoService } from 'src/app/servicos/autenticacao.service'
 import { HoraExtraService } from 'src/app/servicos/hora-extra.service'
 import { LoadingController, ToastController, NavController, AlertController } from '@ionic/angular'
 import { HoraExtra } from 'src/app/Models/hora-extra'
-import { ok } from 'assert'
 
 @Component({
   selector: 'app-registro-hora-extra',
@@ -18,7 +17,7 @@ export class RegistroHoraExtraPage implements OnInit {
   private carregando: any
   private hora: any
   private data: any
-  
+
   constructor(
     private authService: AutenticacaoService,
     private horaSevice: HoraExtraService,
@@ -40,9 +39,8 @@ export class RegistroHoraExtraPage implements OnInit {
   ngOnInit() {
     let result = this.horaSevice.buscarHoraPendente()
     result.subscribe(doc => {
-      if(doc.length != 0){
+      if (doc.length != 0) { 
         this.navCtrl.navigateRoot('registro-final-hora-extra')
-        this.presentAlert()
       }
     })
   }
@@ -70,12 +68,21 @@ export class RegistroHoraExtraPage implements OnInit {
     this.horaExtraInicio.userId = this.authService.getAuth().currentUser.uid
     this.horaExtraInicio.dataInicial = moment().locale('pt-br').format('L')
     this.horaExtraInicio.cont = new Date().getTime()
+    console.log(this.horaExtraInicio.horaCalculoInicial)
 
     try {
-      await this.horaSevice.registrarHoraExtra(this.horaExtraInicio)
-      await this.navCtrl.navigateRoot('registro-final-hora-extra')
-      await this.carregando.dismiss()
-     
+      if(this.horaExtraInicio.horaCalculoInicial <= 12 || this.horaExtraInicio.horaCalculoInicial >= 13 ||
+         this.horaExtraInicio.horaCalculoInicial > 18){
+          await this.horaSevice.registrarHoraExtra(this.horaExtraInicio)
+          await this.navCtrl.navigateRoot('registro-final-hora-extra')
+          await this.carregando.dismiss()
+      }else {
+        await this.presentToast("Não é possível realizar hora extra no período normal!")
+        await this.carregando.dismiss()
+      }
+      
+    
+
     } catch (error) {
       this.presentToast(error)
       this.carregando.dismiss()
@@ -103,7 +110,7 @@ export class RegistroHoraExtraPage implements OnInit {
   }
 
   async presentLoading() {
-    this.carregando = await this.loadingCtrl.create({ message: 'Por favor, aguarde...'})
+    this.carregando = await this.loadingCtrl.create({ message: 'Por favor, aguarde...' })
     return this.carregando.present()
   }
 

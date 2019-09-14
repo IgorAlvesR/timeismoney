@@ -160,7 +160,7 @@ var CadastroUsuarioPage = /** @class */ (function () {
                 switch (_b.label) {
                     case 0:
                         _a = this;
-                        return [4 /*yield*/, this.loadingCtrl.create({ message: 'Por favor, aguarde...', spinner: "circles" })];
+                        return [4 /*yield*/, this.loadingCtrl.create({ message: 'Por favor, aguarde...' })];
                     case 1:
                         _a.carregando = _b.sent();
                         return [2 /*return*/, this.carregando.present()];
