@@ -1,33 +1,39 @@
 <ion-header>
   <ion-toolbar>
-      <div class="header-top">
-          <ion-icon name="arrow-round-back" button [routerLink]="['/registro-hora-extra']"></ion-icon>
-          <p text-center>RELATÓRIO DE HORAS EXTRAS</p>
-        </div>
+    <div class="header-top">
+      <ion-icon name="arrow-round-back" button [routerLink]="['/registro-hora-extra']"></ion-icon>
+      <p text-center>RELATÓRIO DE HORAS EXTRAS</p>
+    </div>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-grid>
     <ion-row>
-      <ion-col >
+      <ion-col>
         <strong>Período/Data</strong>
       </ion-col>
-      <ion-col class="ion-text-center" >
+      <ion-col class="ion-text-center">
         <strong>Total</strong>
+      </ion-col>
+      <ion-col size="1">
+        <ion-icon name='trash'></ion-icon>
       </ion-col>
     </ion-row>
     <ion-row *ngFor='let h of horasExtras'>
-        <ion-col *ngIf='h.horaFinal == null'>
-            {{h.horaInicial}} - <span class="horaPendente">Hora Pendente</span>
-        </ion-col>
-        <ion-col *ngIf='h.horaFinal != null'>
-          {{h.horaInicial}} - {{h.horaFinal}} <br>
-          <span>{{h.dataInicial}}</span>
-        </ion-col>
-        <ion-col class="ion-text-center total" *ngIf='h.horaFinal != null'>
-          {{h.total}}
-        </ion-col>
+      <ion-col *ngIf='h.horaFinal == null'>
+        {{h.horaInicial}} - <span class="horaPendente">Hora Pendente</span>
+      </ion-col>
+      <ion-col *ngIf='h.horaFinal != null'>
+        {{h.horaInicial}} - {{h.horaFinal}} <br>
+        <span>{{h.dataInicial}}</span>
+      </ion-col>
+      <ion-col class="ion-text-center total" *ngIf='h.horaFinal != null'>
+        {{h.total}}
+      </ion-col>
+      <ion-col size="1">
+        <ion-icon name='trash' (click)="deleteHoraExtra(h.id)"></ion-icon>
+      </ion-col>
     </ion-row>
   </ion-grid>
 </ion-content>

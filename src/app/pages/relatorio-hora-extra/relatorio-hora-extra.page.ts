@@ -5,6 +5,7 @@ import { AutenticacaoService } from 'src/app/servicos/autenticacao.service'
 import { Subscription } from 'rxjs'
 import * as moment from 'moment'
 import { elementEnd } from '@angular/core/src/render3'
+import { ToastController } from '@ionic/angular'
 
 @Component({
   selector: 'app-relatorio-hora-extra',
@@ -17,7 +18,12 @@ export class RelatorioHoraExtraPage implements OnInit {
   private horasExtrasSubscription: Subscription
 
 
-  constructor(private authService: AutenticacaoService, private horaService: HoraExtraService) {
+  constructor(
+    private authService: AutenticacaoService,
+    private horaService: HoraExtraService,
+    private toastCtrl: ToastController
+  ) {
+
   }
 
   ngOnInit() {
@@ -41,6 +47,14 @@ export class RelatorioHoraExtraPage implements OnInit {
       })
       return this.horasExtras = dados
     })
+  }
+
+  async deleteHoraExtra(id: string) {
+    try {
+      await this.horaService.deleteHoraExtra(id);
+    } catch (error) {
+      this.toastCtrl.create({message:'Erro ao tentar excluir hora extra'});
+    }
   }
 }
 

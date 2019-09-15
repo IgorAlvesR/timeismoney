@@ -5,6 +5,7 @@ import { HoraExtraService } from 'src/app/servicos/hora-extra.service'
 import { LoadingController, ToastController, NavController } from '@ionic/angular'
 import { HoraExtra } from 'src/app/Models/hora-extra'
 import { Keyboard } from '@ionic-native/keyboard/ngx'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-registro-final-hora-extra',
@@ -19,14 +20,14 @@ export class RegistroFinalHoraExtraPage implements OnInit {
   private hora: any
   private data: any
   
-
   constructor(
     private authService: AutenticacaoService,
     private horaSevice: HoraExtraService,
     private loadingCtrl: LoadingController,
     private toastCtrl: ToastController,
     private navCtrl: NavController,
-    public keyboard: Keyboard
+    public keyboard: Keyboard,
+    private route: Router
   ) {
     this.criarRelogio()
   }
@@ -63,8 +64,8 @@ export class RegistroFinalHoraExtraPage implements OnInit {
         await this.horaSevice.update(this.horaExtraFinal)
         await this.carregando.dismiss()
         await this.navCtrl.navigateRoot('registro-hora-extra')
+        window.location.reload()
       }
-
     } catch (error) {
       this.presentToast(error)
       this.carregando.dismiss()

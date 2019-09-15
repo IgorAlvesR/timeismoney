@@ -90,6 +90,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var src_app_servicos_autenticacao_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/servicos/autenticacao.service */ "./src/app/servicos/autenticacao.service.ts");
 /* harmony import */ var src_app_servicos_hora_extra_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/servicos/hora-extra.service */ "./src/app/servicos/hora-extra.service.ts");
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
+/* harmony import */ var _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/fire/firestore */ "./node_modules/@angular/fire/firestore/index.js");
+
 
 
 
@@ -97,13 +99,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var RegistroHoraExtraPage = /** @class */ (function () {
-    function RegistroHoraExtraPage(authService, horaSevice, loadingCtrl, toastCtrl, navCtrl, alertController) {
+    function RegistroHoraExtraPage(authService, horaSevice, loadingCtrl, toastCtrl, navCtrl, alertController, angularFirestore) {
         this.authService = authService;
         this.horaSevice = horaSevice;
         this.loadingCtrl = loadingCtrl;
         this.toastCtrl = toastCtrl;
         this.navCtrl = navCtrl;
         this.alertController = alertController;
+        this.angularFirestore = angularFirestore;
         this.horaExtraInicio = {};
         this.criarRelógio();
     }
@@ -153,6 +156,7 @@ var RegistroHoraExtraPage = /** @class */ (function () {
                         _a.sent();
                         horas = moment__WEBPACK_IMPORTED_MODULE_2__().hours();
                         minutos = moment__WEBPACK_IMPORTED_MODULE_2__().minute();
+                        this.horaExtraInicio.id = this.angularFirestore.createId();
                         this.horaExtraInicio.horaCalculoInicial = horas;
                         this.horaExtraInicio.minutoCalculoInicial = minutos;
                         this.horaExtraInicio.horaInicial = this.hora;
@@ -301,7 +305,8 @@ var RegistroHoraExtraPage = /** @class */ (function () {
             _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["LoadingController"],
             _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["ToastController"],
             _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["NavController"],
-            _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["AlertController"]])
+            _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["AlertController"],
+            _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_6__["AngularFirestore"]])
     ], RegistroHoraExtraPage);
     return RegistroHoraExtraPage;
 }());

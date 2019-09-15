@@ -17,6 +17,7 @@ export class HoraExtraService {
   public horasExtras: Observable<HoraExtra[]>
   private horas: DocumentReference
 
+
   constructor(private afs: AngularFirestore, private authService: AutenticacaoService) {
     //cria uma referencia da coleção HoraExtraInicio e HoraExtraFinal
     let userId = authService.getAuth().currentUser.uid
@@ -46,10 +47,20 @@ export class HoraExtraService {
     })
   }
 
-
-   buscarHoraPendente() {
+  buscarHoraPendente() {
     let userId = this.authService.getAuth().currentUser.uid
     return this.afs.collection('HoraExtra', ref => (ref.where('userId','==',userId).where('horaFinal','==',''))).valueChanges() 
   }
+
+  deleteHoraExtra(id: string) {
+    let horasOb: Observable<any[]>
+    let colection = this.afs.collection('HoraExtra', ref => (ref.where('id','==',id))).snapshotChanges().pipe(flatMap(horasOb => horasOb))
+    colection.subscribe(doc => {
+      this.horas = doc.payload.doc.ref
+      return this.horas.delete()
+    })
+  }
+
+ 
 
 }

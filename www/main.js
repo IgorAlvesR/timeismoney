@@ -536,7 +536,11 @@ var routes = [
         loadChildren: './pages/registro-deslocamento/registro-deslocamento.module#RegistroDeslocamentoPageModule',
         canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_4__["AuthGuard"]]
     },
-    { path: 'relatorio-deslocamento', loadChildren: './pages/relatorio-deslocamento/relatorio-deslocamento.module#RelatorioDeslocamentoPageModule' },
+    {
+        path: 'relatorio-deslocamento',
+        loadChildren: './pages/relatorio-deslocamento/relatorio-deslocamento.module#RelatorioDeslocamentoPageModule',
+        canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_4__["AuthGuard"]]
+    },
 ];
 var AppRoutingModule = /** @class */ (function () {
     function AppRoutingModule() {
@@ -905,6 +909,14 @@ var HoraExtraService = /** @class */ (function () {
     HoraExtraService.prototype.buscarHoraPendente = function () {
         var userId = this.authService.getAuth().currentUser.uid;
         return this.afs.collection('HoraExtra', function (ref) { return (ref.where('userId', '==', userId).where('horaFinal', '==', '')); }).valueChanges();
+    };
+    HoraExtraService.prototype.deleteHoraExtra = function (id) {
+        var _this = this;
+        var colection = this.afs.collection('HoraExtra', function (ref) { return (ref.where('id', '==', id)).limit(1); }).snapshotChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (horasOb) { return horasOb; }));
+        colection.subscribe(function (doc) {
+            _this.horas = doc.payload.doc.ref;
+            return _this.horas.delete();
+        });
     };
     HoraExtraService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({

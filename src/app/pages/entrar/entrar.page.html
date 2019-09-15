@@ -1,5 +1,5 @@
 <ion-content class="ion-margin-bottom" id="conteudo">
-  <div class="ion-text-center logo" [hidden]="keyboard.isVisible">
+  <div class="ion-text-center logo" hidden="keyboard.isVisible">
     <img src="../../../assets/imagens/logoInicial.svg">
   </div>
 
@@ -8,7 +8,6 @@
     <ion-input  class="inputLogin ion-padding"  type="text" placeholder="Email" [(ngModel)]="funcionario.email"></ion-input>
     <ion-input class="inputLogin ion-padding" type="password" placeholder="Senha" [(ngModel)]="funcionario.senha"></ion-input>
     <ion-input class="inputLoginSubmit" type="submit" value="Entrar" (click)="login()"></ion-input>
-    <h6>Esqueceu sua senha?</h6>
   </div>
 
   <div class="ion-text-center " id="divCadastro" [hidden]="keyboard.isVisible">

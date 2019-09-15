@@ -78,20 +78,16 @@ export class RegistroDeslocamentoPage implements OnInit {
   async loadMap() {
     this.loading = await this.loadingCtrl.create({ message: 'Por favor, aguarde...' })
     await this.loading.present()
-
-    /* Environment.setEnv({
-      'API_KEY_FOR_BROWSER_RELEASE': 'AIzaSyClpig7cd7BKXZTeN93Xi7mUn57uzSFcqc',
-      'API_KEY_FOR_BROWSER_DEBUG': 'AIzaSyClpig7cd7BKXZTeN93Xi7mUn57uzSFcqc'
-    }); */
-
+    
     const mapOptions: GoogleMapOptions = {
       controls: {
         zoom: false
       }
     }
+    await this.checkGPSPermission()
     this.map = await GoogleMaps.create(this.mapElement, mapOptions)
+    await this.addOriginMarker()
     try {
-      await this.checkGPSPermission()
       await this.map.one(GoogleMapsEvent.MAP_READY)
       await this.addOriginMarker()
     } catch (error) {

@@ -203,12 +203,7 @@ var RegistroDeslocamentoPage = /** @class */ (function () {
                         return [4 /*yield*/, this.loadingCtrl.create({ message: 'Por favor, aguarde...' })];
                     case 1:
                         _a.loading = _c.sent();
-                        return [4 /*yield*/, this.loading.present()
-                            /* Environment.setEnv({
-                              'API_KEY_FOR_BROWSER_RELEASE': 'AIzaSyClpig7cd7BKXZTeN93Xi7mUn57uzSFcqc',
-                              'API_KEY_FOR_BROWSER_DEBUG': 'AIzaSyClpig7cd7BKXZTeN93Xi7mUn57uzSFcqc'
-                            }); */
-                        ];
+                        return [4 /*yield*/, this.loading.present()];
                     case 2:
                         _c.sent();
                         mapOptions = {
@@ -216,28 +211,31 @@ var RegistroDeslocamentoPage = /** @class */ (function () {
                                 zoom: false
                             }
                         };
+                        return [4 /*yield*/, this.checkGPSPermission()];
+                    case 3:
+                        _c.sent();
                         _b = this;
                         return [4 /*yield*/, _ionic_native_google_maps__WEBPACK_IMPORTED_MODULE_3__["GoogleMaps"].create(this.mapElement, mapOptions)];
-                    case 3:
-                        _b.map = _c.sent();
-                        _c.label = 4;
                     case 4:
-                        _c.trys.push([4, 8, , 9]);
-                        return [4 /*yield*/, this.checkGPSPermission()];
+                        _b.map = _c.sent();
+                        return [4 /*yield*/, this.addOriginMarker()];
                     case 5:
                         _c.sent();
-                        return [4 /*yield*/, this.map.one(_ionic_native_google_maps__WEBPACK_IMPORTED_MODULE_3__["GoogleMapsEvent"].MAP_READY)];
+                        _c.label = 6;
                     case 6:
-                        _c.sent();
-                        return [4 /*yield*/, this.addOriginMarker()];
+                        _c.trys.push([6, 9, , 10]);
+                        return [4 /*yield*/, this.map.one(_ionic_native_google_maps__WEBPACK_IMPORTED_MODULE_3__["GoogleMapsEvent"].MAP_READY)];
                     case 7:
                         _c.sent();
-                        return [3 /*break*/, 9];
+                        return [4 /*yield*/, this.addOriginMarker()];
                     case 8:
+                        _c.sent();
+                        return [3 /*break*/, 10];
+                    case 9:
                         error_2 = _c.sent();
                         console.error(error_2);
-                        return [3 /*break*/, 9];
-                    case 9: return [2 /*return*/];
+                        return [3 /*break*/, 10];
+                    case 10: return [2 /*return*/];
                 }
             });
         });

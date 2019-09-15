@@ -1,4 +1,5 @@
 export interface HoraExtra {
+    id?:string;
     horaCalculoFinal?: number;
     minutoCalculoFinal?: number;
     horaInicial?: any;

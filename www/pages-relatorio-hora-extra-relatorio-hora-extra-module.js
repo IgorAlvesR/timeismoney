@@ -58,7 +58,7 @@ var RelatorioHoraExtraPageModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\n  <ion-toolbar>\n      <div class=\"header-top\">\n          <ion-icon name=\"arrow-round-back\" button [routerLink]=\"['/registro-hora-extra']\"></ion-icon>\n          <p text-center>RELATÓRIO DE HORAS EXTRAS</p>\n        </div>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-grid>\n    <ion-row>\n      <ion-col >\n        <strong>Período/Data</strong>\n      </ion-col>\n      <ion-col class=\"ion-text-center\" >\n        <strong>Total</strong>\n      </ion-col>\n    </ion-row>\n    <ion-row *ngFor='let h of horasExtras'>\n        <ion-col *ngIf='h.horaFinal == null'>\n            {{h.horaInicial}} - <span class=\"horaPendente\">Hora Pendente</span>\n        </ion-col>\n        <ion-col *ngIf='h.horaFinal != null'>\n          {{h.horaInicial}} - {{h.horaFinal}} <br>\n          <span>{{h.dataInicial}}</span>\n        </ion-col>\n        <ion-col class=\"ion-text-center total\" *ngIf='h.horaFinal != null'>\n          {{h.total}}\n        </ion-col>\n    </ion-row>\n  </ion-grid>\n</ion-content>"
+module.exports = "<ion-header>\n  <ion-toolbar>\n    <div class=\"header-top\">\n      <ion-icon name=\"arrow-round-back\" button [routerLink]=\"['/registro-hora-extra']\"></ion-icon>\n      <p text-center>RELATÓRIO DE HORAS EXTRAS</p>\n    </div>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-grid>\n    <ion-row>\n      <ion-col>\n        <strong>Período/Data</strong>\n      </ion-col>\n      <ion-col class=\"ion-text-center\">\n        <strong>Total</strong>\n      </ion-col>\n      <ion-col size=\"1\">\n        <ion-icon name='trash'></ion-icon>\n      </ion-col>\n    </ion-row>\n    <ion-row *ngFor='let h of horasExtras'>\n      <ion-col *ngIf='h.horaFinal == null'>\n        {{h.horaInicial}} - <span class=\"horaPendente\">Hora Pendente</span>\n      </ion-col>\n      <ion-col *ngIf='h.horaFinal != null'>\n        {{h.horaInicial}} - {{h.horaFinal}} <br>\n        <span>{{h.dataInicial}}</span>\n      </ion-col>\n      <ion-col class=\"ion-text-center total\" *ngIf='h.horaFinal != null'>\n        {{h.total}}\n      </ion-col>\n      <ion-col size=\"1\">\n        <ion-icon name='trash' (click)=\"deleteHoraExtra(h.id)\"></ion-icon>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n</ion-content>"
 
 /***/ }),
 
@@ -89,15 +89,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var src_app_servicos_autenticacao_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/servicos/autenticacao.service */ "./src/app/servicos/autenticacao.service.ts");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
+
 
 
 
 
 
 var RelatorioHoraExtraPage = /** @class */ (function () {
-    function RelatorioHoraExtraPage(authService, horaService) {
+    function RelatorioHoraExtraPage(authService, horaService, toastCtrl) {
         this.authService = authService;
         this.horaService = horaService;
+        this.toastCtrl = toastCtrl;
         this.horasExtras = new Array();
     }
     RelatorioHoraExtraPage.prototype.ngOnInit = function () {
@@ -120,13 +123,35 @@ var RelatorioHoraExtraPage = /** @class */ (function () {
             return _this.horasExtras = dados;
         });
     };
+    RelatorioHoraExtraPage.prototype.deleteHoraExtra = function (id) {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var error_1;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, this.horaService.deleteHoraExtra(id)];
+                    case 1:
+                        _a.sent();
+                        return [3 /*break*/, 3];
+                    case 2:
+                        error_1 = _a.sent();
+                        this.toastCtrl.create({ message: 'Erro ao tentar excluir hora extra' });
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
     RelatorioHoraExtraPage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
             selector: 'app-relatorio-hora-extra',
             template: __webpack_require__(/*! ./relatorio-hora-extra.page.html */ "./src/app/pages/relatorio-hora-extra/relatorio-hora-extra.page.html"),
             styles: [__webpack_require__(/*! ./relatorio-hora-extra.page.scss */ "./src/app/pages/relatorio-hora-extra/relatorio-hora-extra.page.scss")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [src_app_servicos_autenticacao_service__WEBPACK_IMPORTED_MODULE_3__["AutenticacaoService"], src_app_servicos_hora_extra_service__WEBPACK_IMPORTED_MODULE_2__["HoraExtraService"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [src_app_servicos_autenticacao_service__WEBPACK_IMPORTED_MODULE_3__["AutenticacaoService"],
+            src_app_servicos_hora_extra_service__WEBPACK_IMPORTED_MODULE_2__["HoraExtraService"],
+            _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["ToastController"]])
     ], RelatorioHoraExtraPage);
     return RelatorioHoraExtraPage;
 }());
