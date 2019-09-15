@@ -91,6 +91,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var src_app_servicos_hora_extra_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/servicos/hora-extra.service */ "./src/app/servicos/hora-extra.service.ts");
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
 /* harmony import */ var _ionic_native_keyboard_ngx__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ionic-native/keyboard/ngx */ "./node_modules/@ionic-native/keyboard/ngx/index.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+
 
 
 
@@ -99,13 +101,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var RegistroFinalHoraExtraPage = /** @class */ (function () {
-    function RegistroFinalHoraExtraPage(authService, horaSevice, loadingCtrl, toastCtrl, navCtrl, keyboard) {
+    function RegistroFinalHoraExtraPage(authService, horaSevice, loadingCtrl, toastCtrl, navCtrl, keyboard, route) {
         this.authService = authService;
         this.horaSevice = horaSevice;
         this.loadingCtrl = loadingCtrl;
         this.toastCtrl = toastCtrl;
         this.navCtrl = navCtrl;
         this.keyboard = keyboard;
+        this.route = route;
         this.horaExtraFinal = {};
         this.customAlertOptions = {
             header: 'Selecione a Cidade'
@@ -138,7 +141,7 @@ var RegistroFinalHoraExtraPage = /** @class */ (function () {
                         _a.label = 2;
                     case 2:
                         _a.trys.push([2, 8, , 9]);
-                        if (!(this.horaExtraFinal.descricao == null || this.horaExtraFinal.localizacao == null)) return [3 /*break*/, 3];
+                        if (!(this.horaExtraFinal.descricao == null || this.horaExtraFinal.descricao == '' || this.horaExtraFinal.localizacao == null || this.horaExtraFinal.localizacao == '')) return [3 /*break*/, 3];
                         this.presentToast("Preenha todos os campos!");
                         this.carregando.dismiss();
                         return [3 /*break*/, 7];
@@ -151,6 +154,7 @@ var RegistroFinalHoraExtraPage = /** @class */ (function () {
                         return [4 /*yield*/, this.navCtrl.navigateRoot('registro-hora-extra')];
                     case 6:
                         _a.sent();
+                        window.location.reload();
                         _a.label = 7;
                     case 7: return [3 /*break*/, 9];
                     case 8:
@@ -203,7 +207,8 @@ var RegistroFinalHoraExtraPage = /** @class */ (function () {
             _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["LoadingController"],
             _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["ToastController"],
             _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["NavController"],
-            _ionic_native_keyboard_ngx__WEBPACK_IMPORTED_MODULE_6__["Keyboard"]])
+            _ionic_native_keyboard_ngx__WEBPACK_IMPORTED_MODULE_6__["Keyboard"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_7__["Router"]])
     ], RegistroFinalHoraExtraPage);
     return RegistroFinalHoraExtraPage;
 }());

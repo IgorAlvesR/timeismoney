@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone } from '@angular/core'
+import { Component, OnInit, NgZone, OnDestroy } from '@angular/core'
 import * as moment from 'moment'
 import { AutenticacaoService } from 'src/app/servicos/autenticacao.service'
 import { HoraExtraService } from 'src/app/servicos/hora-extra.service'
@@ -12,9 +12,8 @@ import { Router } from '@angular/router'
   templateUrl: './registro-hora-extra.page.html',
   styleUrls: ['./registro-hora-extra.page.scss'],
 })
-export class RegistroHoraExtraPage implements OnInit {
-
-
+export class RegistroHoraExtraPage implements OnInit, OnDestroy {
+  
   private horaExtraInicio: HoraExtra = {}
   private carregando: any
   private hora: any
@@ -48,7 +47,7 @@ export class RegistroHoraExtraPage implements OnInit {
       }
     })
   }
-
+  
   async presentAlert() {
     const alert = await this.alertController.create({
       header: 'Lembrete',

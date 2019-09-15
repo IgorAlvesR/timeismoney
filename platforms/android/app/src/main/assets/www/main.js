@@ -912,7 +912,8 @@ var HoraExtraService = /** @class */ (function () {
     };
     HoraExtraService.prototype.deleteHoraExtra = function (id) {
         var _this = this;
-        var colection = this.afs.collection('HoraExtra', function (ref) { return (ref.where('id', '==', id)).limit(1); }).snapshotChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (horasOb) { return horasOb; }));
+        var horasOb;
+        var colection = this.afs.collection('HoraExtra', function (ref) { return (ref.where('id', '==', id)); }).snapshotChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (horasOb) { return horasOb; }));
         colection.subscribe(function (doc) {
             _this.horas = doc.payload.doc.ref;
             return _this.horas.delete();

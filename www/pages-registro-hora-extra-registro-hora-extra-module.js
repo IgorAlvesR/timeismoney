@@ -91,6 +91,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var src_app_servicos_hora_extra_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/servicos/hora-extra.service */ "./src/app/servicos/hora-extra.service.ts");
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
 /* harmony import */ var _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/fire/firestore */ "./node_modules/@angular/fire/firestore/index.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+
 
 
 
@@ -99,7 +101,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var RegistroHoraExtraPage = /** @class */ (function () {
-    function RegistroHoraExtraPage(authService, horaSevice, loadingCtrl, toastCtrl, navCtrl, alertController, angularFirestore) {
+    function RegistroHoraExtraPage(authService, horaSevice, loadingCtrl, toastCtrl, navCtrl, alertController, angularFirestore, route) {
         this.authService = authService;
         this.horaSevice = horaSevice;
         this.loadingCtrl = loadingCtrl;
@@ -107,6 +109,7 @@ var RegistroHoraExtraPage = /** @class */ (function () {
         this.navCtrl = navCtrl;
         this.alertController = alertController;
         this.angularFirestore = angularFirestore;
+        this.route = route;
         this.horaExtraInicio = {};
         this.criarRelógio();
     }
@@ -125,6 +128,9 @@ var RegistroHoraExtraPage = /** @class */ (function () {
                 _this.navCtrl.navigateRoot('registro-final-hora-extra');
             }
         });
+    };
+    RegistroHoraExtraPage.prototype.ngOnDestroy = function () {
+        //window.location.reload()
     };
     RegistroHoraExtraPage.prototype.presentAlert = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
@@ -164,7 +170,6 @@ var RegistroHoraExtraPage = /** @class */ (function () {
                         this.horaExtraInicio.userId = this.authService.getAuth().currentUser.uid;
                         this.horaExtraInicio.dataInicial = moment__WEBPACK_IMPORTED_MODULE_2__().locale('pt-br').format('L');
                         this.horaExtraInicio.cont = new Date().getTime();
-                        this.horaExtraInicio.diaSemana = moment__WEBPACK_IMPORTED_MODULE_2__().day();
                         this.horaExtraInicio.diaSemana = moment__WEBPACK_IMPORTED_MODULE_2__().day();
                         _a.label = 2;
                     case 2:
@@ -212,53 +217,27 @@ var RegistroHoraExtraPage = /** @class */ (function () {
             });
         });
     };
-    RegistroHoraExtraPage.prototype.registrarHoraFinalPendente = function () {
-        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-            var error_2;
-            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 4, , 5]);
-                        return [4 /*yield*/, this.presentLoading()];
-                    case 1:
-                        _a.sent();
-                        return [4 /*yield*/, this.carregando.dismiss()];
-                    case 2:
-                        _a.sent();
-                        return [4 /*yield*/, this.navCtrl.navigateRoot('registro-final-hora-extra')];
-                    case 3:
-                        _a.sent();
-                        return [3 /*break*/, 5];
-                    case 4:
-                        error_2 = _a.sent();
-                        console.log(error_2);
-                        return [3 /*break*/, 5];
-                    case 5: return [2 /*return*/];
-                }
-            });
-        });
-    };
     RegistroHoraExtraPage.prototype.logout = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-            var error_3;
+            var error_2;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.presentLoading()];
                     case 1:
                         _a.sent();
-                        return [4 /*yield*/, this.carregando.dismiss()];
+                        _a.label = 2;
                     case 2:
-                        _a.sent();
-                        _a.label = 3;
-                    case 3:
-                        _a.trys.push([3, 5, , 6]);
+                        _a.trys.push([2, 5, , 6]);
                         return [4 /*yield*/, this.authService.logout()];
+                    case 3:
+                        _a.sent();
+                        return [4 /*yield*/, this.carregando.dismiss()];
                     case 4:
                         _a.sent();
                         return [3 /*break*/, 6];
                     case 5:
-                        error_3 = _a.sent();
-                        this.presentToast(error_3);
+                        error_2 = _a.sent();
+                        this.presentToast(error_2);
                         return [3 /*break*/, 6];
                     case 6: return [2 /*return*/];
                 }
@@ -306,7 +285,8 @@ var RegistroHoraExtraPage = /** @class */ (function () {
             _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["ToastController"],
             _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["NavController"],
             _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["AlertController"],
-            _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_6__["AngularFirestore"]])
+            _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_6__["AngularFirestore"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_7__["Router"]])
     ], RegistroHoraExtraPage);
     return RegistroHoraExtraPage;
 }());

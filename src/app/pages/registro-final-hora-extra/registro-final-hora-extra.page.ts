@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone } from '@angular/core'
+import { Component, OnInit, NgZone, OnDestroy } from '@angular/core'
 import * as moment from 'moment'
 import { AutenticacaoService } from 'src/app/servicos/autenticacao.service'
 import { HoraExtraService } from 'src/app/servicos/hora-extra.service'
@@ -13,6 +13,7 @@ import { Router } from '@angular/router'
   styleUrls: ['./registro-final-hora-extra.page.scss'],
 })
 export class RegistroFinalHoraExtraPage implements OnInit {
+  
 
   private horaExtraFinal: HoraExtra = {}
   private carregando: any
@@ -34,7 +35,6 @@ export class RegistroFinalHoraExtraPage implements OnInit {
 
   ngOnInit() { }
 
-   
   customAlertOptions: any = {
     header: 'Selecione a Cidade'
   }
@@ -57,7 +57,7 @@ export class RegistroFinalHoraExtraPage implements OnInit {
     this.horaExtraFinal.userId = this.authService.getAuth().currentUser.uid
     this.horaExtraFinal.dataFinal = moment().locale('pt-br').format('L')
     try {
-      if (this.horaExtraFinal.descricao == null || this.horaExtraFinal.localizacao == null) {
+      if (this.horaExtraFinal.descricao == null || this.horaExtraFinal.descricao == '' || this.horaExtraFinal.localizacao == null || this.horaExtraFinal.localizacao == '') {
         this.presentToast("Preenha todos os campos!")
         this.carregando.dismiss()
       } else {
