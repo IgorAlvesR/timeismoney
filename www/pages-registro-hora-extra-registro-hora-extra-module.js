@@ -129,9 +129,6 @@ var RegistroHoraExtraPage = /** @class */ (function () {
             }
         });
     };
-    RegistroHoraExtraPage.prototype.ngOnDestroy = function () {
-        //window.location.reload()
-    };
     RegistroHoraExtraPage.prototype.presentAlert = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
             var alert;

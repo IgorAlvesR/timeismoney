@@ -13,14 +13,14 @@ import { Router } from '@angular/router'
   styleUrls: ['./registro-final-hora-extra.page.scss'],
 })
 export class RegistroFinalHoraExtraPage implements OnInit {
-  
+
 
   private horaExtraFinal: HoraExtra = {}
   private carregando: any
   public dados: any
   private hora: any
   private data: any
-  
+
   constructor(
     private authService: AutenticacaoService,
     private horaSevice: HoraExtraService,
@@ -29,11 +29,13 @@ export class RegistroFinalHoraExtraPage implements OnInit {
     private navCtrl: NavController,
     public keyboard: Keyboard,
     private route: Router
-  ) {
-    this.criarRelogio()
+  ) {}
+
+  ngOnInit() {
+    //this.criarRelogio()
   }
 
-  ngOnInit() { }
+ 
 
   customAlertOptions: any = {
     header: 'Selecione a Cidade'
@@ -44,6 +46,10 @@ export class RegistroFinalHoraExtraPage implements OnInit {
       this.hora = moment().locale('pt-br').format('LTS')
       this.data = moment().locale('pt-br').format('LL')
     }, 1000)
+  }
+
+  ionViewWillEnter(){
+    this.criarRelogio()
   }
 
   async registrarFinalHoraExtra() {

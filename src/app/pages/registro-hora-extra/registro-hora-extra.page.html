@@ -17,9 +17,11 @@
     <img class="logoRegistro" src="../../../assets/imagens/logoRegistroHora.svg">
   </div>
 
-  <div class="ion-text-center ion-padding digitalHora">
-    <img src="../../../assets/imagens/digitalRegistro.svg" (click)="registrarInicioHoraExtra()">
-    <p class="finalizarHora"><strong>Toque para iniciar hora extra</strong></p>
+  <div  class="ion-text-center ion-padding digitalHora">
+    <img id='botao1' src="../../../assets/imagens/digitalRegistro.svg" (click)="registrarInicioHoraExtra()">
+    <img id='botao2' src="../../../assets/imagens/digitalRegistro.svg" [routerLink]="['/registro-final-hora-extra']" >
+    <p id='texto' class="finalizarHora"><strong>Toque para iniciar hora extra</strong></p>
+    <p id='texto2' class="finalizarHora"><strong>Hora Extra pendente, clique para finalizar</strong></p>
   </div>
 
 </ion-content>

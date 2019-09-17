@@ -12,8 +12,8 @@ import { Router } from '@angular/router'
   templateUrl: './registro-hora-extra.page.html',
   styleUrls: ['./registro-hora-extra.page.scss'],
 })
-export class RegistroHoraExtraPage implements OnInit, OnDestroy {
-  
+export class RegistroHoraExtraPage implements OnInit {
+
   private horaExtraInicio: HoraExtra = {}
   private carregando: any
   private hora: any
@@ -28,38 +28,52 @@ export class RegistroHoraExtraPage implements OnInit, OnDestroy {
     private alertController: AlertController,
     private angularFirestore: AngularFirestore,
     private route: Router
-  ) {
-    this.criarRelógio()
-  }
+  ) {}
 
-  criarRelógio() {
-    setInterval(() => {
+   async criarRelógio() {
+    await setInterval(() => {
       this.hora = moment().locale('pt-br').format('LTS')
       this.data = moment().locale('pt-br').format('LL')
     }, 1000)
   }
 
+
+  ionViewWillEnter(){
+    this.criarRelógio()
+  }
+
   ngOnInit() {
-    let result = this.horaSevice.buscarHoraPendente()
+    let result =  this.horaSevice.buscarHoraPendente()
     result.subscribe(doc => {
-      if (doc.length != 0) {
-        this.navCtrl.navigateRoot('registro-final-hora-extra')
-      }
+      if(doc.length > 0){
+        document.getElementById('botao1').hidden = true
+        document.getElementById('texto').hidden = true
+      }else {
+        document.getElementById('botao2').hidden = true
+        document.getElementById('texto2').hidden = true
+      } 
     })
   }
-  
+
   async presentAlert() {
     const alert = await this.alertController.create({
       header: 'Lembrete',
-      subHeader: 'Você possui uma hora extra para ser finalizada!',
-      buttons: ['OK']
+      subHeader: 'Você possui hora extra para ser finalizada, deseja finaliza-la ?',
+      buttons: [
+        {
+          text: 'NÃO',
+        }, {
+          text: 'SIM',
+          handler: () => {
+            this.navCtrl.navigateRoot('registro-final-hora-extra')
+          }
+        }
+      ]
     })
-
     await alert.present()
   }
 
   async registrarInicioHoraExtra() {
-
     await this.presentLoading()
     let horas = moment().hours()
     let minutos = moment().minute()
@@ -90,6 +104,7 @@ export class RegistroHoraExtraPage implements OnInit, OnDestroy {
         await this.navCtrl.navigateRoot('registro-final-hora-extra')
         await this.carregando.dismiss()
       }
+
     } catch (error) {
       this.presentToast(error)
       this.carregando.dismiss()
