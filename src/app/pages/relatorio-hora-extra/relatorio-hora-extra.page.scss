@@ -9,6 +9,7 @@ ion-row{
     padding: 5px;
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 span{
@@ -21,7 +22,7 @@ span{
 }
 
 .horaPendente{
-    color: rgb(233, 47, 47);
+    color: rgb(175, 13, 13);
 }
 
 .header-top{
@@ -35,4 +36,10 @@ span{
 ion-icon{
     width: 20px;
     height: 20px;
+}
+
+.delete{
+    width: 25px;
+    height: 25px;
+    color: rgb(175, 13, 13);
 }

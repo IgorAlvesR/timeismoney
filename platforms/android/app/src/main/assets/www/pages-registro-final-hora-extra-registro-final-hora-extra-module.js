@@ -113,15 +113,20 @@ var RegistroFinalHoraExtraPage = /** @class */ (function () {
         this.customAlertOptions = {
             header: 'Selecione a Cidade'
         };
-        this.criarRelogio();
     }
-    RegistroFinalHoraExtraPage.prototype.ngOnInit = function () { };
+    RegistroFinalHoraExtraPage.prototype.ngOnInit = function () {
+    };
     RegistroFinalHoraExtraPage.prototype.criarRelogio = function () {
         var _this = this;
+        this.hora = moment__WEBPACK_IMPORTED_MODULE_2__().locale('pt-br').format('LTS');
+        this.data = moment__WEBPACK_IMPORTED_MODULE_2__().locale('pt-br').format('LL');
         setInterval(function () {
             _this.hora = moment__WEBPACK_IMPORTED_MODULE_2__().locale('pt-br').format('LTS');
             _this.data = moment__WEBPACK_IMPORTED_MODULE_2__().locale('pt-br').format('LL');
         }, 1000);
+    };
+    RegistroFinalHoraExtraPage.prototype.ionViewWillEnter = function () {
+        this.criarRelogio();
     };
     RegistroFinalHoraExtraPage.prototype.registrarFinalHoraExtra = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {

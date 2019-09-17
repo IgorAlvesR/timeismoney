@@ -28,7 +28,7 @@
         <span>{{h.dataInicial}}</span>
       </ion-col>
       <ion-col *ngIf='h.horaFinal == ""'>
-        {{h.horaInicial}} - <span class="horaPendente">Hora Pendente</span> <br>
+        {{h.horaInicial}} - <span class="horaPendente">PENDENTE</span> <br>
         <span>{{h.dataInicial}}</span>
       </ion-col>
       
@@ -36,7 +36,7 @@
         {{h.total}}
       </ion-col>
       <ion-col size="1" *ngIf='h.horaFinal != ""'>
-        <ion-icon name='trash' (click)="deleteHoraExtra(h.id)"></ion-icon>
+        <ion-icon class="delete" name='trash' (click)="deleteHoraExtra(h.id)"></ion-icon>
       </ion-col>
     </ion-row>
   </ion-grid>
