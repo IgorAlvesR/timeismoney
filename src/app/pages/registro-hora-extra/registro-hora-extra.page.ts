@@ -31,6 +31,8 @@ export class RegistroHoraExtraPage implements OnInit {
   ) {}
 
    async criarRelógio() {
+    this.hora = moment().locale('pt-br').format('LTS')
+    this.data = moment().locale('pt-br').format('LL')
     await setInterval(() => {
       this.hora = moment().locale('pt-br').format('LTS')
       this.data = moment().locale('pt-br').format('LL')

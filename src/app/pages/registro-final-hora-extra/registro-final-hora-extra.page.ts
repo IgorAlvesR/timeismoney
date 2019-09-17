@@ -32,7 +32,7 @@ export class RegistroFinalHoraExtraPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    //this.criarRelogio()
+
   }
 
  
@@ -42,6 +42,8 @@ export class RegistroFinalHoraExtraPage implements OnInit {
   }
 
   criarRelogio() {
+    this.hora = moment().locale('pt-br').format('LTS')
+    this.data = moment().locale('pt-br').format('LL')
     setInterval(() => {
       this.hora = moment().locale('pt-br').format('LTS')
       this.data = moment().locale('pt-br').format('LL')
