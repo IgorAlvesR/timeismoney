@@ -38,9 +38,9 @@ export class RelatorioHoraExtraPage implements OnInit {
     this.horasExtrasSubscription = this.horaService.getHorasExtras().subscribe(dados => {
 
       dados.forEach(element => {
-        var horaFinal = element.horaFinal
-        var horaInicial = element.horaInicial
-        var ms = moment(horaFinal, "HH:mm:ss").diff(moment(horaInicial, "HH:mm:ss"));
+        var horaFinal = element.horaDataCalculoFinal
+        var horaInicial = element.horaDataCalculoInicio
+        var ms = moment(horaFinal, "DD/MM/YYYY HH:mm:ss").diff(moment(horaInicial, "DD/MM/YYYY HH:mm:ss"));
         var d = moment.duration(ms);
         var s = Math.floor(d.asHours()) + moment.utc(ms).format(":mm:ss");
         element.total = s

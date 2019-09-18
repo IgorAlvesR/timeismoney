@@ -28,9 +28,9 @@ export class RegistroHoraExtraPage implements OnInit {
     private alertController: AlertController,
     private angularFirestore: AngularFirestore,
     private route: Router
-  ) {}
+  ) { }
 
-   async criarRelógio() {
+  async criarRelógio() {
     this.hora = moment().locale('pt-br').format('LTS')
     this.data = moment().locale('pt-br').format('LL')
     await setInterval(() => {
@@ -40,20 +40,18 @@ export class RegistroHoraExtraPage implements OnInit {
   }
 
 
-  ionViewWillEnter(){
+  ionViewWillEnter() {
     this.criarRelógio()
   }
 
   ngOnInit() {
-    let result =  this.horaSevice.buscarHoraPendente()
+    let result = this.horaSevice.buscarHoraPendente()
     result.subscribe(doc => {
-      if(doc.length > 0){
-        document.getElementById('botao1').hidden = true
-        document.getElementById('texto').hidden = true
-      }else {
-        document.getElementById('botao2').hidden = true
-        document.getElementById('texto2').hidden = true
-      } 
+      if (doc.length > 0) {
+        document.getElementById('botao1').onclick = () => (this.presentAlert())
+      } else {
+        document.getElementById('botao1').onclick = () => this.registrarInicioHoraExtra()
+      }
     })
   }
 
@@ -88,17 +86,18 @@ export class RegistroHoraExtraPage implements OnInit {
     this.horaExtraInicio.dataInicial = moment().locale('pt-br').format('L')
     this.horaExtraInicio.cont = new Date().getTime()
     this.horaExtraInicio.diaSemana = moment().day()
-
+    this.horaExtraInicio.horaDataCalculoInicio = moment().locale('pt-br').format('DD/MM/YYYY HH:mm:ss')
+  
     try {
       if (this.horaExtraInicio.diaSemana != 6 && this.horaExtraInicio.diaSemana != 7) {
-        if (this.horaExtraInicio.horaCalculoInicial >= 12 || this.horaExtraInicio.horaCalculoInicial <= 13
-          && this.horaExtraInicio.minutoCalculoInicial <= 30 ||
-          this.horaExtraInicio.horaCalculoInicial >= 18) {
+        if (this.horaExtraInicio.horaCalculoInicial >= 8 && this.horaExtraInicio.horaCalculoInicial <= 12 
+          || this.horaExtraInicio.horaCalculoInicial == 13 && this.horaExtraInicio.minutoCalculoInicial > 30
+          || this.horaExtraInicio.horaCalculoInicial > 13 && this.horaExtraInicio.horaCalculoInicial < 18) {
+            await this.presentToast("Não é possível realizar hora extra no período normal!")
+            await this.carregando.dismiss()
+        } else {
           await this.horaSevice.registrarHoraExtra(this.horaExtraInicio)
           await this.navCtrl.navigateRoot('registro-final-hora-extra')
-          await this.carregando.dismiss()
-        } else {
-          await this.presentToast("Não é possível realizar hora extra no período normal!")
           await this.carregando.dismiss()
         }
       } else {

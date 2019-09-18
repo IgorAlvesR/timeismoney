@@ -13,7 +13,7 @@ import { Router } from '@angular/router'
   styleUrls: ['./registro-final-hora-extra.page.scss'],
 })
 export class RegistroFinalHoraExtraPage implements OnInit {
-
+  
 
   private horaExtraFinal: HoraExtra = {}
   private carregando: any
@@ -32,8 +32,9 @@ export class RegistroFinalHoraExtraPage implements OnInit {
   ) {}
 
   ngOnInit() {
-
+    
   }
+ 
 
  
 
@@ -64,6 +65,8 @@ export class RegistroFinalHoraExtraPage implements OnInit {
     this.horaExtraFinal.horaFinal = this.hora
     this.horaExtraFinal.userId = this.authService.getAuth().currentUser.uid
     this.horaExtraFinal.dataFinal = moment().locale('pt-br').format('L')
+    this.horaExtraFinal.horaDataCalculoFinal = moment().locale('pt-br').format('DD/MM/YYYY HH:mm:ss')
+
     try {
       if (this.horaExtraFinal.descricao == null || this.horaExtraFinal.descricao == '' || this.horaExtraFinal.localizacao == null || this.horaExtraFinal.localizacao == '') {
         this.presentToast("Preenha todos os campos!")

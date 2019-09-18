@@ -17,7 +17,6 @@ export class HoraExtraService {
   public horasExtras: Observable<HoraExtra[]>
   private horas: DocumentReference
 
-
   constructor(private afs: AngularFirestore, private authService: AutenticacaoService) {
     //cria uma referencia da coleção HoraExtraInicio e HoraExtraFinal
     let userId = authService.getAuth().currentUser.uid
