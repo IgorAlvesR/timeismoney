@@ -16,9 +16,7 @@ export class LoginGuard implements CanActivate {
     return new Promise(resolve => {
       this.servicoAutenticacao.getAuth().onAuthStateChanged(funcionario => {
         if (funcionario) {
-          this.navCtrl.navigateRoot('registro-hora-extra').then(()=>
-            window.location.reload()
-          )
+          window.location.replace('registro-hora-extra')
         }
         resolve(!funcionario ? true : false);
       });

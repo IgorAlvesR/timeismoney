@@ -58,7 +58,7 @@ var RelatorioHoraExtraPageModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\n  <ion-toolbar>\n    <div class=\"header-top\">\n      <ion-icon name=\"arrow-round-back\" button [routerLink]=\"['/registro-hora-extra']\"></ion-icon>\n      <p text-center>RELATÓRIO DE HORAS EXTRAS</p>\n    </div>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-grid>\n    <ion-row>\n      <ion-col>\n        <strong>Período/Data</strong>\n      </ion-col>\n      <ion-col class=\"ion-text-center\">\n        <strong>Total</strong>\n      </ion-col>\n      <ion-col size=\"1\">\n      </ion-col>\n    </ion-row>\n    <ion-row *ngFor='let h of horasExtras'>\n      <ion-col *ngIf='h.horaFinal == null'>\n        {{h.horaInicial}} - <span class=\"horaPendente\">Hora Pendente</span>\n      </ion-col>\n      <ion-col *ngIf='h.horaFinal != \"\"'>\n        {{h.horaInicial}} - {{h.horaFinal}} <br>\n        <span>{{h.dataInicial}}</span>\n      </ion-col>\n      <ion-col *ngIf='h.horaFinal == \"\"'>\n        {{h.horaInicial}} - <span class=\"horaPendente\">PENDENTE</span> <br>\n        <span>{{h.dataInicial}}</span>\n      </ion-col>\n      \n      <ion-col class=\"ion-text-center total\" *ngIf='h.horaFinal != \"\"'>\n        {{h.total}}\n      </ion-col>\n      <ion-col size=\"1\" *ngIf='h.horaFinal != \"\"'>\n        <ion-icon class=\"delete\" name='trash' (click)=\"deleteHoraExtra(h.id)\"></ion-icon>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n</ion-content>"
+module.exports = "<ion-header>\n  <ion-toolbar>\n    <div class=\"header-top\">\n      <ion-icon name=\"arrow-round-back\" button [routerLink]=\"['/registro-hora-extra']\"></ion-icon>\n      <p text-center>RELATÓRIO DE HORAS EXTRAS</p>\n    </div>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-grid>\n    <ion-row>\n      <ion-col>\n        <strong>Período/Data</strong>\n      </ion-col>\n      <ion-col class=\"ion-text-center\">\n        <strong>Total</strong>\n      </ion-col>\n      <ion-col size=\"1\">\n      </ion-col>\n    </ion-row>\n    <ion-row *ngFor='let h of horasExtras' >\n      <ion-col *ngIf='h.horaFinal == null'>\n        {{h.horaInicial}} - <span class=\"horaPendente\">Hora Pendente</span>\n      </ion-col>\n      <ion-col *ngIf='h.horaFinal != \"\"' (click)='mostrarDescricao(h.descricao)'>\n        {{h.horaInicial}} - {{h.horaFinal}} <br>\n        <span>{{h.dataInicial}}</span>\n      </ion-col>\n      <ion-col *ngIf='h.horaFinal == \"\"'>\n        {{h.horaInicial}} - <span class=\"horaPendente\">PENDENTE</span> <br>\n        <span>{{h.dataInicial}}</span>\n      </ion-col>\n      \n      <ion-col class=\"ion-text-center total\" *ngIf='h.horaFinal != \"\"'>\n        {{h.total}}\n      </ion-col>\n      <ion-col size=\"1\" *ngIf='h.horaFinal != \"\"'>\n        <ion-icon class=\"delete\" name='trash' (click)=\"deleteConfirm(h.id)\"></ion-icon>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n</ion-content>"
 
 /***/ }),
 
@@ -97,10 +97,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var RelatorioHoraExtraPage = /** @class */ (function () {
-    function RelatorioHoraExtraPage(authService, horaService, toastCtrl) {
+    function RelatorioHoraExtraPage(authService, horaService, toastCtrl, alertController) {
         this.authService = authService;
         this.horaService = horaService;
         this.toastCtrl = toastCtrl;
+        this.alertController = alertController;
         this.horasExtras = new Array();
     }
     RelatorioHoraExtraPage.prototype.ngOnInit = function () {
@@ -113,9 +114,9 @@ var RelatorioHoraExtraPage = /** @class */ (function () {
         var _this = this;
         this.horasExtrasSubscription = this.horaService.getHorasExtras().subscribe(function (dados) {
             dados.forEach(function (element) {
-                var horaFinal = element.horaFinal;
-                var horaInicial = element.horaInicial;
-                var ms = moment__WEBPACK_IMPORTED_MODULE_4__(horaFinal, "HH:mm:ss").diff(moment__WEBPACK_IMPORTED_MODULE_4__(horaInicial, "HH:mm:ss"));
+                var horaFinal = element.horaDataCalculoFinal;
+                var horaInicial = element.horaDataCalculoInicio;
+                var ms = moment__WEBPACK_IMPORTED_MODULE_4__(horaFinal, "DD/MM/YYYY HH:mm:ss").diff(moment__WEBPACK_IMPORTED_MODULE_4__(horaInicial, "DD/MM/YYYY HH:mm:ss"));
                 var d = moment__WEBPACK_IMPORTED_MODULE_4__["duration"](ms);
                 var s = Math.floor(d.asHours()) + moment__WEBPACK_IMPORTED_MODULE_4__["utc"](ms).format(":mm:ss");
                 element.total = s;
@@ -143,6 +144,54 @@ var RelatorioHoraExtraPage = /** @class */ (function () {
             });
         });
     };
+    RelatorioHoraExtraPage.prototype.deleteConfirm = function (id) {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var alert;
+            var _this = this;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.alertController.create({
+                            header: 'Você deseja realmente excluir esse registro?',
+                            buttons: [
+                                {
+                                    text: 'NÃO',
+                                }, {
+                                    text: 'SIM',
+                                    handler: function () {
+                                        _this.deleteHoraExtra(id);
+                                    }
+                                }
+                            ]
+                        })];
+                    case 1:
+                        alert = _a.sent();
+                        return [4 /*yield*/, alert.present()];
+                    case 2:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    RelatorioHoraExtraPage.prototype.mostrarDescricao = function (descricao) {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var alert;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.alertController.create({
+                            subHeader: 'Descrição',
+                            message: descricao
+                        })];
+                    case 1:
+                        alert = _a.sent();
+                        return [4 /*yield*/, alert.present()];
+                    case 2:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
     RelatorioHoraExtraPage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
             selector: 'app-relatorio-hora-extra',
@@ -151,7 +200,8 @@ var RelatorioHoraExtraPage = /** @class */ (function () {
         }),
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [src_app_servicos_autenticacao_service__WEBPACK_IMPORTED_MODULE_3__["AutenticacaoService"],
             src_app_servicos_hora_extra_service__WEBPACK_IMPORTED_MODULE_2__["HoraExtraService"],
-            _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["ToastController"]])
+            _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["ToastController"],
+            _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["AlertController"]])
     ], RelatorioHoraExtraPage);
     return RelatorioHoraExtraPage;
 }());

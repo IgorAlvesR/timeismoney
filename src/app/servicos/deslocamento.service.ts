@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestoreCollection, AngularFirestore, DocumentReference } from '@angular/fire/firestore';
 import { Deslocamento } from '../Models/deslocamento';
 import { AutenticacaoService } from './autenticacao.service';
 import { Observable } from 'rxjs';
+import { flatMap } from 'rxjs/operators';
+
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +14,7 @@ export class DeslocamentoService {
   private deslocamento: AngularFirestoreCollection<Deslocamento>
   public deslocamentos:  Observable<Deslocamento[]>
   private colecaoDeslocamento: AngularFirestoreCollection<Deslocamento>
+  private deslocamentoReference: DocumentReference
 
   constructor(private afs: AngularFirestore, private authService: AutenticacaoService) { 
     let userId = this.authService.getAuth().currentUser.uid
@@ -25,6 +28,14 @@ export class DeslocamentoService {
 
   getDeslocamentos() {
     return this.deslocamentos = this.colecaoDeslocamento.valueChanges()
+  }
+
+  deleteDeslocamento(id: string) {
+    let colection = this.afs.collection('Deslocamento', ref => (ref.where('id','==',id))).snapshotChanges().pipe(flatMap(deslocamento => deslocamento))
+    colection.subscribe(doc => {
+      this.deslocamentoReference = doc.payload.doc.ref
+      return this.deslocamentoReference.delete()
+    })
   }
 
 }

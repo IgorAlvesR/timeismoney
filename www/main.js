@@ -787,9 +787,7 @@ var LoginGuard = /** @class */ (function () {
         return new Promise(function (resolve) {
             _this.servicoAutenticacao.getAuth().onAuthStateChanged(function (funcionario) {
                 if (funcionario) {
-                    _this.navCtrl.navigateRoot('registro-hora-extra').then(function () {
-                        return window.location.reload();
-                    });
+                    window.location.replace('registro-hora-extra');
                 }
                 resolve(!funcionario ? true : false);
             });

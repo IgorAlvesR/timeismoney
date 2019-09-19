@@ -19,10 +19,7 @@
 
   <div>
       <ion-select  [interfaceOptions]="customAlertOptions" placeholder="Selecione a cidade..." [(ngModel)]="horaExtraFinal.localizacao">
-        <ion-select-option value="Tubarão">Tubarão</ion-select-option>
-        <ion-select-option value="Imbituba">Imbituba</ion-select-option>
-        <ion-select-option value="Orleans">Orleans</ion-select-option>
-        <ion-select-option value="Cricíuma">Cricíuma</ion-select-option>
+        <ion-select-option *ngFor='let cidade of cidades'  value="{{cidade.Nome}}">{{cidade.Nome}}</ion-select-option>
       </ion-select>
     <ion-textarea rows="6" cols="20" placeholder="Descrição..." [(ngModel)]="horaExtraFinal.descricao"></ion-textarea>
   </div>

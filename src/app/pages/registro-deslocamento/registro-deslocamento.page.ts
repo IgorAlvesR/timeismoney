@@ -9,6 +9,7 @@ import * as moment from 'moment'
 import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
 import { AutenticacaoService } from 'src/app/servicos/autenticacao.service';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 
 @Component({
@@ -23,9 +24,9 @@ export class RegistroDeslocamentoPage implements OnInit {
   private map: GoogleMap
   reserveGeocodingResults: string = ""
   private deslocamento: Deslocamento = {}
+  
 
   constructor(
-    private platform: Platform,
     private loadingCtrl: LoadingController,
     public nativeGeocoder: NativeGeocoder,
     public geolocation: Geolocation,
@@ -34,10 +35,12 @@ export class RegistroDeslocamentoPage implements OnInit {
     private navCtrl: NavController,
     private locationAccuracy: LocationAccuracy,
     private authService: AutenticacaoService,
-    private androidPermissions: AndroidPermissions
+    private androidPermissions: AndroidPermissions,
+    private angularFirestore: AngularFirestore
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.checkGPSPermission()
     this.mapElement = this.mapElement.nativeElement
     this.mapElement.style.width = '100%'
     this.mapElement.style.height = '50%'
@@ -61,6 +64,7 @@ export class RegistroDeslocamentoPage implements OnInit {
       var longitude = position.coords.longitude
       this.reverseGeocoding(latitude, longitude)
     })
+    this.deslocamento.id = this.angularFirestore.createId();
     this.deslocamento.data = moment().locale('pt-br').format('L')
     this.deslocamento.hora = moment().locale('pt-br').format('LTS')
     this.deslocamento.userId = this.authService.getAuth().currentUser.uid
@@ -84,7 +88,7 @@ export class RegistroDeslocamentoPage implements OnInit {
         zoom: false
       }
     }
-    await this.checkGPSPermission()
+    //await this.checkGPSPermission()
     this.map = await GoogleMaps.create(this.mapElement, mapOptions)
     await this.addOriginMarker()
     try {
@@ -122,12 +126,8 @@ export class RegistroDeslocamentoPage implements OnInit {
     this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION).then(
       result => {
         if (result.hasPermission) {
-
-          //If having permission show 'Turn On GPS' dialogue
           this.askToTurnOnGPS();
         } else {
-
-          //If not having permission ask for permission
           this.requestGPSPermission();
         }
       },
@@ -142,7 +142,6 @@ export class RegistroDeslocamentoPage implements OnInit {
       if (canRequest) {
         console.log("4");
       } else {
-        //Show 'GPS Permission Request' dialogue
         this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION)
           .then(
             () => {

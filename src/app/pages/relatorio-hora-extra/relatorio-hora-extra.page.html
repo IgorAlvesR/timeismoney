@@ -19,11 +19,11 @@
       <ion-col size="1">
       </ion-col>
     </ion-row>
-    <ion-row *ngFor='let h of horasExtras'>
+    <ion-row *ngFor='let h of horasExtras' >
       <ion-col *ngIf='h.horaFinal == null'>
         {{h.horaInicial}} - <span class="horaPendente">Hora Pendente</span>
       </ion-col>
-      <ion-col *ngIf='h.horaFinal != ""'>
+      <ion-col *ngIf='h.horaFinal != ""' (click)='mostrarDescricaoCidade(h.descricao,h.localizacao)'>
         {{h.horaInicial}} - {{h.horaFinal}} <br>
         <span>{{h.dataInicial}}</span>
       </ion-col>
@@ -36,7 +36,7 @@
         {{h.total}}
       </ion-col>
       <ion-col size="1" *ngIf='h.horaFinal != ""'>
-        <ion-icon class="delete" name='trash' (click)="deleteHoraExtra(h.id)"></ion-icon>
+        <ion-icon class="delete" name='trash' (click)="deleteConfirm(h.id)"></ion-icon>
       </ion-col>
     </ion-row>
   </ion-grid>

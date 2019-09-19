@@ -6,6 +6,8 @@ import { LoadingController, ToastController, NavController } from '@ionic/angula
 import { HoraExtra } from 'src/app/Models/hora-extra'
 import { Keyboard } from '@ionic-native/keyboard/ngx'
 import { Router } from '@angular/router'
+import { Cidade } from 'src/app/Models/cidade'
+import { Subscription } from 'rxjs/internal/Subscription'
 
 @Component({
   selector: 'app-registro-final-hora-extra',
@@ -14,12 +16,13 @@ import { Router } from '@angular/router'
 })
 export class RegistroFinalHoraExtraPage implements OnInit {
   
-
   private horaExtraFinal: HoraExtra = {}
+  public cidades = new Array<Cidade>()
   private carregando: any
   public dados: any
   private hora: any
   private data: any
+  private deslocamentoSubscription: Subscription
 
   constructor(
     private authService: AutenticacaoService,
@@ -32,12 +35,9 @@ export class RegistroFinalHoraExtraPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    
+    this.buscarCidades()
   }
- 
-
- 
-
+  
   customAlertOptions: any = {
     header: 'Selecione a Cidade'
   }
@@ -74,8 +74,7 @@ export class RegistroFinalHoraExtraPage implements OnInit {
       } else {
         await this.horaSevice.update(this.horaExtraFinal)
         await this.carregando.dismiss()
-        await this.navCtrl.navigateRoot('registro-hora-extra')
-        window.location.reload()
+        await window.location.replace('registro-hora-extra')
       }
     } catch (error) {
       this.presentToast(error)
@@ -93,6 +92,11 @@ export class RegistroFinalHoraExtraPage implements OnInit {
     toast.present()
   }
 
+  buscarCidades(){
+    this.deslocamentoSubscription = this.horaSevice.buscarCidades().subscribe(result => {
+       return this.cidades = result
+    })
+  }
 
 }
 

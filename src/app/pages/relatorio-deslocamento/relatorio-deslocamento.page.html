@@ -18,12 +18,15 @@
       </ion-col>
     </ion-row>
     <ion-row *ngFor='let d of deslocamentos'>
-      <ion-col class="dados">
+      <ion-col class="dados" (click)='mostrarHora(d.hora)'>
         {{d.descricao}}<br>
         <span>{{d.data}}</span>
       </ion-col>
       <ion-col class="ion-text-center dados">
         {{d.localizacao}}
+      </ion-col>
+      <ion-col size="1">
+        <ion-icon class="delete" name='trash' (click)="deleteConfirm(d.id)"></ion-icon>
       </ion-col>
     </ion-row>
   </ion-grid>

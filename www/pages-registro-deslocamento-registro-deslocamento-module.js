@@ -95,6 +95,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ionic_native_location_accuracy_ngx__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @ionic-native/location-accuracy/ngx */ "./node_modules/@ionic-native/location-accuracy/ngx/index.js");
 /* harmony import */ var src_app_servicos_autenticacao_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! src/app/servicos/autenticacao.service */ "./src/app/servicos/autenticacao.service.ts");
 /* harmony import */ var _ionic_native_android_permissions_ngx__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @ionic-native/android-permissions/ngx */ "./node_modules/@ionic-native/android-permissions/ngx/index.js");
+/* harmony import */ var _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/fire/firestore */ "./node_modules/@angular/fire/firestore/index.js");
+
 
 
 
@@ -107,8 +109,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var RegistroDeslocamentoPage = /** @class */ (function () {
-    function RegistroDeslocamentoPage(platform, loadingCtrl, nativeGeocoder, geolocation, deslocamentoService, toastCtrl, navCtrl, locationAccuracy, authService, androidPermissions) {
-        this.platform = platform;
+    function RegistroDeslocamentoPage(loadingCtrl, nativeGeocoder, geolocation, deslocamentoService, toastCtrl, navCtrl, locationAccuracy, authService, androidPermissions, angularFirestore) {
         this.loadingCtrl = loadingCtrl;
         this.nativeGeocoder = nativeGeocoder;
         this.geolocation = geolocation;
@@ -118,14 +119,25 @@ var RegistroDeslocamentoPage = /** @class */ (function () {
         this.locationAccuracy = locationAccuracy;
         this.authService = authService;
         this.androidPermissions = androidPermissions;
+        this.angularFirestore = angularFirestore;
         this.reserveGeocodingResults = "";
         this.deslocamento = {};
     }
     RegistroDeslocamentoPage.prototype.ngOnInit = function () {
-        this.mapElement = this.mapElement.nativeElement;
-        this.mapElement.style.width = '100%';
-        this.mapElement.style.height = '50%';
-        this.loadMap();
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.checkGPSPermission()];
+                    case 1:
+                        _a.sent();
+                        this.mapElement = this.mapElement.nativeElement;
+                        this.mapElement.style.width = '100%';
+                        this.mapElement.style.height = '50%';
+                        this.loadMap();
+                        return [2 /*return*/];
+                }
+            });
+        });
     };
     RegistroDeslocamentoPage.prototype.reverseGeocoding = function (latitude, longitude) {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
@@ -168,6 +180,7 @@ var RegistroDeslocamentoPage = /** @class */ (function () {
                             })];
                     case 3:
                         _b.sent();
+                        this.deslocamento.id = this.angularFirestore.createId();
                         this.deslocamento.data = moment__WEBPACK_IMPORTED_MODULE_7__().locale('pt-br').format('L');
                         this.deslocamento.hora = moment__WEBPACK_IMPORTED_MODULE_7__().locale('pt-br').format('LTS');
                         this.deslocamento.userId = this.authService.getAuth().currentUser.uid;
@@ -211,31 +224,30 @@ var RegistroDeslocamentoPage = /** @class */ (function () {
                                 zoom: false
                             }
                         };
-                        return [4 /*yield*/, this.checkGPSPermission()];
-                    case 3:
-                        _c.sent();
+                        //await this.checkGPSPermission()
                         _b = this;
                         return [4 /*yield*/, _ionic_native_google_maps__WEBPACK_IMPORTED_MODULE_3__["GoogleMaps"].create(this.mapElement, mapOptions)];
-                    case 4:
+                    case 3:
+                        //await this.checkGPSPermission()
                         _b.map = _c.sent();
                         return [4 /*yield*/, this.addOriginMarker()];
-                    case 5:
+                    case 4:
                         _c.sent();
-                        _c.label = 6;
-                    case 6:
-                        _c.trys.push([6, 9, , 10]);
+                        _c.label = 5;
+                    case 5:
+                        _c.trys.push([5, 8, , 9]);
                         return [4 /*yield*/, this.map.one(_ionic_native_google_maps__WEBPACK_IMPORTED_MODULE_3__["GoogleMapsEvent"].MAP_READY)];
-                    case 7:
+                    case 6:
                         _c.sent();
                         return [4 /*yield*/, this.addOriginMarker()];
-                    case 8:
+                    case 7:
                         _c.sent();
-                        return [3 /*break*/, 10];
-                    case 9:
+                        return [3 /*break*/, 9];
+                    case 8:
                         error_2 = _c.sent();
                         console.error(error_2);
-                        return [3 /*break*/, 10];
-                    case 10: return [2 /*return*/];
+                        return [3 /*break*/, 9];
+                    case 9: return [2 /*return*/];
                 }
             });
         });
@@ -279,11 +291,9 @@ var RegistroDeslocamentoPage = /** @class */ (function () {
         var _this = this;
         this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION).then(function (result) {
             if (result.hasPermission) {
-                //If having permission show 'Turn On GPS' dialogue
                 _this.askToTurnOnGPS();
             }
             else {
-                //If not having permission ask for permission
                 _this.requestGPSPermission();
             }
         }, function (err) {
@@ -297,7 +307,6 @@ var RegistroDeslocamentoPage = /** @class */ (function () {
                 console.log("4");
             }
             else {
-                //Show 'GPS Permission Request' dialogue
                 _this.androidPermissions.requestPermission(_this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION)
                     .then(function () {
                     _this.askToTurnOnGPS();
@@ -318,8 +327,7 @@ var RegistroDeslocamentoPage = /** @class */ (function () {
             template: __webpack_require__(/*! ./registro-deslocamento.page.html */ "./src/app/pages/registro-deslocamento/registro-deslocamento.page.html"),
             styles: [__webpack_require__(/*! ./registro-deslocamento.page.scss */ "./src/app/pages/registro-deslocamento/registro-deslocamento.page.scss")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_2__["Platform"],
-            _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["LoadingController"],
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_2__["LoadingController"],
             _ionic_native_native_geocoder_ngx__WEBPACK_IMPORTED_MODULE_4__["NativeGeocoder"],
             _ionic_native_geolocation_ngx__WEBPACK_IMPORTED_MODULE_5__["Geolocation"],
             src_app_servicos_deslocamento_service__WEBPACK_IMPORTED_MODULE_6__["DeslocamentoService"],
@@ -327,7 +335,8 @@ var RegistroDeslocamentoPage = /** @class */ (function () {
             _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["NavController"],
             _ionic_native_location_accuracy_ngx__WEBPACK_IMPORTED_MODULE_8__["LocationAccuracy"],
             src_app_servicos_autenticacao_service__WEBPACK_IMPORTED_MODULE_9__["AutenticacaoService"],
-            _ionic_native_android_permissions_ngx__WEBPACK_IMPORTED_MODULE_10__["AndroidPermissions"]])
+            _ionic_native_android_permissions_ngx__WEBPACK_IMPORTED_MODULE_10__["AndroidPermissions"],
+            _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_11__["AngularFirestore"]])
     ], RegistroDeslocamentoPage);
     return RegistroDeslocamentoPage;
 }());

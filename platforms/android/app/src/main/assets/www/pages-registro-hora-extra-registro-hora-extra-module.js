@@ -58,7 +58,7 @@ var RegistroHoraExtraPageModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\n  <ion-toolbar>\n    <p class=\"ion-text-center\">REGISTRO INÍCIO <span (click)='logout()'>SAIR</span></p>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content class=\"ion-padding\">\n\n\n  <div class=\"ion-padding horaData\">\n    <h1 class=\"horaData\">{{this.hora}}</h1>\n    <h5 class=\"horaData\">{{this.data}}</h5>\n  </div>\n\n\n  <div class=\"ion-text-center ion-padding \">\n    <img class=\"logoRegistro\" src=\"../../../assets/imagens/logoRegistroHora.svg\">\n  </div>\n\n  <div  class=\"ion-text-center ion-padding digitalHora\">\n    <img id='botao1' src=\"../../../assets/imagens/digitalRegistro.svg\" (click)=\"registrarInicioHoraExtra()\">\n    <img id='botao2' src=\"../../../assets/imagens/digitalRegistro.svg\" [routerLink]=\"['/registro-final-hora-extra']\" >\n    <p id='texto' class=\"finalizarHora\"><strong>Toque para iniciar hora extra</strong></p>\n    <p id='texto2' class=\"finalizarHora\"><strong>Hora Extra pendente, clique para finalizar</strong></p>\n  </div>\n\n</ion-content>\n\n\n<ion-toolbar class=\"footer\">\n  <div class=\"menu\">\n    <ion-icon name=\"clock\" [routerLink]=\"['/relatorio-hora-extra']\"></ion-icon>\n    <ion-icon name=\"paper\"  [routerLink]=\"['/relatorio-deslocamento']\"></ion-icon>\n    <ion-icon name=\"navigate\" [routerLink]=\"['/registro-deslocamento']\" ></ion-icon>\n  </div>\n</ion-toolbar>\n"
+module.exports = "<ion-header>\n  <ion-toolbar>\n    <p class=\"ion-text-center\">REGISTRO INÍCIO <span (click)='logout()'>SAIR</span></p>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content class=\"ion-padding\">\n\n\n  <div class=\"ion-padding horaData\">\n    <h1 class=\"horaData\">{{this.hora}}</h1>\n    <h5 class=\"horaData\">{{this.data}}</h5>\n  </div>\n\n\n  <div class=\"ion-text-center ion-padding \">\n    <img class=\"logoRegistro\" src=\"../../../assets/imagens/logoRegistroHora.svg\">\n  </div>\n\n  <div  class=\"ion-text-center ion-padding digitalHora\">\n    <img id='botao1' src=\"../../../assets/imagens/digitalRegistro.svg\">\n    <p id='texto' class=\"finalizarHora\"><strong>Toque para iniciar hora extra</strong></p>\n  </div>\n\n</ion-content>\n\n\n<ion-toolbar class=\"footer\">\n  <div class=\"menu\">\n    <ion-icon name=\"clock\" [routerLink]=\"['/relatorio-hora-extra']\"></ion-icon>\n    <ion-icon name=\"paper\"  [routerLink]=\"['/relatorio-deslocamento']\"></ion-icon>\n    <ion-icon name=\"navigate\" [routerLink]=\"['/registro-deslocamento']\" ></ion-icon>\n  </div>\n</ion-toolbar>\n"
 
 /***/ }),
 
@@ -135,15 +135,14 @@ var RegistroHoraExtraPage = /** @class */ (function () {
         this.criarRelógio();
     };
     RegistroHoraExtraPage.prototype.ngOnInit = function () {
+        var _this = this;
         var result = this.horaSevice.buscarHoraPendente();
         result.subscribe(function (doc) {
             if (doc.length > 0) {
-                document.getElementById('botao1').hidden = true;
-                document.getElementById('texto').hidden = true;
+                document.getElementById('botao1').onclick = function () { return (_this.presentAlert()); };
             }
             else {
-                document.getElementById('botao2').hidden = true;
-                document.getElementById('texto2').hidden = true;
+                document.getElementById('botao1').onclick = function () { return _this.registrarInicioHoraExtra(); };
             }
         });
     };
@@ -196,24 +195,25 @@ var RegistroHoraExtraPage = /** @class */ (function () {
                         this.horaExtraInicio.dataInicial = moment__WEBPACK_IMPORTED_MODULE_2__().locale('pt-br').format('L');
                         this.horaExtraInicio.cont = new Date().getTime();
                         this.horaExtraInicio.diaSemana = moment__WEBPACK_IMPORTED_MODULE_2__().day();
+                        this.horaExtraInicio.horaDataCalculoInicio = moment__WEBPACK_IMPORTED_MODULE_2__().locale('pt-br').format('DD/MM/YYYY HH:mm:ss');
                         _a.label = 2;
                     case 2:
                         _a.trys.push([2, 15, , 16]);
                         if (!(this.horaExtraInicio.diaSemana != 6 && this.horaExtraInicio.diaSemana != 7)) return [3 /*break*/, 10];
-                        if (!(this.horaExtraInicio.horaCalculoInicial >= 12 || this.horaExtraInicio.horaCalculoInicial <= 13
-                            && this.horaExtraInicio.minutoCalculoInicial <= 30 ||
-                            this.horaExtraInicio.horaCalculoInicial >= 18)) return [3 /*break*/, 6];
-                        return [4 /*yield*/, this.horaSevice.registrarHoraExtra(this.horaExtraInicio)];
+                        if (!(this.horaExtraInicio.horaCalculoInicial >= 8 && this.horaExtraInicio.horaCalculoInicial <= 12
+                            || this.horaExtraInicio.horaCalculoInicial == 13 && this.horaExtraInicio.minutoCalculoInicial > 30
+                            || this.horaExtraInicio.horaCalculoInicial > 13 && this.horaExtraInicio.horaCalculoInicial < 18)) return [3 /*break*/, 5];
+                        return [4 /*yield*/, this.presentToast("Não é possível realizar hora extra no período normal!")];
                     case 3:
                         _a.sent();
-                        return [4 /*yield*/, this.navCtrl.navigateRoot('registro-final-hora-extra')];
+                        return [4 /*yield*/, this.carregando.dismiss()];
                     case 4:
                         _a.sent();
-                        return [4 /*yield*/, this.carregando.dismiss()];
-                    case 5:
-                        _a.sent();
                         return [3 /*break*/, 9];
-                    case 6: return [4 /*yield*/, this.presentToast("Não é possível realizar hora extra no período normal!")];
+                    case 5: return [4 /*yield*/, this.horaSevice.registrarHoraExtra(this.horaExtraInicio)];
+                    case 6:
+                        _a.sent();
+                        return [4 /*yield*/, this.navCtrl.navigateRoot('registro-final-hora-extra')];
                     case 7:
                         _a.sent();
                         return [4 /*yield*/, this.carregando.dismiss()];

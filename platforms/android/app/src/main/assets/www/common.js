@@ -391,6 +391,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/fire/firestore */ "./node_modules/@angular/fire/firestore/index.js");
 /* harmony import */ var _autenticacao_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./autenticacao.service */ "./src/app/servicos/autenticacao.service.ts");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
 
 
 
@@ -408,6 +410,14 @@ var DeslocamentoService = /** @class */ (function () {
     };
     DeslocamentoService.prototype.getDeslocamentos = function () {
         return this.deslocamentos = this.colecaoDeslocamento.valueChanges();
+    };
+    DeslocamentoService.prototype.deleteDeslocamento = function (id) {
+        var _this = this;
+        var colection = this.afs.collection('Deslocamento', function (ref) { return (ref.where('id', '==', id)); }).snapshotChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (deslocamento) { return deslocamento; }));
+        colection.subscribe(function (doc) {
+            _this.deslocamentoReference = doc.payload.doc.ref;
+            return _this.deslocamentoReference.delete();
+        });
     };
     DeslocamentoService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({

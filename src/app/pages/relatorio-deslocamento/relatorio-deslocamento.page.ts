@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DeslocamentoService } from 'src/app/servicos/deslocamento.service';
 import { Deslocamento } from 'src/app/Models/deslocamento';
 import { Subscription } from 'rxjs';
+import { ToastController, AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-relatorio-deslocamento',
@@ -12,8 +13,9 @@ export class RelatorioDeslocamentoPage implements OnInit {
 
   public deslocamentos = new Array<Deslocamento>()
   private deslocamentoSubscription: Subscription
-
-  constructor(private deslocamentoService: DeslocamentoService) 
+  private toastCtrl: ToastController
+  
+  constructor(private deslocamentoService: DeslocamentoService, private alertController: AlertController) 
   {
     this.deslocamentoService.getDeslocamentos()
   }
@@ -33,4 +35,35 @@ export class RelatorioDeslocamentoPage implements OnInit {
     })
   }
 
+  async deleteDeslocamento(id: string) {
+    try {
+      await this.deslocamentoService.deleteDeslocamento(id);
+    } catch (error) {
+      this.toastCtrl.create({message:'Erro ao tentar excluir deslocamento'});
+    }
+  }
+
+  async deleteConfirm(id: string){
+    const alert = await this.alertController.create({
+      header: 'Você deseja realmente excluir esse registro?',
+      buttons: [
+        {
+          text: 'NÃO',
+        }, {
+          text: 'SIM',
+          handler: () => {
+            this.deleteDeslocamento(id)
+          }
+        }
+      ]
+    })
+    await alert.present()
+  }
+
+  async mostrarHora(hora: string){
+    const alert = await this.alertController.create({
+      subHeader: "Horário do registro: "+hora,
+    })
+    await alert.present()
+  }
 }

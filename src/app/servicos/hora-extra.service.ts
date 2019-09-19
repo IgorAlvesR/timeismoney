@@ -3,7 +3,9 @@ import { AngularFirestore, AngularFirestoreCollection, DocumentReference } from 
 import { Observable, Subscription } from 'rxjs';
 import { AutenticacaoService } from './autenticacao.service';
 import { HoraExtra } from '../Models/hora-extra';
-import { map, flatMap } from 'rxjs/operators';
+import { flatMap } from 'rxjs/operators';
+import { Cidade } from '../Models/cidade';
+import { Deslocamento } from '../Models/deslocamento';
 
 
 
@@ -13,13 +15,16 @@ import { map, flatMap } from 'rxjs/operators';
 export class HoraExtraService {
 
   private colecaoHoraExtra: AngularFirestoreCollection<HoraExtra>
+  private colecaoCidades: AngularFirestoreCollection<Cidade>
   private colecaoHoraExtraRegistro: AngularFirestoreCollection<HoraExtra>
   public horasExtras: Observable<HoraExtra[]>
   private horas: DocumentReference
+  public cidades: Observable<Cidade[]>
 
   constructor(private afs: AngularFirestore, private authService: AutenticacaoService) {
     //cria uma referencia da coleção HoraExtraInicio e HoraExtraFinal
     let userId = authService.getAuth().currentUser.uid
+    this.colecaoCidades = this.afs.collection('Cidades')
     this.colecaoHoraExtraRegistro = this.afs.collection<HoraExtra>('HoraExtra')
     this.colecaoHoraExtra = this.afs.collection('HoraExtra', ref => ref.where('userId', '==', userId))
   }
@@ -58,6 +63,10 @@ export class HoraExtraService {
       this.horas = doc.payload.doc.ref
       return this.horas.delete()
     })
+  }
+  
+  buscarCidades(){
+    return this.cidades = this.colecaoCidades.valueChanges()
   }
 
  

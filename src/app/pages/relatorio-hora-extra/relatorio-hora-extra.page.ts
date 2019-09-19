@@ -4,8 +4,7 @@ import { HoraExtra } from 'src/app/Models/hora-extra'
 import { AutenticacaoService } from 'src/app/servicos/autenticacao.service'
 import { Subscription } from 'rxjs'
 import * as moment from 'moment'
-import { elementEnd } from '@angular/core/src/render3'
-import { ToastController } from '@ionic/angular'
+import { ToastController, AlertController } from '@ionic/angular'
 
 @Component({
   selector: 'app-relatorio-hora-extra',
@@ -17,14 +16,12 @@ export class RelatorioHoraExtraPage implements OnInit {
   public horasExtras = new Array<HoraExtra>()
   private horasExtrasSubscription: Subscription
 
-
   constructor(
     private authService: AutenticacaoService,
     private horaService: HoraExtraService,
-    private toastCtrl: ToastController
-  ) {
-
-  }
+    private toastCtrl: ToastController,
+    private alertController: AlertController
+  ) {}
 
   ngOnInit() {
     this.getHoras()
@@ -36,7 +33,6 @@ export class RelatorioHoraExtraPage implements OnInit {
 
   getHoras() {
     this.horasExtrasSubscription = this.horaService.getHorasExtras().subscribe(dados => {
-
       dados.forEach(element => {
         var horaFinal = element.horaDataCalculoFinal
         var horaInicial = element.horaDataCalculoInicio
@@ -55,6 +51,31 @@ export class RelatorioHoraExtraPage implements OnInit {
     } catch (error) {
       this.toastCtrl.create({message:'Erro ao tentar excluir hora extra'});
     }
+  }
+
+  async deleteConfirm(id: string){
+    const alert = await this.alertController.create({
+      header: 'Você deseja realmente excluir esse registro?',
+      buttons: [
+        {
+          text: 'NÃO',
+        }, {
+          text: 'SIM',
+          handler: () => {
+            this.deleteHoraExtra(id)
+          }
+        }
+      ]
+    })
+    await alert.present()
+  }
+
+  async mostrarDescricaoCidade(descricao: string, cidade: string){
+    const alert = await this.alertController.create({
+      subHeader: cidade,
+      message: descricao
+    })
+    await alert.present()
   }
 }
 
