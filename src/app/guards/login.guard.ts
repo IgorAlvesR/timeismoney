@@ -1,18 +1,26 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 import { AutenticacaoService } from '../servicos/autenticacao.service';
-import { NavController } from '@ionic/angular';
+import { Network } from '@ionic-native/network/ngx';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginGuard implements CanActivate {
+  private disconnectSubscription
+  private connectSubscription
   constructor(
     private servicoAutenticacao: AutenticacaoService,
-    private navCtrl: NavController
+    private network: Network
   ) { }
 
+
+
+
   canActivate(): Promise<boolean> {
+    this.network.onDisconnect().subscribe(()=> {
+      this.servicoAutenticacao.logout()
+    })
     return new Promise(resolve => {
       this.servicoAutenticacao.getAuth().onAuthStateChanged(funcionario => {
         if (funcionario) {
@@ -20,7 +28,6 @@ export class LoginGuard implements CanActivate {
         }
         resolve(!funcionario ? true : false);
       });
-    });
-
+    })
   }
 }

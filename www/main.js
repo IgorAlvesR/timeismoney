@@ -586,21 +586,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
 /* harmony import */ var _ionic_native_splash_screen_ngx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ionic-native/splash-screen/ngx */ "./node_modules/@ionic-native/splash-screen/ngx/index.js");
 /* harmony import */ var _ionic_native_status_bar_ngx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic-native/status-bar/ngx */ "./node_modules/@ionic-native/status-bar/ngx/index.js");
+/* harmony import */ var _servicos_internet_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./servicos/internet.service */ "./src/app/servicos/internet.service.ts");
+
 
 
 
 
 
 var AppComponent = /** @class */ (function () {
-    function AppComponent(platform, splashScreen, statusBar) {
+    function AppComponent(platform, splashScreen, statusBar, networkService) {
         this.platform = platform;
         this.splashScreen = splashScreen;
         this.statusBar = statusBar;
+        this.networkService = networkService;
         this.initializeApp();
     }
     AppComponent.prototype.initializeApp = function () {
         var _this = this;
         this.platform.ready().then(function () {
+            _this.networkService.verificaConexao();
             _this.statusBar.styleDefault();
             _this.splashScreen.hide();
         });
@@ -612,7 +616,8 @@ var AppComponent = /** @class */ (function () {
         }),
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_2__["Platform"],
             _ionic_native_splash_screen_ngx__WEBPACK_IMPORTED_MODULE_3__["SplashScreen"],
-            _ionic_native_status_bar_ngx__WEBPACK_IMPORTED_MODULE_4__["StatusBar"]])
+            _ionic_native_status_bar_ngx__WEBPACK_IMPORTED_MODULE_4__["StatusBar"],
+            _servicos_internet_service__WEBPACK_IMPORTED_MODULE_5__["InternetService"]])
     ], AppComponent);
     return AppComponent;
 }());
@@ -652,6 +657,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ionic_native_geolocation_ngx__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @ionic-native/geolocation/ngx */ "./node_modules/@ionic-native/geolocation/ngx/index.js");
 /* harmony import */ var _ionic_native_android_permissions_ngx__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @ionic-native/android-permissions/ngx */ "./node_modules/@ionic-native/android-permissions/ngx/index.js");
 /* harmony import */ var _ionic_native_location_accuracy_ngx__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @ionic-native/location-accuracy/ngx */ "./node_modules/@ionic-native/location-accuracy/ngx/index.js");
+/* harmony import */ var _ionic_native_network_ngx__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @ionic-native/network/ngx */ "./node_modules/@ionic-native/network/ngx/index.js");
+
 
 
 
@@ -699,7 +706,8 @@ var AppModule = /** @class */ (function () {
                 _ionic_native_native_geocoder_ngx__WEBPACK_IMPORTED_MODULE_17__["NativeGeocoder"],
                 _ionic_native_geolocation_ngx__WEBPACK_IMPORTED_MODULE_18__["Geolocation"],
                 _ionic_native_location_accuracy_ngx__WEBPACK_IMPORTED_MODULE_20__["LocationAccuracy"],
-                _ionic_native_android_permissions_ngx__WEBPACK_IMPORTED_MODULE_19__["AndroidPermissions"]
+                _ionic_native_android_permissions_ngx__WEBPACK_IMPORTED_MODULE_19__["AndroidPermissions"],
+                _ionic_native_network_ngx__WEBPACK_IMPORTED_MODULE_21__["Network"]
             ],
             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_7__["AppComponent"]]
         })
@@ -772,18 +780,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _servicos_autenticacao_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../servicos/autenticacao.service */ "./src/app/servicos/autenticacao.service.ts");
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
+/* harmony import */ var _ionic_native_network_ngx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ionic-native/network/ngx */ "./node_modules/@ionic-native/network/ngx/index.js");
 
 
 
 
 var LoginGuard = /** @class */ (function () {
-    function LoginGuard(servicoAutenticacao, navCtrl) {
+    function LoginGuard(servicoAutenticacao, network) {
         this.servicoAutenticacao = servicoAutenticacao;
-        this.navCtrl = navCtrl;
+        this.network = network;
     }
     LoginGuard.prototype.canActivate = function () {
         var _this = this;
+        this.network.onDisconnect().subscribe(function () {
+            _this.servicoAutenticacao.logout();
+        });
         return new Promise(function (resolve) {
             _this.servicoAutenticacao.getAuth().onAuthStateChanged(function (funcionario) {
                 if (funcionario) {
@@ -798,7 +809,7 @@ var LoginGuard = /** @class */ (function () {
             providedIn: 'root'
         }),
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_servicos_autenticacao_service__WEBPACK_IMPORTED_MODULE_2__["AutenticacaoService"],
-            _ionic_angular__WEBPACK_IMPORTED_MODULE_3__["NavController"]])
+            _ionic_native_network_ngx__WEBPACK_IMPORTED_MODULE_3__["Network"]])
     ], LoginGuard);
     return LoginGuard;
 }());
@@ -834,9 +845,11 @@ var AutenticacaoService = /** @class */ (function () {
     AutenticacaoService.prototype.login = function (funcionario) {
         return this.afa.auth.signInWithEmailAndPassword(funcionario.email, funcionario.senha);
     };
-    AutenticacaoService.prototype.registrarUsuarioFuncionario = function (funcionario) {
-        this.colecaoFuncionario.add(funcionario);
+    AutenticacaoService.prototype.registrarUsuario = function (funcionario) {
         return this.afa.auth.createUserWithEmailAndPassword(funcionario.email, funcionario.senha);
+    };
+    AutenticacaoService.prototype.registrarFuncionario = function (funcionario) {
+        return this.colecaoFuncionario.add(funcionario);
     };
     AutenticacaoService.prototype.logout = function () {
         return this.afa.auth.signOut();
@@ -877,12 +890,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 var HoraExtraService = /** @class */ (function () {
     function HoraExtraService(afs, authService) {
         this.afs = afs;
         this.authService = authService;
         //cria uma referencia da coleção HoraExtraInicio e HoraExtraFinal
         var userId = authService.getAuth().currentUser.uid;
+        this.colecaoCidades = this.afs.collection('Cidades');
         this.colecaoHoraExtraRegistro = this.afs.collection('HoraExtra');
         this.colecaoHoraExtra = this.afs.collection('HoraExtra', function (ref) { return ref.where('userId', '==', userId); });
     }
@@ -894,13 +909,16 @@ var HoraExtraService = /** @class */ (function () {
     };
     HoraExtraService.prototype.update = function (horaExtra) {
         var _this = this;
-        var horasOb;
         var userId = this.authService.getAuth().currentUser.uid;
         var query = this.afs.collection('HoraExtra', function (ref) { return (ref.where('userId', '==', userId).limit(1).orderBy('cont', 'desc')); })
             .snapshotChanges()
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (horasOb) { return horasOb; }));
-        query.subscribe(function (doc) {
-            _this.horas = doc.payload.doc.ref;
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (actions) {
+            actions.map(function (a) {
+                _this.horas = a.payload.doc.ref;
+                _this.horas.update(horaExtra);
+            });
+        }));
+        query.subscribe(function () {
             return _this.horas.update(horaExtra);
         });
     };
@@ -910,12 +928,14 @@ var HoraExtraService = /** @class */ (function () {
     };
     HoraExtraService.prototype.deleteHoraExtra = function (id) {
         var _this = this;
-        var horasOb;
         var colection = this.afs.collection('HoraExtra', function (ref) { return (ref.where('id', '==', id)); }).snapshotChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (horasOb) { return horasOb; }));
         colection.subscribe(function (doc) {
             _this.horas = doc.payload.doc.ref;
             return _this.horas.delete();
         });
+    };
+    HoraExtraService.prototype.buscarCidades = function () {
+        return this.cidades = this.colecaoCidades.valueChanges();
     };
     HoraExtraService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
@@ -924,6 +944,72 @@ var HoraExtraService = /** @class */ (function () {
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_fire_firestore__WEBPACK_IMPORTED_MODULE_2__["AngularFirestore"], _autenticacao_service__WEBPACK_IMPORTED_MODULE_3__["AutenticacaoService"]])
     ], HoraExtraService);
     return HoraExtraService;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/servicos/internet.service.ts":
+/*!**********************************************!*\
+  !*** ./src/app/servicos/internet.service.ts ***!
+  \**********************************************/
+/*! exports provided: InternetService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InternetService", function() { return InternetService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
+/* harmony import */ var _autenticacao_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./autenticacao.service */ "./src/app/servicos/autenticacao.service.ts");
+/* harmony import */ var _capacitor_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @capacitor/core */ "./node_modules/@capacitor/core/dist/esm/index.js");
+
+
+
+
+
+var Network = _capacitor_core__WEBPACK_IMPORTED_MODULE_4__["Plugins"].Network;
+var InternetService = /** @class */ (function () {
+    function InternetService(toastCtrl, authService) {
+        this.toastCtrl = toastCtrl;
+        this.authService = authService;
+    }
+    InternetService.prototype.verificaConexao = function () {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var _a;
+            var _this = this;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        this.networdListener = Network.addListener('networkStatusChange', function (status) {
+                            _this.networkStatus = status;
+                        });
+                        _a = this;
+                        return [4 /*yield*/, Network.getStatus()];
+                    case 1:
+                        _a.networkStatus = _b.sent();
+                        if (!(this.networkStatus.connected == false)) return [3 /*break*/, 4];
+                        return [4 /*yield*/, this.toastCtrl.create({ message: 'Você está sem conexao com a Internet', duration: 3000 })];
+                    case 2:
+                        _b.sent();
+                        return [4 /*yield*/, this.authService.logout()];
+                    case 3:
+                        _b.sent();
+                        _b.label = 4;
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    InternetService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+            providedIn: 'root'
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_2__["ToastController"], _autenticacao_service__WEBPACK_IMPORTED_MODULE_3__["AutenticacaoService"]])
+    ], InternetService);
+    return InternetService;
 }());
 
 

@@ -19,9 +19,12 @@ export class AutenticacaoService {
     return this.afa.auth.signInWithEmailAndPassword(funcionario.email, funcionario.senha);
   }
 
-  registrarUsuarioFuncionario(funcionario: Funcionario) {
-     this.colecaoFuncionario.add(funcionario);
+  registrarUsuario(funcionario: Funcionario) {
      return this.afa.auth.createUserWithEmailAndPassword(funcionario.email, funcionario.senha);
+  }
+
+  registrarFuncionario(funcionario: Funcionario){
+    return this.colecaoFuncionario.add(funcionario);
   }
 
 

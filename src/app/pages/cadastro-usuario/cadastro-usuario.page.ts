@@ -30,13 +30,15 @@ export class CadastroUsuarioPage implements OnInit {
     }
   }
 
-  async registrarFuncionario() {
+  async registrar() {
     await this.presentLoading()
     try {
-      if(this.funcionario.nome == "" || this.funcionario.salarioBruto == null || this.funcionario.funcao == ""){
+      if(this.funcionario.nome == "" || this.funcionario.salarioBruto == null || this.funcionario.funcao == ""
+      || this.funcionario.email == ""){
         this.presentToast('Preencha todos os campos!')
       }else {
-        await this.servicoAutenticacao.registrarUsuarioFuncionario(this.funcionario)
+        await this.servicoAutenticacao.registrarFuncionario(this.funcionario)
+        await this.servicoAutenticacao.registrarUsuario(this.funcionario)
       }
       
     } catch (error) {
@@ -53,6 +55,9 @@ export class CadastroUsuarioPage implements OnInit {
           break
         case 'auth/weak-password':
           mensagem = 'Senha inválida!'
+          break
+        default: 
+          mensagem = 'Erro ao cadastrar funcionário, verifique seus dados e sua conexão'
           break
       }
 

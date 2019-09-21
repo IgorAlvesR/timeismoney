@@ -39,12 +39,16 @@ export class RegistroDeslocamentoPage implements OnInit {
     private angularFirestore: AngularFirestore
   ) { }
 
-  async ngOnInit() {
-    await this.checkGPSPermission()
-    this.mapElement = this.mapElement.nativeElement
+  ngOnInit() {
+    this.mapElement =  this.mapElement.nativeElement
     this.mapElement.style.width = '100%'
     this.mapElement.style.height = '50%'
-    this.loadMap()
+    
+  }
+
+  async ionViewWillEnter(){
+    await this.checkGPSPermission()
+    await this.loadMap()
   }
 
   async reverseGeocoding(latitude, longitude) {
@@ -82,13 +86,11 @@ export class RegistroDeslocamentoPage implements OnInit {
   async loadMap() {
     this.loading = await this.loadingCtrl.create({ message: 'Por favor, aguarde...' })
     await this.loading.present()
-    
     const mapOptions: GoogleMapOptions = {
       controls: {
         zoom: false
       }
     }
-    //await this.checkGPSPermission()
     this.map = await GoogleMaps.create(this.mapElement, mapOptions)
     await this.addOriginMarker()
     try {
@@ -120,8 +122,6 @@ export class RegistroDeslocamentoPage implements OnInit {
     }
   }
 
-
-
   checkGPSPermission() {
     this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION).then(
       result => {
@@ -151,8 +151,7 @@ export class RegistroDeslocamentoPage implements OnInit {
       }
     });
   }
-
-  askToTurnOnGPS() {
+  askToTurnOnGPS() {    
     this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY)
   }
 

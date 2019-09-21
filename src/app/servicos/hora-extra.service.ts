@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, DocumentReference } from '@angular/fire/firestore';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, Subscribable } from 'rxjs';
 import { AutenticacaoService } from './autenticacao.service';
 import { HoraExtra } from '../Models/hora-extra';
 import { flatMap } from 'rxjs/operators';
 import { Cidade } from '../Models/cidade';
 import { Deslocamento } from '../Models/deslocamento';
+import { map } from 'rxjs/operators';
+import { ObserveOnSubscriber } from 'rxjs/internal/operators/observeOn';
+
 
 
 
@@ -38,17 +41,21 @@ export class HoraExtraService {
   }
 
   update(horaExtra: HoraExtra) {
-    let horasOb: Observable<any[]>
     let userId = this.authService.getAuth().currentUser.uid
-
     let query = this.afs.collection('HoraExtra', ref => (ref.where('userId', '==', userId).limit(1).orderBy('cont', 'desc')))
       .snapshotChanges()
-      .pipe(flatMap(horasOb => horasOb))
+      .pipe(map(actions => {
+        actions.map(a => {
+          this.horas = a.payload.doc.ref
+          this.horas.update(horaExtra)
+        })
+      })
+      )
 
-    query.subscribe(doc => {
-      this.horas = doc.payload.doc.ref
+    query.subscribe(() => {
       return this.horas.update(horaExtra)
     })
+    
   }
 
   buscarHoraPendente() {
@@ -57,7 +64,6 @@ export class HoraExtraService {
   }
 
   deleteHoraExtra(id: string) {
-    let horasOb: Observable<any[]>
     let colection = this.afs.collection('HoraExtra', ref => (ref.where('id','==',id))).snapshotChanges().pipe(flatMap(horasOb => horasOb))
     colection.subscribe(doc => {
       this.horas = doc.payload.doc.ref

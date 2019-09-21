@@ -90,6 +90,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ionic_native_native_geocoder_ngx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic-native/native-geocoder/ngx */ "./node_modules/@ionic-native/native-geocoder/ngx/index.js");
 /* harmony import */ var _ionic_native_geolocation_ngx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ionic-native/geolocation/ngx */ "./node_modules/@ionic-native/geolocation/ngx/index.js");
 /* harmony import */ var src_app_servicos_deslocamento_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/servicos/deslocamento.service */ "./src/app/servicos/deslocamento.service.ts");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _ionic_native_location_accuracy_ngx__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @ionic-native/location-accuracy/ngx */ "./node_modules/@ionic-native/location-accuracy/ngx/index.js");
+/* harmony import */ var src_app_servicos_autenticacao_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! src/app/servicos/autenticacao.service */ "./src/app/servicos/autenticacao.service.ts");
+/* harmony import */ var _ionic_native_android_permissions_ngx__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @ionic-native/android-permissions/ngx */ "./node_modules/@ionic-native/android-permissions/ngx/index.js");
+/* harmony import */ var _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/fire/firestore */ "./node_modules/@angular/fire/firestore/index.js");
+
+
+
+
+
 
 
 
@@ -98,30 +109,36 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var RegistroDeslocamentoPage = /** @class */ (function () {
-    function RegistroDeslocamentoPage(platform, loadingCtrl, nativeGeocoder, geolocation, deslocamentoService, navCtrl) {
-        this.platform = platform;
+    function RegistroDeslocamentoPage(loadingCtrl, nativeGeocoder, geolocation, deslocamentoService, toastCtrl, navCtrl, locationAccuracy, authService, androidPermissions, angularFirestore) {
         this.loadingCtrl = loadingCtrl;
         this.nativeGeocoder = nativeGeocoder;
         this.geolocation = geolocation;
         this.deslocamentoService = deslocamentoService;
+        this.toastCtrl = toastCtrl;
         this.navCtrl = navCtrl;
+        this.locationAccuracy = locationAccuracy;
+        this.authService = authService;
+        this.androidPermissions = androidPermissions;
+        this.angularFirestore = angularFirestore;
         this.reserveGeocodingResults = "";
         this.deslocamento = {};
     }
     RegistroDeslocamentoPage.prototype.ngOnInit = function () {
-        this.mapElement = this.mapElement.nativeElement;
-        this.mapElement.style.width = '100%';
-        this.mapElement.style.height = '50%';
-        this.loadMap();
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.checkGPSPermission()];
+                    case 1:
+                        _a.sent();
+                        this.mapElement = this.mapElement.nativeElement;
+                        this.mapElement.style.width = '100%';
+                        this.mapElement.style.height = '50%';
+                        this.loadMap();
+                        return [2 /*return*/];
+                }
+            });
+        });
     };
-    /*reverseGeolocation() {
-      this.geolocation.getCurrentPosition().then((position) => {
-        var latitude = position.coords.latitude
-        var longitude = position.coords.longitude
-        this.reverseGeocoding(latitude, longitude)
-        return this.reserveGeocodingResults
-      })
-    }*/
     RegistroDeslocamentoPage.prototype.reverseGeocoding = function (latitude, longitude) {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
             var options;
@@ -159,12 +176,14 @@ var RegistroDeslocamentoPage = /** @class */ (function () {
                         return [4 /*yield*/, this.geolocation.getCurrentPosition().then(function (position) {
                                 var latitude = position.coords.latitude;
                                 var longitude = position.coords.longitude;
-                                console.log(_this.reverseGeocoding(latitude, longitude));
+                                _this.reverseGeocoding(latitude, longitude);
                             })];
                     case 3:
                         _b.sent();
-                        this.deslocamento.data = "teste";
-                        console.log(this.deslocamento.localizacao);
+                        this.deslocamento.id = this.angularFirestore.createId();
+                        this.deslocamento.data = moment__WEBPACK_IMPORTED_MODULE_7__().locale('pt-br').format('L');
+                        this.deslocamento.hora = moment__WEBPACK_IMPORTED_MODULE_7__().locale('pt-br').format('LTS');
+                        this.deslocamento.userId = this.authService.getAuth().currentUser.uid;
                         _b.label = 4;
                     case 4:
                         _b.trys.push([4, 8, , 9]);
@@ -180,7 +199,7 @@ var RegistroDeslocamentoPage = /** @class */ (function () {
                         return [3 /*break*/, 9];
                     case 8:
                         error_1 = _b.sent();
-                        console.log(error_1);
+                        this.toastCtrl.create({ message: error_1, duration: 2000 });
                         return [3 /*break*/, 9];
                     case 9: return [2 /*return*/];
                 }
@@ -200,34 +219,35 @@ var RegistroDeslocamentoPage = /** @class */ (function () {
                         return [4 /*yield*/, this.loading.present()];
                     case 2:
                         _c.sent();
-                        _ionic_native_google_maps__WEBPACK_IMPORTED_MODULE_3__["Environment"].setEnv({
-                            'API_KEY_FOR_BROWSER_RELEASE': 'AIzaSyClpig7cd7BKXZTeN93Xi7mUn57uzSFcqc',
-                            'API_KEY_FOR_BROWSER_DEBUG': 'AIzaSyClpig7cd7BKXZTeN93Xi7mUn57uzSFcqc'
-                        });
                         mapOptions = {
                             controls: {
                                 zoom: false
                             }
                         };
+                        //await this.checkGPSPermission()
                         _b = this;
                         return [4 /*yield*/, _ionic_native_google_maps__WEBPACK_IMPORTED_MODULE_3__["GoogleMaps"].create(this.mapElement, mapOptions)];
                     case 3:
+                        //await this.checkGPSPermission()
                         _b.map = _c.sent();
-                        _c.label = 4;
-                    case 4:
-                        _c.trys.push([4, 7, , 8]);
-                        return [4 /*yield*/, this.map.one(_ionic_native_google_maps__WEBPACK_IMPORTED_MODULE_3__["GoogleMapsEvent"].MAP_READY)];
-                    case 5:
-                        _c.sent();
                         return [4 /*yield*/, this.addOriginMarker()];
+                    case 4:
+                        _c.sent();
+                        _c.label = 5;
+                    case 5:
+                        _c.trys.push([5, 8, , 9]);
+                        return [4 /*yield*/, this.map.one(_ionic_native_google_maps__WEBPACK_IMPORTED_MODULE_3__["GoogleMapsEvent"].MAP_READY)];
                     case 6:
                         _c.sent();
-                        return [3 /*break*/, 8];
+                        return [4 /*yield*/, this.addOriginMarker()];
                     case 7:
+                        _c.sent();
+                        return [3 /*break*/, 9];
+                    case 8:
                         error_2 = _c.sent();
                         console.error(error_2);
-                        return [3 /*break*/, 8];
-                    case 8: return [2 /*return*/];
+                        return [3 /*break*/, 9];
+                    case 9: return [2 /*return*/];
                 }
             });
         });
@@ -267,6 +287,36 @@ var RegistroDeslocamentoPage = /** @class */ (function () {
             });
         });
     };
+    RegistroDeslocamentoPage.prototype.checkGPSPermission = function () {
+        var _this = this;
+        this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION).then(function (result) {
+            if (result.hasPermission) {
+                _this.askToTurnOnGPS();
+            }
+            else {
+                _this.requestGPSPermission();
+            }
+        }, function (err) {
+            alert(err);
+        });
+    };
+    RegistroDeslocamentoPage.prototype.requestGPSPermission = function () {
+        var _this = this;
+        this.locationAccuracy.canRequest().then(function (canRequest) {
+            if (canRequest) {
+                console.log("4");
+            }
+            else {
+                _this.androidPermissions.requestPermission(_this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION)
+                    .then(function () {
+                    _this.askToTurnOnGPS();
+                });
+            }
+        });
+    };
+    RegistroDeslocamentoPage.prototype.askToTurnOnGPS = function () {
+        this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY);
+    };
     tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])('map'),
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Object)
@@ -277,55 +327,18 @@ var RegistroDeslocamentoPage = /** @class */ (function () {
             template: __webpack_require__(/*! ./registro-deslocamento.page.html */ "./src/app/pages/registro-deslocamento/registro-deslocamento.page.html"),
             styles: [__webpack_require__(/*! ./registro-deslocamento.page.scss */ "./src/app/pages/registro-deslocamento/registro-deslocamento.page.scss")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_2__["Platform"],
-            _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["LoadingController"],
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_2__["LoadingController"],
             _ionic_native_native_geocoder_ngx__WEBPACK_IMPORTED_MODULE_4__["NativeGeocoder"],
             _ionic_native_geolocation_ngx__WEBPACK_IMPORTED_MODULE_5__["Geolocation"],
             src_app_servicos_deslocamento_service__WEBPACK_IMPORTED_MODULE_6__["DeslocamentoService"],
-            _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["NavController"]])
+            _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["ToastController"],
+            _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["NavController"],
+            _ionic_native_location_accuracy_ngx__WEBPACK_IMPORTED_MODULE_8__["LocationAccuracy"],
+            src_app_servicos_autenticacao_service__WEBPACK_IMPORTED_MODULE_9__["AutenticacaoService"],
+            _ionic_native_android_permissions_ngx__WEBPACK_IMPORTED_MODULE_10__["AndroidPermissions"],
+            _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_11__["AngularFirestore"]])
     ], RegistroDeslocamentoPage);
     return RegistroDeslocamentoPage;
-}());
-
-
-
-/***/ }),
-
-/***/ "./src/app/servicos/deslocamento.service.ts":
-/*!**************************************************!*\
-  !*** ./src/app/servicos/deslocamento.service.ts ***!
-  \**************************************************/
-/*! exports provided: DeslocamentoService */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DeslocamentoService", function() { return DeslocamentoService; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/fire/firestore */ "./node_modules/@angular/fire/firestore/index.js");
-/* harmony import */ var _autenticacao_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./autenticacao.service */ "./src/app/servicos/autenticacao.service.ts");
-
-
-
-
-var DeslocamentoService = /** @class */ (function () {
-    function DeslocamentoService(afs, authService) {
-        this.afs = afs;
-        this.authService = authService;
-        var userId = this.authService.getAuth().currentUser.uid;
-        this.deslocamento = this.afs.collection('Deslocamento');
-    }
-    DeslocamentoService.prototype.registrar = function (deslocamento) {
-        return this.deslocamento.add(deslocamento);
-    };
-    DeslocamentoService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
-            providedIn: 'root'
-        }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_fire_firestore__WEBPACK_IMPORTED_MODULE_2__["AngularFirestore"], _autenticacao_service__WEBPACK_IMPORTED_MODULE_3__["AutenticacaoService"]])
-    ], DeslocamentoService);
-    return DeslocamentoService;
 }());
 
 

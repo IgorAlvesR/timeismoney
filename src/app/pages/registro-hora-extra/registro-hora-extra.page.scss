@@ -5,6 +5,9 @@ ion-toolbar{
     
     span{
         margin-left: 20%;
+        border: 2px solid white;
+        border-radius: 20px;
+        padding: 5px 10px;
     }
 }
 
@@ -32,10 +35,8 @@ h5{
 
 .logoRegistro{
     margin-top: 15%;
-    width: 25%;
-    height: 25%;
-    border: 1px solid var(--ion-color-padraoApp);
-    border-radius: 5px;
+    width: 30%;
+    height: 30%;
 }
 
 ion-icon{

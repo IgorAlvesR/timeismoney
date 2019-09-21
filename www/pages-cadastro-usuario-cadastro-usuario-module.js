@@ -69,7 +69,7 @@ module.exports = "<ion-content class=\"conteudo ion-margin-bottom\" id=\"conteud
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "ion-content {\n  --background: url('superior.svg')  no-repeat top / 100% ,url('inferior.svg') no-repeat bottom / 100%; }\n  ion-content .ion-icon {\n    color: white; }\n  .logo {\n  margin-top: 20%; }\n  .inputLogin {\n  border: 2px solid #4F9AF5;\n  border-radius: 30px;\n  width: 60%;\n  margin: 5px auto;\n  text-align: left;\n  height: 35px; }\n  .inputLoginSubmit {\n  background-color: #4F9AF5;\n  border-radius: 30px;\n  width: 60%;\n  margin: 5px auto;\n  color: white; }\n  h6 {\n  color: #4F9AF5; }\n  .cadastrar {\n  padding: 7px;\n  border-radius: 20px;\n  color: var(--ion-color-padraoApp);\n  border: 2px solid #4F9AF5;\n  width: 50%;\n  margin: 5px auto; }\n  #divLogin {\n  margin-top: 15%; }\n  ion-icon {\n  width: 20px;\n  height: 20px;\n  color: white; }\n  .cadastro {\n  margin-top: 10%; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcGFnZXMvY2FkYXN0cm8tdXN1YXJpby9DOlxcVXNlcnNcXElnb3JcXERlc2t0b3BcXElGU0NcXElGU0MgMjAxOS0yXFxUQ0MgSUlcXFRDQy1JSSBBcGxpY2F0aXZvIEhvcmFzIEV4dHJhc1xcVGltZWlzbW9uZXlhcHAvc3JjXFxhcHBcXHBhZ2VzXFxjYWRhc3Ryby11c3VhcmlvXFxjYWRhc3Ryby11c3VhcmlvLnBhZ2Uuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLG9HQUFhLEVBQUE7RUFEakI7SUFJUSxZQUFZLEVBQUE7RUFLcEI7RUFDSSxlQUFlLEVBQUE7RUFHbkI7RUFDSSx5QkFBeUI7RUFDekIsbUJBQW1CO0VBQ25CLFVBQVU7RUFDVixnQkFBZ0I7RUFDaEIsZ0JBQWdCO0VBQ2hCLFlBQVksRUFBQTtFQUdoQjtFQUNJLHlCQUF5QjtFQUN6QixtQkFBbUI7RUFDbkIsVUFBVTtFQUNWLGdCQUFnQjtFQUNoQixZQUFZLEVBQUE7RUFHaEI7RUFDSSxjQUFjLEVBQUE7RUFHbEI7RUFDSSxZQUFZO0VBQ1osbUJBQW1CO0VBQ25CLGlDQUFpQztFQUNqQyx5QkFBeUI7RUFDekIsVUFBVTtFQUNWLGdCQUFnQixFQUFBO0VBR3BCO0VBQ0ksZUFBZSxFQUFBO0VBR25CO0VBQ0ksV0FBVztFQUNYLFlBQVk7RUFDWixZQUFZLEVBQUE7RUFHaEI7RUFDSSxlQUFlLEVBQUEiLCJmaWxlIjoic3JjL2FwcC9wYWdlcy9jYWRhc3Ryby11c3VhcmlvL2NhZGFzdHJvLXVzdWFyaW8ucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiaW9uLWNvbnRlbnR7XHJcbiAgICAtLWJhY2tncm91bmQ6IHVybCgnLi4vLi4vLi4vYXNzZXRzL2ltYWdlbnMvc3VwZXJpb3Iuc3ZnJykgIG5vLXJlcGVhdCB0b3AgLyAxMDAlICx1cmwoJy4uLy4uLy4uL2Fzc2V0cy9pbWFnZW5zL2luZmVyaW9yLnN2ZycpIG5vLXJlcGVhdCBib3R0b20gLyAxMDAlO1xyXG5cclxuICAgIC5pb24taWNvbntcclxuICAgICAgICBjb2xvcjogd2hpdGU7XHJcbiAgICB9XHJcblxyXG59XHJcblxyXG4ubG9nb3tcclxuICAgIG1hcmdpbi10b3A6IDIwJTsgXHJcbn1cclxuXHJcbi5pbnB1dExvZ2lue1xyXG4gICAgYm9yZGVyOiAycHggc29saWQgIzRGOUFGNTtcclxuICAgIGJvcmRlci1yYWRpdXM6IDMwcHg7XHJcbiAgICB3aWR0aDogNjAlO1xyXG4gICAgbWFyZ2luOiA1cHggYXV0bztcclxuICAgIHRleHQtYWxpZ246IGxlZnQ7XHJcbiAgICBoZWlnaHQ6IDM1cHg7XHJcbn1cclxuXHJcbi5pbnB1dExvZ2luU3VibWl0e1xyXG4gICAgYmFja2dyb3VuZC1jb2xvcjogIzRGOUFGNTtcclxuICAgIGJvcmRlci1yYWRpdXM6IDMwcHg7XHJcbiAgICB3aWR0aDogNjAlO1xyXG4gICAgbWFyZ2luOiA1cHggYXV0bztcclxuICAgIGNvbG9yOiB3aGl0ZTtcclxufVxyXG5cclxuaDZ7XHJcbiAgICBjb2xvcjogIzRGOUFGNTtcclxufVxyXG5cclxuLmNhZGFzdHJhcntcclxuICAgIHBhZGRpbmc6IDdweDtcclxuICAgIGJvcmRlci1yYWRpdXM6IDIwcHg7XHJcbiAgICBjb2xvcjogdmFyKC0taW9uLWNvbG9yLXBhZHJhb0FwcCk7XHJcbiAgICBib3JkZXI6IDJweCBzb2xpZCAjNEY5QUY1O1xyXG4gICAgd2lkdGg6IDUwJTtcclxuICAgIG1hcmdpbjogNXB4IGF1dG87XHJcbn1cclxuXHJcbiNkaXZMb2dpbntcclxuICAgIG1hcmdpbi10b3A6IDE1JTtcclxufVxyXG5cclxuaW9uLWljb257XHJcbiAgICB3aWR0aDogMjBweDtcclxuICAgIGhlaWdodDogMjBweDtcclxuICAgIGNvbG9yOiB3aGl0ZTtcclxufVxyXG5cclxuLmNhZGFzdHJve1xyXG4gICAgbWFyZ2luLXRvcDogMTAlO1xyXG59XHJcblxyXG4iXX0= */"
+module.exports = "ion-content {\n  --background: url('superior.svg')  no-repeat top / 100% ,url('inferior.svg') no-repeat bottom / 100%; }\n  ion-content .ion-icon {\n    color: white; }\n  .logo {\n  margin-top: 20%; }\n  .inputLogin {\n  border: 2px solid #4F9AF5;\n  border-radius: 30px;\n  width: 60%;\n  margin: 5px auto;\n  text-align: left;\n  height: 35px; }\n  .inputLoginSubmit {\n  background-color: #4F9AF5;\n  border-radius: 30px;\n  width: 60%;\n  margin: 5px auto;\n  color: white; }\n  h6 {\n  color: #4F9AF5; }\n  .cadastrar {\n  padding: 7px;\n  border-radius: 20px;\n  color: var(--ion-color-padraoApp);\n  border: 2px solid #4F9AF5;\n  width: 50%;\n  margin: 5px auto; }\n  #divLogin {\n  margin-top: 15%; }\n  ion-icon {\n  width: 25px;\n  height: 25px;\n  color: white;\n  margin-left: 5px; }\n  .cadastro {\n  margin-top: 10%; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcGFnZXMvY2FkYXN0cm8tdXN1YXJpby9DOlxcVXNlcnNcXElnb3JcXERlc2t0b3BcXElGU0NcXElGU0MgMjAxOS0yXFxUQ0MgSUlcXFRDQy1JSSBBcGxpY2F0aXZvIEhvcmFzIEV4dHJhc1xcVGltZWlzbW9uZXlhcHAvc3JjXFxhcHBcXHBhZ2VzXFxjYWRhc3Ryby11c3VhcmlvXFxjYWRhc3Ryby11c3VhcmlvLnBhZ2Uuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLG9HQUFhLEVBQUE7RUFEakI7SUFJUSxZQUFZLEVBQUE7RUFLcEI7RUFDSSxlQUFlLEVBQUE7RUFHbkI7RUFDSSx5QkFBeUI7RUFDekIsbUJBQW1CO0VBQ25CLFVBQVU7RUFDVixnQkFBZ0I7RUFDaEIsZ0JBQWdCO0VBQ2hCLFlBQVksRUFBQTtFQUdoQjtFQUNJLHlCQUF5QjtFQUN6QixtQkFBbUI7RUFDbkIsVUFBVTtFQUNWLGdCQUFnQjtFQUNoQixZQUFZLEVBQUE7RUFHaEI7RUFDSSxjQUFjLEVBQUE7RUFHbEI7RUFDSSxZQUFZO0VBQ1osbUJBQW1CO0VBQ25CLGlDQUFpQztFQUNqQyx5QkFBeUI7RUFDekIsVUFBVTtFQUNWLGdCQUFnQixFQUFBO0VBR3BCO0VBQ0ksZUFBZSxFQUFBO0VBR25CO0VBQ0ksV0FBVztFQUNYLFlBQVk7RUFDWixZQUFZO0VBQ1osZ0JBQWdCLEVBQUE7RUFHcEI7RUFDSSxlQUFlLEVBQUEiLCJmaWxlIjoic3JjL2FwcC9wYWdlcy9jYWRhc3Ryby11c3VhcmlvL2NhZGFzdHJvLXVzdWFyaW8ucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiaW9uLWNvbnRlbnR7XHJcbiAgICAtLWJhY2tncm91bmQ6IHVybCgnLi4vLi4vLi4vYXNzZXRzL2ltYWdlbnMvc3VwZXJpb3Iuc3ZnJykgIG5vLXJlcGVhdCB0b3AgLyAxMDAlICx1cmwoJy4uLy4uLy4uL2Fzc2V0cy9pbWFnZW5zL2luZmVyaW9yLnN2ZycpIG5vLXJlcGVhdCBib3R0b20gLyAxMDAlO1xyXG5cclxuICAgIC5pb24taWNvbntcclxuICAgICAgICBjb2xvcjogd2hpdGU7XHJcbiAgICB9XHJcblxyXG59XHJcblxyXG4ubG9nb3tcclxuICAgIG1hcmdpbi10b3A6IDIwJTsgXHJcbn1cclxuXHJcbi5pbnB1dExvZ2lue1xyXG4gICAgYm9yZGVyOiAycHggc29saWQgIzRGOUFGNTtcclxuICAgIGJvcmRlci1yYWRpdXM6IDMwcHg7XHJcbiAgICB3aWR0aDogNjAlO1xyXG4gICAgbWFyZ2luOiA1cHggYXV0bztcclxuICAgIHRleHQtYWxpZ246IGxlZnQ7XHJcbiAgICBoZWlnaHQ6IDM1cHg7XHJcbn1cclxuXHJcbi5pbnB1dExvZ2luU3VibWl0e1xyXG4gICAgYmFja2dyb3VuZC1jb2xvcjogIzRGOUFGNTtcclxuICAgIGJvcmRlci1yYWRpdXM6IDMwcHg7XHJcbiAgICB3aWR0aDogNjAlO1xyXG4gICAgbWFyZ2luOiA1cHggYXV0bztcclxuICAgIGNvbG9yOiB3aGl0ZTtcclxufVxyXG5cclxuaDZ7XHJcbiAgICBjb2xvcjogIzRGOUFGNTtcclxufVxyXG5cclxuLmNhZGFzdHJhcntcclxuICAgIHBhZGRpbmc6IDdweDtcclxuICAgIGJvcmRlci1yYWRpdXM6IDIwcHg7XHJcbiAgICBjb2xvcjogdmFyKC0taW9uLWNvbG9yLXBhZHJhb0FwcCk7XHJcbiAgICBib3JkZXI6IDJweCBzb2xpZCAjNEY5QUY1O1xyXG4gICAgd2lkdGg6IDUwJTtcclxuICAgIG1hcmdpbjogNXB4IGF1dG87XHJcbn1cclxuXHJcbiNkaXZMb2dpbntcclxuICAgIG1hcmdpbi10b3A6IDE1JTtcclxufVxyXG5cclxuaW9uLWljb257XHJcbiAgICB3aWR0aDogMjVweDtcclxuICAgIGhlaWdodDogMjVweDtcclxuICAgIGNvbG9yOiB3aGl0ZTtcclxuICAgIG1hcmdpbi1sZWZ0OiA1cHg7XHJcbn1cclxuXHJcbi5jYWRhc3Ryb3tcclxuICAgIG1hcmdpbi10b3A6IDEwJTtcclxufVxyXG5cclxuIl19 */"
 
 /***/ }),
 
@@ -117,16 +117,20 @@ var CadastroUsuarioPage = /** @class */ (function () {
                         _a.sent();
                         _a.label = 2;
                     case 2:
-                        _a.trys.push([2, 6, 7, 8]);
-                        if (!(this.funcionario.nome == "" || this.funcionario.salarioBruto == null || this.funcionario.funcao == "")) return [3 /*break*/, 3];
+                        _a.trys.push([2, 7, 8, 9]);
+                        if (!(this.funcionario.nome == "" || this.funcionario.salarioBruto == null || this.funcionario.funcao == ""
+                            || this.funcionario.email == "")) return [3 /*break*/, 3];
                         this.presentToast('Preencha todos os campos!');
-                        return [3 /*break*/, 5];
-                    case 3: return [4 /*yield*/, this.servicoAutenticacao.registrarUsuarioFuncionario(this.funcionario)];
+                        return [3 /*break*/, 6];
+                    case 3: return [4 /*yield*/, this.servicoAutenticacao.registrarUsuario(this.funcionario)];
                     case 4:
                         _a.sent();
-                        _a.label = 5;
-                    case 5: return [3 /*break*/, 8];
-                    case 6:
+                        return [4 /*yield*/, this.servicoAutenticacao.registrarFuncionario(this.funcionario)];
+                    case 5:
+                        _a.sent();
+                        _a.label = 6;
+                    case 6: return [3 /*break*/, 9];
+                    case 7:
                         error_1 = _a.sent();
                         mensagem = void 0;
                         switch (error_1.code) {
@@ -144,11 +148,11 @@ var CadastroUsuarioPage = /** @class */ (function () {
                                 break;
                         }
                         this.presentToast(mensagem);
-                        return [3 /*break*/, 8];
-                    case 7:
+                        return [3 /*break*/, 9];
+                    case 8:
                         this.carregando.dismiss();
                         return [7 /*endfinally*/];
-                    case 8: return [2 /*return*/];
+                    case 9: return [2 /*return*/];
                 }
             });
         });

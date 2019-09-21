@@ -17,13 +17,12 @@
     <img class="logoRegistro" src="../../../assets/imagens/logoRegistroHora.svg">
   </div>
 
-  <div  class="ion-text-center ion-padding digitalHora">
-    <img id='botao1' src="../../../assets/imagens/digitalRegistro.svg">
-    <p id='texto' class="finalizarHora"><strong>Toque para iniciar hora extra</strong></p>
+  <div class="ion-text-center ion-padding digitalHora">
+    <img id="botao" src="../../../assets/imagens/digitalRegistro.svg" (click)='verificarHoraExtraPendente()'>
+    <p class="finalizarHora"><strong>Toque para iniciar hora extra</strong></p>
   </div>
 
 </ion-content>
-
 
 <ion-toolbar class="footer">
   <div class="menu">
@@ -32,3 +31,4 @@
     <ion-icon name="navigate" [routerLink]="['/registro-deslocamento']" ></ion-icon>
   </div>
 </ion-toolbar>
+

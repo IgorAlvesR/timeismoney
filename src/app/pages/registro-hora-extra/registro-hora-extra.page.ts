@@ -6,6 +6,9 @@ import { LoadingController, ToastController, NavController, AlertController } fr
 import { HoraExtra } from 'src/app/Models/hora-extra'
 import { AngularFirestore } from '@angular/fire/firestore'
 import { Router } from '@angular/router'
+import { Subscription } from 'rxjs'
+import { InternetService } from 'src/app/servicos/internet.service'
+
 
 @Component({
   selector: 'app-registro-hora-extra',
@@ -18,6 +21,7 @@ export class RegistroHoraExtraPage implements OnInit {
   private carregando: any
   private hora: any
   private data: any
+  private disconnectSubscription: Subscription
 
   constructor(
     private authService: AutenticacaoService,
@@ -27,8 +31,12 @@ export class RegistroHoraExtraPage implements OnInit {
     private navCtrl: NavController,
     private alertController: AlertController,
     private angularFirestore: AngularFirestore,
-    private route: Router
-  ) { }
+    private route: Router,
+    private internetService: InternetService
+  )
+  {
+    
+  }
 
   async criarRelógio() {
     this.hora = moment().locale('pt-br').format('LTS')
@@ -40,17 +48,22 @@ export class RegistroHoraExtraPage implements OnInit {
   }
 
 
-  ionViewWillEnter() {
+  ionViewDidEnter() {
     this.criarRelógio()
   }
 
   ngOnInit() {
-    let result = this.horaSevice.buscarHoraPendente()
-    result.subscribe(doc => {
+    
+  }
+
+  async verificarHoraExtraPendente() {
+    let result = await this.horaSevice.buscarHoraPendente()
+    var botao = await document.getElementById('botao')
+    await result.subscribe(doc => {
       if (doc.length > 0) {
-        document.getElementById('botao1').onclick = () => (this.presentAlert())
+        botao.onclick = () => (this.presentAlert())
       } else {
-        document.getElementById('botao1').onclick = () => this.registrarInicioHoraExtra()
+        botao.onclick = () => this.registrarInicioHoraExtra()
       }
     })
   }
@@ -74,7 +87,7 @@ export class RegistroHoraExtraPage implements OnInit {
   }
 
   async registrarInicioHoraExtra() {
-    await this.presentLoading()
+    await this.presentLoading()   
     let horas = moment().hours()
     let minutos = moment().minute()
     this.horaExtraInicio.id = this.angularFirestore.createId();
@@ -87,14 +100,14 @@ export class RegistroHoraExtraPage implements OnInit {
     this.horaExtraInicio.cont = new Date().getTime()
     this.horaExtraInicio.diaSemana = moment().day()
     this.horaExtraInicio.horaDataCalculoInicio = moment().locale('pt-br').format('DD/MM/YYYY HH:mm:ss')
-  
+
     try {
       if (this.horaExtraInicio.diaSemana != 6 && this.horaExtraInicio.diaSemana != 7) {
-        if (this.horaExtraInicio.horaCalculoInicial >= 8 && this.horaExtraInicio.horaCalculoInicial <= 12 
-          || this.horaExtraInicio.horaCalculoInicial == 13 && this.horaExtraInicio.minutoCalculoInicial > 30
-          || this.horaExtraInicio.horaCalculoInicial > 13 && this.horaExtraInicio.horaCalculoInicial < 18) {
-            await this.presentToast("Não é possível realizar hora extra no período normal!")
-            await this.carregando.dismiss()
+        if ((this.horaExtraInicio.horaCalculoInicial >= 8 && this.horaExtraInicio.horaCalculoInicial < 12)
+          || (this.horaExtraInicio.horaCalculoInicial == 13 && this.horaExtraInicio.minutoCalculoInicial > 30)
+          || (this.horaExtraInicio.horaCalculoInicial > 13 && this.horaExtraInicio.horaCalculoInicial < 18)) {
+          await this.presentToast("Não é possível realizar hora extra no período normal!")
+          await this.carregando.dismiss()
         } else {
           await this.horaSevice.registrarHoraExtra(this.horaExtraInicio)
           await this.navCtrl.navigateRoot('registro-final-hora-extra')
@@ -121,7 +134,7 @@ export class RegistroHoraExtraPage implements OnInit {
       this.presentToast(error)
     }
   }
-
+  
   async presentLoading() {
     this.carregando = await this.loadingCtrl.create({ message: 'Por favor, aguarde...' })
     return this.carregando.present()

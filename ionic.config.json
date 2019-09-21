@@ -1,7 +1,8 @@
 {
   "name": "TimeIsMoneyApp",
   "integrations": {
-    "cordova": {}
+    "cordova": {},
+    "capacitor": {}
   },
   "type": "angular"
 }

@@ -58,7 +58,7 @@ var RegistroFinalHoraExtraPageModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\n  <ion-toolbar>\n    <div class=\"header-top\">\n      <ion-icon name=\"arrow-round-back\" button [routerLink]=\"['/registro-hora-extra']\"></ion-icon>\n      <p text-center>REGISTRO FINAL</p>\n    </div>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content class=\"ion-padding\">\n\n  <div class=\"relogio\">\n    <div class=\"ion-padding horaData\">\n      <h1 class=\"horaData\">{{this.hora}}</h1>\n      <h5 class=\"horaData\">{{this.data}}</h5>\n    </div>\n  </div>\n  \n\n  <div>\n      <ion-select  [interfaceOptions]=\"customAlertOptions\" placeholder=\"Selecione a cidade...\" [(ngModel)]=\"horaExtraFinal.localizacao\">\n        <ion-select-option value=\"Tubarão\">Tubarão</ion-select-option>\n        <ion-select-option value=\"Imbituba\">Imbituba</ion-select-option>\n        <ion-select-option value=\"Orleans\">Orleans</ion-select-option>\n        <ion-select-option value=\"Cricíuma\">Cricíuma</ion-select-option>\n      </ion-select>\n    <ion-textarea rows=\"6\" cols=\"20\" placeholder=\"Descrição...\" [(ngModel)]=\"horaExtraFinal.descricao\"></ion-textarea>\n  </div>\n\n  <div class=\"ion-text-center ion-padding digitalHora\">\n    <img src=\"../../../assets/imagens/digitalRegistro.svg\" (click)=\"registrarFinalHoraExtra()\">\n    <p class=\"finalizarHora\"><strong>Toque para finalizar  hora extra</strong></p>\n  </div>\n\n</ion-content>"
+module.exports = "<ion-header>\n  <ion-toolbar>\n    <div class=\"header-top\">\n      <ion-icon name=\"arrow-round-back\" button [routerLink]=\"['/registro-hora-extra']\"></ion-icon>\n      <p text-center>REGISTRO FINAL</p>\n    </div>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content class=\"ion-padding\">\n\n  <div class=\"relogio\">\n    <div class=\"ion-padding horaData\">\n      <h1 class=\"horaData\">{{this.hora}}</h1>\n      <h5 class=\"horaData\">{{this.data}}</h5>\n    </div>\n  </div>\n  \n\n  <div>\n      <ion-select  [interfaceOptions]=\"customAlertOptions\" placeholder=\"Selecione a cidade...\" [(ngModel)]=\"horaExtraFinal.localizacao\">\n        <ion-select-option *ngFor='let cidade of cidades'  value=\"{{cidade.Nome}}\">{{cidade.Nome}}</ion-select-option>\n      </ion-select>\n    <ion-textarea rows=\"6\" cols=\"20\" placeholder=\"Descrição...\" [(ngModel)]=\"horaExtraFinal.descricao\"></ion-textarea>\n  </div>\n\n  <div class=\"ion-text-center ion-padding digitalHora\">\n    <img src=\"../../../assets/imagens/digitalRegistro.svg\" (click)=\"registrarFinalHoraExtra()\">\n    <p class=\"finalizarHora\"><strong>Toque para finalizar  hora extra</strong></p>\n  </div>\n\n</ion-content>"
 
 /***/ }),
 
@@ -91,6 +91,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var src_app_servicos_hora_extra_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/servicos/hora-extra.service */ "./src/app/servicos/hora-extra.service.ts");
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
 /* harmony import */ var _ionic_native_keyboard_ngx__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ionic-native/keyboard/ngx */ "./node_modules/@ionic-native/keyboard/ngx/index.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+
 
 
 
@@ -99,26 +101,34 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var RegistroFinalHoraExtraPage = /** @class */ (function () {
-    function RegistroFinalHoraExtraPage(authService, horaSevice, loadingCtrl, toastCtrl, navCtrl, keyboard) {
+    function RegistroFinalHoraExtraPage(authService, horaSevice, loadingCtrl, toastCtrl, navCtrl, keyboard, route) {
         this.authService = authService;
         this.horaSevice = horaSevice;
         this.loadingCtrl = loadingCtrl;
         this.toastCtrl = toastCtrl;
         this.navCtrl = navCtrl;
         this.keyboard = keyboard;
+        this.route = route;
         this.horaExtraFinal = {};
+        this.cidades = new Array();
         this.customAlertOptions = {
             header: 'Selecione a Cidade'
         };
-        this.criarRelogio();
     }
-    RegistroFinalHoraExtraPage.prototype.ngOnInit = function () { };
+    RegistroFinalHoraExtraPage.prototype.ngOnInit = function () {
+        this.buscarCidades();
+    };
     RegistroFinalHoraExtraPage.prototype.criarRelogio = function () {
         var _this = this;
+        this.hora = moment__WEBPACK_IMPORTED_MODULE_2__().locale('pt-br').format('LTS');
+        this.data = moment__WEBPACK_IMPORTED_MODULE_2__().locale('pt-br').format('LL');
         setInterval(function () {
             _this.hora = moment__WEBPACK_IMPORTED_MODULE_2__().locale('pt-br').format('LTS');
             _this.data = moment__WEBPACK_IMPORTED_MODULE_2__().locale('pt-br').format('LL');
         }, 1000);
+    };
+    RegistroFinalHoraExtraPage.prototype.ionViewWillEnter = function () {
+        this.criarRelogio();
     };
     RegistroFinalHoraExtraPage.prototype.registrarFinalHoraExtra = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
@@ -135,10 +145,11 @@ var RegistroFinalHoraExtraPage = /** @class */ (function () {
                         this.horaExtraFinal.horaFinal = this.hora;
                         this.horaExtraFinal.userId = this.authService.getAuth().currentUser.uid;
                         this.horaExtraFinal.dataFinal = moment__WEBPACK_IMPORTED_MODULE_2__().locale('pt-br').format('L');
+                        this.horaExtraFinal.horaDataCalculoFinal = moment__WEBPACK_IMPORTED_MODULE_2__().locale('pt-br').format('DD/MM/YYYY HH:mm:ss');
                         _a.label = 2;
                     case 2:
                         _a.trys.push([2, 8, , 9]);
-                        if (!(this.horaExtraFinal.descricao == null || this.horaExtraFinal.localizacao == null)) return [3 /*break*/, 3];
+                        if (!(this.horaExtraFinal.descricao == null || this.horaExtraFinal.descricao == '' || this.horaExtraFinal.localizacao == null || this.horaExtraFinal.localizacao == '')) return [3 /*break*/, 3];
                         this.presentToast("Preenha todos os campos!");
                         this.carregando.dismiss();
                         return [3 /*break*/, 7];
@@ -148,7 +159,7 @@ var RegistroFinalHoraExtraPage = /** @class */ (function () {
                         return [4 /*yield*/, this.carregando.dismiss()];
                     case 5:
                         _a.sent();
-                        return [4 /*yield*/, this.navCtrl.navigateRoot('registro-hora-extra')];
+                        return [4 /*yield*/, window.location.replace('registro-hora-extra')];
                     case 6:
                         _a.sent();
                         _a.label = 7;
@@ -192,6 +203,12 @@ var RegistroFinalHoraExtraPage = /** @class */ (function () {
             });
         });
     };
+    RegistroFinalHoraExtraPage.prototype.buscarCidades = function () {
+        var _this = this;
+        this.deslocamentoSubscription = this.horaSevice.buscarCidades().subscribe(function (result) {
+            return _this.cidades = result;
+        });
+    };
     RegistroFinalHoraExtraPage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
             selector: 'app-registro-final-hora-extra',
@@ -203,7 +220,8 @@ var RegistroFinalHoraExtraPage = /** @class */ (function () {
             _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["LoadingController"],
             _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["ToastController"],
             _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["NavController"],
-            _ionic_native_keyboard_ngx__WEBPACK_IMPORTED_MODULE_6__["Keyboard"]])
+            _ionic_native_keyboard_ngx__WEBPACK_IMPORTED_MODULE_6__["Keyboard"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_7__["Router"]])
     ], RegistroFinalHoraExtraPage);
     return RegistroFinalHoraExtraPage;
 }());
