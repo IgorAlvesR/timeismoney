@@ -842,11 +842,11 @@ var AutenticacaoService = /** @class */ (function () {
         this.afs = afs;
         this.colecaoFuncionario = this.afs.collection('Funcionario');
     }
-    AutenticacaoService.prototype.login = function (funcionario) {
-        return this.afa.auth.signInWithEmailAndPassword(funcionario.email, funcionario.senha);
+    AutenticacaoService.prototype.login = function (usuario) {
+        return this.afa.auth.signInWithEmailAndPassword(usuario.email, usuario.senha);
     };
-    AutenticacaoService.prototype.registrarUsuario = function (funcionario) {
-        return this.afa.auth.createUserWithEmailAndPassword(funcionario.email, funcionario.senha);
+    AutenticacaoService.prototype.registrarUsuario = function (usuario) {
+        return this.afa.auth.createUserWithEmailAndPassword(usuario.email, usuario.senha);
     };
     AutenticacaoService.prototype.registrarFuncionario = function (funcionario) {
         return this.colecaoFuncionario.add(funcionario);

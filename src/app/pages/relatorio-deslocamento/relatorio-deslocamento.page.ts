@@ -48,12 +48,12 @@ export class RelatorioDeslocamentoPage implements OnInit {
       header: 'Você deseja realmente excluir esse registro?',
       buttons: [
         {
-          text: 'NÃO',
-        }, {
           text: 'SIM',
           handler: () => {
             this.deleteDeslocamento(id)
           }
+        }, {
+          text: 'NÃO'
         }
       ]
     })

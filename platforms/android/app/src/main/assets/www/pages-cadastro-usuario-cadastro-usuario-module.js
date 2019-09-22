@@ -58,7 +58,7 @@ var CadastroUsuarioPageModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-content class=\"conteudo ion-margin-bottom\" id=\"conteudo\" >\n  <ion-icon name=\"arrow-round-back\" button [routerLink]=\"['/entrar']\"></ion-icon>\n  <div class=\"ion-text-center logo\" [hidden]=\"keyboard.isVisible\">\n    <img src=\"../../../assets/imagens/logoInicial.svg\">\n  </div>\n  <div class=\"ion-text-center cadastro\">\n    <h6>Faça seu cadastro</h6>\n    <ion-input class=\"inputLogin ion-padding\" type=\"text\" placeholder=\"Nome\"  [(ngModel)]=\"funcionario.nome\"></ion-input>\n    <ion-input class=\"inputLogin ion-padding\" type=\"text\" placeholder=\"Função\"  [(ngModel)]=\"funcionario.funcao\"></ion-input>\n    <ion-input class=\"inputLogin ion-padding\" type=\"number\" placeholder=\"Salario Bruto\"  [(ngModel)]=\"funcionario.salarioBruto\"></ion-input>\n    <ion-input class=\"inputLogin ion-padding\" type=\"text\" placeholder=\"Email\" [(ngModel)]=\"funcionario.email\">\n    </ion-input>\n    <ion-input class=\"inputLogin ion-padding\" type=\"password\" placeholder=\"Senha\" [(ngModel)]=\"funcionario.senha\">\n    </ion-input>\n    <ion-input [hidden]=\"keyboard.isVisible\" class=\"inputLoginSubmit \" type=\"submit\" value=\"Cadastrar\" (click)=\"registrarFuncionario()\"></ion-input>\n  </div>\n</ion-content>"
+module.exports = "<ion-content class=\"conteudo ion-margin-bottom\" id=\"conteudo\" >\n  <ion-icon name=\"arrow-round-back\" button [routerLink]=\"['/entrar']\"></ion-icon>\n  <div class=\"ion-text-center logo\" [hidden]=\"keyboard.isVisible\">\n    <img src=\"../../../assets/imagens/logoInicial.svg\">\n  </div>\n  <div class=\"ion-text-center cadastro\">\n    <h6>Faça seu cadastro</h6>\n    <ion-input class=\"inputLogin ion-padding\" type=\"text\" placeholder=\"Nome\"  [(ngModel)]=\"funcionario.nome\"></ion-input>\n    <ion-input class=\"inputLogin ion-padding\" type=\"text\" placeholder=\"Função\"  [(ngModel)]=\"funcionario.funcao\"></ion-input>\n    <ion-input class=\"inputLogin ion-padding\" type=\"number\" placeholder=\"Salario Bruto\"  [(ngModel)]=\"funcionario.salarioBruto\"></ion-input>\n    <ion-input class=\"inputLogin ion-padding\" type=\"text\" placeholder=\"Email\" [(ngModel)]=\"usuario.email\">\n    </ion-input>\n    <ion-input class=\"inputLogin ion-padding\" type=\"password\" placeholder=\"Senha\" [(ngModel)]=\"usuario.senha\">\n    </ion-input>\n    <ion-input [hidden]=\"keyboard.isVisible\" class=\"inputLoginSubmit \" type=\"submit\" value=\"Cadastrar\" (click)=\"registrar()\"></ion-input>\n  </div>\n</ion-content>"
 
 /***/ }),
 
@@ -100,6 +100,7 @@ var CadastroUsuarioPage = /** @class */ (function () {
         this.servicoAutenticacao = servicoAutenticacao;
         this.keyboard = keyboard;
         this.funcionario = {};
+        this.usuario = {};
     }
     CadastroUsuarioPage.prototype.ngOnInit = function () {
         if (this.keyboard.isVisible) {
@@ -107,7 +108,7 @@ var CadastroUsuarioPage = /** @class */ (function () {
             content.style.backgroundColor = 'white';
         }
     };
-    CadastroUsuarioPage.prototype.registrarFuncionario = function () {
+    CadastroUsuarioPage.prototype.registrar = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
             var error_1, mensagem;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
@@ -115,17 +116,19 @@ var CadastroUsuarioPage = /** @class */ (function () {
                     case 0: return [4 /*yield*/, this.presentLoading()];
                     case 1:
                         _a.sent();
+                        this.funcionario.email = this.usuario.email;
                         _a.label = 2;
                     case 2:
                         _a.trys.push([2, 7, 8, 9]);
                         if (!(this.funcionario.nome == "" || this.funcionario.salarioBruto == null || this.funcionario.funcao == ""
-                            || this.funcionario.email == "")) return [3 /*break*/, 3];
+                            || this.usuario.email.length <= 4 || this.usuario.email.search("@") == 1 ||
+                            this.usuario.email.search(" ") == 1)) return [3 /*break*/, 3];
                         this.presentToast('Preencha todos os campos!');
                         return [3 /*break*/, 6];
-                    case 3: return [4 /*yield*/, this.servicoAutenticacao.registrarUsuario(this.funcionario)];
+                    case 3: return [4 /*yield*/, this.servicoAutenticacao.registrarFuncionario(this.funcionario)];
                     case 4:
                         _a.sent();
-                        return [4 /*yield*/, this.servicoAutenticacao.registrarFuncionario(this.funcionario)];
+                        return [4 /*yield*/, this.servicoAutenticacao.registrarUsuario(this.usuario)];
                     case 5:
                         _a.sent();
                         _a.label = 6;
@@ -145,6 +148,10 @@ var CadastroUsuarioPage = /** @class */ (function () {
                                 break;
                             case 'auth/weak-password':
                                 mensagem = 'Senha inválida!';
+                                break;
+                            default:
+                                alert(error_1);
+                                mensagem = 'Erro ao cadastrar funcionário, verifique seus dados e sua conexão';
                                 break;
                         }
                         this.presentToast(mensagem);

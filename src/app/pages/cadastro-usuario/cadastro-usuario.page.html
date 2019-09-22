@@ -8,9 +8,9 @@
     <ion-input class="inputLogin ion-padding" type="text" placeholder="Nome"  [(ngModel)]="funcionario.nome"></ion-input>
     <ion-input class="inputLogin ion-padding" type="text" placeholder="Função"  [(ngModel)]="funcionario.funcao"></ion-input>
     <ion-input class="inputLogin ion-padding" type="number" placeholder="Salario Bruto"  [(ngModel)]="funcionario.salarioBruto"></ion-input>
-    <ion-input class="inputLogin ion-padding" type="text" placeholder="Email" [(ngModel)]="funcionario.email">
+    <ion-input class="inputLogin ion-padding" type="text" placeholder="Email" [(ngModel)]="usuario.email">
     </ion-input>
-    <ion-input class="inputLogin ion-padding" type="password" placeholder="Senha" [(ngModel)]="funcionario.senha">
+    <ion-input class="inputLogin ion-padding" type="password" placeholder="Senha" [(ngModel)]="usuario.senha">
     </ion-input>
     <ion-input [hidden]="keyboard.isVisible" class="inputLoginSubmit " type="submit" value="Cadastrar" (click)="registrar()"></ion-input>
   </div>

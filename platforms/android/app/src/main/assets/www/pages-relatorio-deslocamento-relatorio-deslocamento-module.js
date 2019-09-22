@@ -140,12 +140,12 @@ var RelatorioDeslocamentoPage = /** @class */ (function () {
                             header: 'Você deseja realmente excluir esse registro?',
                             buttons: [
                                 {
-                                    text: 'NÃO',
-                                }, {
                                     text: 'SIM',
                                     handler: function () {
                                         _this.deleteDeslocamento(id);
                                     }
+                                }, {
+                                    text: 'NÃO'
                                 }
                             ]
                         })];

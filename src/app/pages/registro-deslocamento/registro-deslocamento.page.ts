@@ -47,6 +47,7 @@ export class RegistroDeslocamentoPage implements OnInit {
   }
 
   async ionViewWillEnter(){
+    await this.loadMap()
     await this.checkGPSPermission()
     await this.loadMap()
   }

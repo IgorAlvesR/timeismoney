@@ -53,7 +53,7 @@ export class RegistroHoraExtraPage implements OnInit {
   }
 
   ngOnInit() {
-    
+    this.verificarHoraExtraPendente()
   }
 
   async verificarHoraExtraPendente() {
@@ -74,12 +74,13 @@ export class RegistroHoraExtraPage implements OnInit {
       subHeader: 'Você possui hora extra para ser finalizada, deseja finaliza-la ?',
       buttons: [
         {
-          text: 'NÃO',
-        }, {
           text: 'SIM',
           handler: () => {
             this.navCtrl.navigateRoot('registro-final-hora-extra')
           }
+        }, {
+          text: 'NÃO'
+         
         }
       ]
     })
@@ -100,9 +101,9 @@ export class RegistroHoraExtraPage implements OnInit {
     this.horaExtraInicio.cont = new Date().getTime()
     this.horaExtraInicio.diaSemana = moment().day()
     this.horaExtraInicio.horaDataCalculoInicio = moment().locale('pt-br').format('DD/MM/YYYY HH:mm:ss')
-
+   
     try {
-      if (this.horaExtraInicio.diaSemana != 6 && this.horaExtraInicio.diaSemana != 7) {
+      if (this.horaExtraInicio.diaSemana != 6 && this.horaExtraInicio.diaSemana != 0) {
         if ((this.horaExtraInicio.horaCalculoInicial >= 8 && this.horaExtraInicio.horaCalculoInicial < 12)
           || (this.horaExtraInicio.horaCalculoInicial == 13 && this.horaExtraInicio.minutoCalculoInicial > 30)
           || (this.horaExtraInicio.horaCalculoInicial > 13 && this.horaExtraInicio.horaCalculoInicial < 18)) {

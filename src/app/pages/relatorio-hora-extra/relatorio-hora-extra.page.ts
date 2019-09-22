@@ -58,12 +58,12 @@ export class RelatorioHoraExtraPage implements OnInit {
       header: 'Você deseja realmente excluir esse registro?',
       buttons: [
         {
-          text: 'NÃO',
-        }, {
           text: 'SIM',
           handler: () => {
             this.deleteHoraExtra(id)
           }
+        }, {
+          text: 'NÃO'
         }
       ]
     })

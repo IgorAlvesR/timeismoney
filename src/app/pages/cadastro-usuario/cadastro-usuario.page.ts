@@ -3,6 +3,7 @@ import { Funcionario } from 'src/app/Models/funcionario'
 import { LoadingController, ToastController } from '@ionic/angular'
 import { AutenticacaoService } from 'src/app/servicos/autenticacao.service'
 import { Keyboard } from '@ionic-native/keyboard/ngx'
+import { Usuario } from 'src/app/Models/usuario'
 
 @Component({
   selector: 'app-cadastro-usuario',
@@ -13,8 +14,9 @@ import { Keyboard } from '@ionic-native/keyboard/ngx'
 export class CadastroUsuarioPage implements OnInit {
 
   public funcionario: Funcionario = {}
+  public usuario: Usuario = {}
   private carregando: any
-
+  
   constructor(
     private loadingCtrl: LoadingController,
     private toastCtrl: ToastController,
@@ -23,7 +25,6 @@ export class CadastroUsuarioPage implements OnInit {
   ) { }
 
   ngOnInit() {
-
     if(this.keyboard.isVisible){
       let content = document.getElementById('conteudo')
       content.style.backgroundColor = 'white'
@@ -32,13 +33,15 @@ export class CadastroUsuarioPage implements OnInit {
 
   async registrar() {
     await this.presentLoading()
+    this.funcionario.email = this.usuario.email
     try {
       if(this.funcionario.nome == "" || this.funcionario.salarioBruto == null || this.funcionario.funcao == ""
-      || this.funcionario.email == ""){
+      || this.usuario.email.length <=4 || this.usuario.email.search("@") == 1 ||
+      this.usuario.email.search(" ") == 1 ){
         this.presentToast('Preencha todos os campos!')
       }else {
         await this.servicoAutenticacao.registrarFuncionario(this.funcionario)
-        await this.servicoAutenticacao.registrarUsuario(this.funcionario)
+        await this.servicoAutenticacao.registrarUsuario(this.usuario)
       }
       
     } catch (error) {
@@ -56,7 +59,8 @@ export class CadastroUsuarioPage implements OnInit {
         case 'auth/weak-password':
           mensagem = 'Senha inválida!'
           break
-        default: 
+        default:
+          alert(error)
           mensagem = 'Erro ao cadastrar funcionário, verifique seus dados e sua conexão'
           break
       }

@@ -132,11 +132,14 @@ var RegistroDeslocamentoPage = /** @class */ (function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.checkGPSPermission()];
+                    case 0: return [4 /*yield*/, this.loadMap()];
                     case 1:
                         _a.sent();
-                        return [4 /*yield*/, this.loadMap()];
+                        return [4 /*yield*/, this.checkGPSPermission()];
                     case 2:
+                        _a.sent();
+                        return [4 /*yield*/, this.loadMap()];
+                    case 3:
                         _a.sent();
                         return [2 /*return*/];
                 }

@@ -154,12 +154,12 @@ var RelatorioHoraExtraPage = /** @class */ (function () {
                             header: 'Você deseja realmente excluir esse registro?',
                             buttons: [
                                 {
-                                    text: 'NÃO',
-                                }, {
                                     text: 'SIM',
                                     handler: function () {
                                         _this.deleteHoraExtra(id);
                                     }
+                                }, {
+                                    text: 'NÃO'
                                 }
                             ]
                         })];

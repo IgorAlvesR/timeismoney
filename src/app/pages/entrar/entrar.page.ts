@@ -4,6 +4,7 @@ import { Funcionario } from 'src/app/Models/funcionario'
 import { AutenticacaoService } from 'src/app/servicos/autenticacao.service'
 import { LoadingController, ToastController } from '@ionic/angular'
 import { Keyboard } from '@ionic-native/keyboard/ngx'
+import { Usuario } from 'src/app/Models/usuario'
 
 
 @Component({
@@ -13,7 +14,7 @@ import { Keyboard } from '@ionic-native/keyboard/ngx'
 })
 export class EntrarPage implements OnInit {
 
-  public funcionario: Funcionario = {}
+  public usuario: Usuario = {}
   private carregando: any
 
   constructor(
@@ -29,7 +30,7 @@ export class EntrarPage implements OnInit {
   async login() {
     await this.presentLoading()
     try {
-      await this.servicoAutenticacao.login(this.funcionario)
+      await this.servicoAutenticacao.login(this.usuario)
     } catch (error) {
       let mensagem: string
       switch (error.code) {
