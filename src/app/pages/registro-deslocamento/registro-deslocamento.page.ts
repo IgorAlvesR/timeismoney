@@ -1,15 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Platform, LoadingController, NavController, ToastController } from '@ionic/angular';
+import { LoadingController, NavController, ToastController } from '@ionic/angular';
 import { GoogleMap, GoogleMaps, GoogleMapOptions, GoogleMapsEvent, MyLocation, GoogleMapsAnimation } from '@ionic-native/google-maps';
 import { NativeGeocoder, NativeGeocoderOptions, NativeGeocoderResult } from '@ionic-native/native-geocoder/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { DeslocamentoService } from 'src/app/servicos/deslocamento.service';
 import { Deslocamento } from 'src/app/Models/deslocamento';
 import * as moment from 'moment'
-import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
 import { AutenticacaoService } from 'src/app/servicos/autenticacao.service';
-import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
+import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 
 
 @Component({
@@ -33,23 +33,19 @@ export class RegistroDeslocamentoPage implements OnInit {
     private deslocamentoService: DeslocamentoService,
     private toastCtrl: ToastController,
     private navCtrl: NavController,
-    private locationAccuracy: LocationAccuracy,
     private authService: AutenticacaoService,
-    private androidPermissions: AndroidPermissions,
-    private angularFirestore: AngularFirestore
+    private angularFirestore: AngularFirestore,
+    private locationAccuracy: LocationAccuracy,
+    private androidPermissions: AndroidPermissions
   ) { }
 
   ngOnInit() {
+    this.checkGPSPermission()
     this.mapElement =  this.mapElement.nativeElement
     this.mapElement.style.width = '100%'
-    this.mapElement.style.height = '50%'
+    this.mapElement.style.height = '50%'    
+    this.loadMap()
     
-  }
-
-  async ionViewWillEnter(){
-    await this.loadMap()
-    await this.checkGPSPermission()
-    await this.loadMap()
   }
 
   async reverseGeocoding(latitude, longitude) {
@@ -96,7 +92,6 @@ export class RegistroDeslocamentoPage implements OnInit {
     await this.addOriginMarker()
     try {
       await this.map.one(GoogleMapsEvent.MAP_READY)
-      await this.addOriginMarker()
     } catch (error) {
       console.error(error)
     }
@@ -155,8 +150,4 @@ export class RegistroDeslocamentoPage implements OnInit {
   askToTurnOnGPS() {    
     this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY)
   }
-
-
-
-
 }
