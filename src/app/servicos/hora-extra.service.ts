@@ -44,14 +44,11 @@ export class HoraExtraService {
     let userId = this.authService.getAuth().currentUser.uid
     let query = this.afs.collection('HoraExtra', ref => (ref.where('userId', '==', userId).limit(1).orderBy('cont', 'desc')))
       .snapshotChanges()
-      .pipe(map(actions => {
-        actions.map(a => {
-          this.horas = a.payload.doc.ref
-        })
-      })
-      )
-
-    query.subscribe(() => {
+      .pipe(flatMap(horasOb => horasOb))
+  
+    query.subscribe((doc) => {
+      this.horas = doc.payload.doc.ref
+      console.log(this.horas)
       return this.horas.update(horaExtra)
     })
     

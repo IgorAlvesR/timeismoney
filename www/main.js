@@ -463,6 +463,10 @@ var map = {
 		"common",
 		"pages-relatorio-deslocamento-relatorio-deslocamento-module"
 	],
+	"./pages/relatorio-detalhado/relatorio-detalhado.module": [
+		"./src/app/pages/relatorio-detalhado/relatorio-detalhado.module.ts",
+		"pages-relatorio-detalhado-relatorio-detalhado-module"
+	],
 	"./pages/relatorio-hora-extra/relatorio-hora-extra.module": [
 		"./src/app/pages/relatorio-hora-extra/relatorio-hora-extra.module.ts",
 		"default~pages-registro-deslocamento-registro-deslocamento-module~pages-registro-final-hora-extra-reg~0d748602",
@@ -540,7 +544,8 @@ var routes = [
         path: 'relatorio-deslocamento',
         loadChildren: './pages/relatorio-deslocamento/relatorio-deslocamento.module#RelatorioDeslocamentoPageModule',
         canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_4__["AuthGuard"]]
-    }
+    },
+    { path: 'relatorio-detalhado', loadChildren: './pages/relatorio-detalhado/relatorio-detalhado.module#RelatorioDetalhadoPageModule' }
 ];
 var AppRoutingModule = /** @class */ (function () {
     function AppRoutingModule() {
@@ -915,7 +920,6 @@ var HoraExtraService = /** @class */ (function () {
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (actions) {
             actions.map(function (a) {
                 _this.horas = a.payload.doc.ref;
-                _this.horas.update(horaExtra);
             });
         }));
         query.subscribe(function () {

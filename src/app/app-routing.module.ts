@@ -32,7 +32,11 @@ const routes: Routes = [
     loadChildren: './pages/relatorio-deslocamento/relatorio-deslocamento.module#RelatorioDeslocamentoPageModule',
     canActivate: [AuthGuard]
   },
-  { path: 'relatorio-detalhado', loadChildren: './pages/relatorio-detalhado/relatorio-detalhado.module#RelatorioDetalhadoPageModule' }
+  { 
+    path: 'relatorio-detalhado', 
+    loadChildren: './pages/relatorio-detalhado/relatorio-detalhado.module#RelatorioDetalhadoPageModule',
+    canActivate: [AuthGuard]
+  }
 ];
 
 @NgModule({

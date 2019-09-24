@@ -74,8 +74,6 @@ export class RegistroFinalHoraExtraPage implements OnInit {
         this.carregando.dismiss()
       } else {
         await this.horaSevice.update(this.horaExtraFinal)
-        await this.navCtrl.navigateRoot('registro-hora-extra')
-        //await this.navCtrl.navigateRoot('registro-hora-extra')
         await window.location.replace('registro-hora-extra')
         await this.carregando.dismiss()
       }
