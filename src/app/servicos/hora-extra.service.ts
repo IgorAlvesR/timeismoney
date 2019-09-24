@@ -47,7 +47,6 @@ export class HoraExtraService {
       .pipe(map(actions => {
         actions.map(a => {
           this.horas = a.payload.doc.ref
-          this.horas.update(horaExtra)
         })
       })
       )

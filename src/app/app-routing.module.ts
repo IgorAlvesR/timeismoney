@@ -31,7 +31,8 @@ const routes: Routes = [
     path: 'relatorio-deslocamento',
     loadChildren: './pages/relatorio-deslocamento/relatorio-deslocamento.module#RelatorioDeslocamentoPageModule',
     canActivate: [AuthGuard]
-  }
+  },
+  { path: 'relatorio-detalhado', loadChildren: './pages/relatorio-detalhado/relatorio-detalhado.module#RelatorioDetalhadoPageModule' }
 ];
 
 @NgModule({
