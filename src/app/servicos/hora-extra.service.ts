@@ -8,6 +8,7 @@ import { Cidade } from '../Models/cidade';
 import { Deslocamento } from '../Models/deslocamento';
 import { map } from 'rxjs/operators';
 import { ObserveOnSubscriber } from 'rxjs/internal/operators/observeOn';
+import { Funcionario } from '../Models/funcionario';
 
 
 
@@ -23,7 +24,8 @@ export class HoraExtraService {
   public horasExtras: Observable<HoraExtra[]>
   private horas: DocumentReference
   public cidades: Observable<Cidade[]>
-
+  public funcionario: Observable<Funcionario[]>
+   
   constructor(private afs: AngularFirestore, private authService: AutenticacaoService) {
     //cria uma referencia da coleção HoraExtraInicio e HoraExtraFinal
     let userId = authService.getAuth().currentUser.uid
@@ -48,7 +50,6 @@ export class HoraExtraService {
   
     query.subscribe((doc) => {
       this.horas = doc.payload.doc.ref
-      console.log(this.horas)
       return this.horas.update(horaExtra)
     })
     
@@ -69,6 +70,11 @@ export class HoraExtraService {
   
   buscarCidades(){
     return this.cidades = this.colecaoCidades.valueChanges()
+  }
+
+  buscarFuncionario(){
+    let email = this.authService.getAuth().currentUser.email
+    return this.funcionario =  this.afs.collection('Funcionario', ref => (ref.where('email','==',email)).limit(1)).valueChanges()
   }
 
  

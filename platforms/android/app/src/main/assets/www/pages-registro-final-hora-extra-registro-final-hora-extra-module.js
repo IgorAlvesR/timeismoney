@@ -148,35 +148,28 @@ var RegistroFinalHoraExtraPage = /** @class */ (function () {
                         this.horaExtraFinal.horaDataCalculoFinal = moment__WEBPACK_IMPORTED_MODULE_2__().locale('pt-br').format('DD/MM/YYYY HH:mm:ss');
                         _a.label = 2;
                     case 2:
-                        _a.trys.push([2, 9, , 10]);
+                        _a.trys.push([2, 8, , 9]);
                         if (!(this.horaExtraFinal.descricao == null || this.horaExtraFinal.descricao == '' || this.horaExtraFinal.localizacao == null || this.horaExtraFinal.localizacao == '')) return [3 /*break*/, 3];
                         this.presentToast("Preenha todos os campos!");
                         this.carregando.dismiss();
-                        return [3 /*break*/, 8];
+                        return [3 /*break*/, 7];
                     case 3: return [4 /*yield*/, this.horaSevice.update(this.horaExtraFinal)];
                     case 4:
                         _a.sent();
-                        return [4 /*yield*/, this.navCtrl.navigateRoot('registro-hora-extra')
-                            //await this.navCtrl.navigateRoot('registro-hora-extra')
-                        ];
+                        return [4 /*yield*/, window.location.replace('registro-hora-extra')];
                     case 5:
                         _a.sent();
-                        //await this.navCtrl.navigateRoot('registro-hora-extra')
-                        return [4 /*yield*/, window.location.replace('registro-hora-extra')];
-                    case 6:
-                        //await this.navCtrl.navigateRoot('registro-hora-extra')
-                        _a.sent();
                         return [4 /*yield*/, this.carregando.dismiss()];
-                    case 7:
+                    case 6:
                         _a.sent();
-                        _a.label = 8;
-                    case 8: return [3 /*break*/, 10];
-                    case 9:
+                        _a.label = 7;
+                    case 7: return [3 /*break*/, 9];
+                    case 8:
                         error_1 = _a.sent();
                         this.presentToast(error_1);
                         this.carregando.dismiss();
-                        return [3 /*break*/, 10];
-                    case 10: return [2 /*return*/];
+                        return [3 /*break*/, 9];
+                    case 9: return [2 /*return*/];
                 }
             });
         });

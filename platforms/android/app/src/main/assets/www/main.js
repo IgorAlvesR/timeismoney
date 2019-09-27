@@ -545,7 +545,11 @@ var routes = [
         loadChildren: './pages/relatorio-deslocamento/relatorio-deslocamento.module#RelatorioDeslocamentoPageModule',
         canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_4__["AuthGuard"]]
     },
-    { path: 'relatorio-detalhado', loadChildren: './pages/relatorio-detalhado/relatorio-detalhado.module#RelatorioDetalhadoPageModule' }
+    {
+        path: 'relatorio-detalhado',
+        loadChildren: './pages/relatorio-detalhado/relatorio-detalhado.module#RelatorioDetalhadoPageModule',
+        canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_4__["AuthGuard"]]
+    }
 ];
 var AppRoutingModule = /** @class */ (function () {
     function AppRoutingModule() {
@@ -895,7 +899,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 var HoraExtraService = /** @class */ (function () {
     function HoraExtraService(afs, authService) {
         this.afs = afs;
@@ -917,12 +920,10 @@ var HoraExtraService = /** @class */ (function () {
         var userId = this.authService.getAuth().currentUser.uid;
         var query = this.afs.collection('HoraExtra', function (ref) { return (ref.where('userId', '==', userId).limit(1).orderBy('cont', 'desc')); })
             .snapshotChanges()
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (actions) {
-            actions.map(function (a) {
-                _this.horas = a.payload.doc.ref;
-            });
-        }));
-        query.subscribe(function () {
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (horasOb) { return horasOb; }));
+        query.subscribe(function (doc) {
+            _this.horas = doc.payload.doc.ref;
+            console.log(_this.horas);
             return _this.horas.update(horaExtra);
         });
     };
