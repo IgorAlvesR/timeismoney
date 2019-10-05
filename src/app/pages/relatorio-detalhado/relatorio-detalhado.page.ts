@@ -156,7 +156,6 @@ export class RelatorioDetalhadoPage implements OnInit {
     var milisegundos: number = 0
     let somaMilisegundos: number = 0
     await this.horasService.getHorasExtrasTotais().subscribe(dados => {
-      console.log(dados)
       dados.forEach(element => {
         var horaFinal = element.horaDataCalculoFinal
         var horaInicial = element.horaDataCalculoInicio

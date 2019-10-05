@@ -99,7 +99,7 @@ export class RegistroHoraExtraPage implements OnInit {
     this.horaExtraInicio.userId = this.authService.getAuth().currentUser.uid
     this.horaExtraInicio.dataInicial = moment().locale('pt-br').format('L')
     this.horaExtraInicio.cont = new Date().getTime()
-    this.horaExtraInicio.diaSemana = 0
+    this.horaExtraInicio.diaSemana = moment().day()
     this.horaExtraInicio.horaDataCalculoInicio = moment().locale('pt-br').format('DD/MM/YYYY HH:mm:ss')
    
     try {

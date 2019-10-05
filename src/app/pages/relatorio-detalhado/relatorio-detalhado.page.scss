@@ -11,8 +11,41 @@ ion-toolbar{
     }
 }
 
-ion-icon{
+#back{
     width: 25px;
     height: 25px;
     margin-left: 5px;
 }
+
+ion-row{
+    display: flex;
+    justify-content: center;
+}
+
+ion-icon{
+    width: 35px;
+    height: 35px;
+    padding: 0px 15px;
+}
+
+i{
+    padding: 0px 8px;
+}
+
+.descricao{
+    padding: 0px 15px;
+}
+
+#quantidadeHoras{
+    margin-top: 80%;
+    margin-bottom: 20%;
+}
+
+#cash{
+    color: rgb(0, 98, 0);
+}
+
+ion-col{
+    padding: 0px;
+}
+
