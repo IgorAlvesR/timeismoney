@@ -5,9 +5,6 @@ import { AutenticacaoService } from './autenticacao.service';
 import { HoraExtra } from '../Models/hora-extra';
 import { flatMap } from 'rxjs/operators';
 import { Cidade } from '../Models/cidade';
-import { Deslocamento } from '../Models/deslocamento';
-import { map } from 'rxjs/operators';
-import { ObserveOnSubscriber } from 'rxjs/internal/operators/observeOn';
 import { Funcionario } from '../Models/funcionario';
 
 
@@ -19,6 +16,9 @@ import { Funcionario } from '../Models/funcionario';
 export class HoraExtraService {
 
   private colecaoHoraExtra: AngularFirestoreCollection<HoraExtra>
+  private colecaoHoraExtra60porCento: AngularFirestoreCollection<HoraExtra>
+  private colecaoHoraExtra100porCento: AngularFirestoreCollection<HoraExtra>
+  private colecaoHorasExtrasRealizadas: AngularFirestoreCollection<HoraExtra>
   private colecaoCidades: AngularFirestoreCollection<Cidade>
   private colecaoHoraExtraRegistro: AngularFirestoreCollection<HoraExtra>
   public horasExtras: Observable<HoraExtra[]>
@@ -32,6 +32,9 @@ export class HoraExtraService {
     this.colecaoCidades = this.afs.collection('Cidades')
     this.colecaoHoraExtraRegistro = this.afs.collection<HoraExtra>('HoraExtra')
     this.colecaoHoraExtra = this.afs.collection('HoraExtra', ref => ref.where('userId', '==', userId))
+    this.colecaoHoraExtra60porCento = this.afs.collection('HoraExtra', ref => ref.where('userId','==',userId).where('diaSemana','<',7).where('diaSemana','>',0))
+    this.colecaoHoraExtra100porCento = this.afs.collection('HoraExtra', ref => ref.where('userId','==',userId).where('diaSemana','==',0))
+    this.colecaoHorasExtrasRealizadas = this.afs.collection('HoraExtra', ref => ref.where('userId','==',userId))
   }
 
   registrarHoraExtra(horaExtra: HoraExtra) {
@@ -40,6 +43,18 @@ export class HoraExtraService {
 
   getHorasExtras() {
     return this.horasExtras = this.colecaoHoraExtra.valueChanges()
+  }
+
+  getHorasExtras60porCento(){
+    return this.horasExtras = this.colecaoHoraExtra60porCento.valueChanges()
+  }
+
+  getHorasExtras100porCento(){
+    return this.horasExtras = this.colecaoHoraExtra100porCento.valueChanges()
+  }
+
+  getHorasExtrasTotais(){
+    return this.horasExtras = this.colecaoHorasExtrasRealizadas.valueChanges()
   }
 
   update(horaExtra: HoraExtra) {
@@ -74,7 +89,7 @@ export class HoraExtraService {
 
   buscarFuncionario(){
     let email = this.authService.getAuth().currentUser.email
-    return this.funcionario =  this.afs.collection('Funcionario', ref => (ref.where('email','==',email)).limit(1)).valueChanges()
+    return this.funcionario =  this.afs.collection('Funcionario', ref => (ref.where('email','==',email))).valueChanges()
   }
 
  
