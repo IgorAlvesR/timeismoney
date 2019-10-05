@@ -7,63 +7,69 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-grid>
-  <div id="quantidadeHoras">
-    <ion-row>
-      <ion-col>
-        <ion-icon name="time"></ion-icon>
-      </ion-col>
-      <ion-col>
-        <ion-icon name="time"></ion-icon>
-      </ion-col>
-      <ion-col>
-        <ion-icon name="time"></ion-icon>
-      </ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col><i class="descricao">60%</i></ion-col>
-      <ion-col><i class="descricao">100%</i></ion-col>
-      <ion-col><i class="descricao">Total</i></ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col><i>{{horaFormatada}}</i></ion-col>
-      <ion-col><i>{{horas100PorcentoFormatada}}</i></ion-col>
-      <ion-col><i>{{totalDeHorasRealizadasFormatadas}}</i></ion-col>
-    </ion-row>
-  </div>
-
-  <div id="quantidadeReais">
-    <ion-row id="cash">
-      <ion-col >
-        <ion-icon  name="cash"></ion-icon>
-      </ion-col>
-      <ion-col>
-        <ion-icon name="cash"></ion-icon>
-      </ion-col>
-      <ion-col>
-        <ion-icon name="cash"></ion-icon>
-      </ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col><i class="descricao">60%</i></ion-col>
-      <ion-col><i class="descricao">100%</i></ion-col>
-      <ion-col><i class="descricao">Total</i></ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col><i> {{valorEmReais | currency:'BRL':true:'1.2-2'}}</i></ion-col>
-      <ion-col><i>{{valorHora100PorCentoEmReais | currency:'BRL':true:'1.2-2'}}</i></ion-col>
-      <ion-col><i> {{valorEmReaisDeTodasHorasRealizadas | currency:'BRL':true:'1.2-2'}}</i></ion-col>
-    </ion-row>
-  </div>
-
-</ion-grid>
-
 <ion-content>
 
+  <h1 id="nome" class="ion-text-center">{{nomeFuncionario}}</h1>
+  <p id="funcao" class="ion-text-center">{{funcao}}</p>
+ 
+  <ion-grid>
+    <div id="quantidadeHoras">
+      <ion-row>
+        <ion-col>
+          <ion-icon name="time"></ion-icon>
+        </ion-col>
+        <ion-col>
+          <ion-icon name="time"></ion-icon>
+        </ion-col>
+        <ion-col>
+          <ion-icon name="time"></ion-icon>
+        </ion-col>
+      </ion-row>
 
+      <ion-row>
+        <ion-col><span class="descricao">60%</span></ion-col>
+        <ion-col><span class="descricao">100%</span></ion-col>
+        <ion-col><span class="descricao">Total</span></ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col><span id="horas60">{{horaFormatada}}</span></ion-col>
+        <ion-col><span id="horas100">{{horas100PorcentoFormatada}}</span></ion-col>
+        <ion-col><span id="total">{{totalDeHorasRealizadasFormatadas}}</span></ion-col>
+      </ion-row>
+    </div>
+
+    <!-- <div id="quantidadeReais">
+      <ion-row id="cash">
+        <ion-col>
+          <ion-icon name="cash"></ion-icon>
+        </ion-col>
+        <ion-col>
+          <ion-icon name="cash"></ion-icon>
+        </ion-col>
+        <ion-col>
+          <ion-icon name="cash"></ion-icon>
+        </ion-col>
+      </ion-row> -->
+
+      <!-- <ion-row>
+        <ion-col><span class="descricao">60%</span></ion-col>
+        <ion-col><span class="descricao">100%</span></ion-col>
+        <ion-col><span class="descricao">Total</span></ion-col>
+      </ion-row> -->
+
+      <!-- <ion-row>
+        <ion-col><span> {{valorEmReais | currency:'BRL':true:'1.2-2'}}</span></ion-col>
+        <ion-col><span>{{valorHora100PorCentoEmReais | currency:'BRL':true:'1.2-2'}}</span></ion-col>
+        <ion-col><span> {{valorEmReaisDeTodasHorasRealizadas | currency:'BRL':true:'1.2-2'}}</span></ion-col>
+      </ion-row> -->
+    <!-- </div> -->
+
+  </ion-grid>
+
+  <div id="totalHoras">
+      <h4>Total</h4>
+      <h1>{{valorEmReaisDeTodasHorasRealizadas | currency:'BRL':true:'1.2-2'}}</h1>
+    </div>
 
 </ion-content>

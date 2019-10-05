@@ -27,6 +27,8 @@ export class RelatorioDetalhadoPage implements OnInit {
   public totalDeHorasExtrasRealizadasEmHoras: number = 0
   public valorEmReaisDeTodasHorasRealizadas: number = 0
   public totalDeHorasRealizadasFormatadas: string = ''
+  public nomeFuncionario: string = ''
+  public funcao: string = ''
 
   constructor(private horasService: HoraExtraService) { }
 
@@ -77,6 +79,8 @@ export class RelatorioDetalhadoPage implements OnInit {
 
     let resultFuncionario: Observable<Funcionario[]> = await this.horasService.buscarFuncionario()
     resultFuncionario.subscribe(result => {
+      this.funcao = result[0].funcao
+      this.nomeFuncionario = result[0].nome
       this.valorHora100PorCentoEmReais = ((result[0].salarioBruto / 220) * 2) * this.totalDeHorasExtras100PorCentoEmHoras
     })
     return this.valorHora100PorCentoEmReais

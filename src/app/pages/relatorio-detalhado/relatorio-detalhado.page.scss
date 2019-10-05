@@ -1,12 +1,12 @@
 ion-toolbar{
-    --background: var(--ion-color-padraoApp);
+    --background: #1106ac;
     color: white;
 
     .header-top{
         display: flex;
         align-items: center;
         p{
-            margin-left: 15%;
+            margin-left: 10%;
         }
     }
 }
@@ -26,18 +26,22 @@ ion-icon{
     width: 35px;
     height: 35px;
     padding: 0px 15px;
+    color: white;
 }
 
-i{
+span{
     padding: 0px 8px;
+    color:white;
 }
 
 .descricao{
     padding: 0px 15px;
+    color: rgb(189, 182, 182);
+    font-size: 13pt;
 }
 
 #quantidadeHoras{
-    margin-top: 80%;
+    margin-top: 0%;
     margin-bottom: 20%;
 }
 
@@ -46,6 +50,49 @@ i{
 }
 
 ion-col{
-    padding: 0px;
+    padding: 0px 15px;
 }
+
+h1{
+    color: white;
+}
+
+#nome{
+    color: white;
+}
+#funcao{
+    margin-bottom: 15%;
+    color: white;
+}
+
+#totalHoras{
+    text-align: center;
+    width: 50%;
+    height: 30%;
+    border: 5px solid #4BE25A;
+    border-radius: 100%;
+    margin: 0 auto;
+    padding-top: 15px;
+}
+
+ion-content{
+    --background: linear-gradient(to bottom, #1106ac, #c4d3da 130%);
+}
+
+h4{
+    color: white;
+}
+
+#horas60{
+    color: #FBB52F;
+}
+
+#horas100{
+    color: #00F0FF;
+}
+
+#total{
+    color: #4BE25A;
+}
+
 
