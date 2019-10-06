@@ -3,6 +3,9 @@ import { HoraExtraService } from 'src/app/servicos/hora-extra.service';
 import {  Observable } from 'rxjs';
 import { Funcionario } from 'src/app/Models/funcionario';
 import * as moment from 'moment'
+import { StatusBar } from '@ionic-native/status-bar/ngx';
+
+
 
 
 @Component({
@@ -29,11 +32,17 @@ export class RelatorioDetalhadoPage implements OnInit {
   public totalDeHorasRealizadasFormatadas: string = ''
   public nomeFuncionario: string = ''
   public funcao: string = ''
+  public hora = {}
 
-  constructor(private horasService: HoraExtraService) { }
+
+  constructor(private horasService: HoraExtraService, public statusBar: StatusBar) 
+  {
+    this.statusBar.backgroundColorByName('#1106ac')
+  }
 
   async ngOnInit() {
     try {
+      
       await this.calculototalDeHoras()
       await this.calculototalDeHoras100PorCento()
       await this.calculoValorTotalHorasExtras60PorCento()
@@ -54,10 +63,7 @@ export class RelatorioDetalhadoPage implements OnInit {
     resultFuncionario.subscribe(result => {
       this.valorEmReais = ((result[0].salarioBruto / 220) * 1.6) * this.totalDeHorasExtrasEmHoras
     })
-
     return this.valorEmReais
-
-
   }
 
   async calculoValorTotalHorasRealizadas() {

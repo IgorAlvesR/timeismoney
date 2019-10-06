@@ -442,19 +442,19 @@ var map = {
 	],
 	"./pages/registro-deslocamento/registro-deslocamento.module": [
 		"./src/app/pages/registro-deslocamento/registro-deslocamento.module.ts",
-		"default~pages-registro-deslocamento-registro-deslocamento-module~pages-registro-final-hora-extra-reg~0d748602",
+		"default~pages-registro-deslocamento-registro-deslocamento-module~pages-registro-final-hora-extra-reg~a32f17ce",
 		"common",
 		"pages-registro-deslocamento-registro-deslocamento-module"
 	],
 	"./pages/registro-final-hora-extra/registro-final-hora-extra.module": [
 		"./src/app/pages/registro-final-hora-extra/registro-final-hora-extra.module.ts",
-		"default~pages-registro-deslocamento-registro-deslocamento-module~pages-registro-final-hora-extra-reg~0d748602",
+		"default~pages-registro-deslocamento-registro-deslocamento-module~pages-registro-final-hora-extra-reg~a32f17ce",
 		"common",
 		"pages-registro-final-hora-extra-registro-final-hora-extra-module"
 	],
 	"./pages/registro-hora-extra/registro-hora-extra.module": [
 		"./src/app/pages/registro-hora-extra/registro-hora-extra.module.ts",
-		"default~pages-registro-deslocamento-registro-deslocamento-module~pages-registro-final-hora-extra-reg~0d748602",
+		"default~pages-registro-deslocamento-registro-deslocamento-module~pages-registro-final-hora-extra-reg~a32f17ce",
 		"common",
 		"pages-registro-hora-extra-registro-hora-extra-module"
 	],
@@ -465,13 +465,19 @@ var map = {
 	],
 	"./pages/relatorio-detalhado/relatorio-detalhado.module": [
 		"./src/app/pages/relatorio-detalhado/relatorio-detalhado.module.ts",
+		"default~pages-registro-deslocamento-registro-deslocamento-module~pages-registro-final-hora-extra-reg~a32f17ce",
+		"common",
 		"pages-relatorio-detalhado-relatorio-detalhado-module"
 	],
 	"./pages/relatorio-hora-extra/relatorio-hora-extra.module": [
 		"./src/app/pages/relatorio-hora-extra/relatorio-hora-extra.module.ts",
-		"default~pages-registro-deslocamento-registro-deslocamento-module~pages-registro-final-hora-extra-reg~0d748602",
+		"default~pages-registro-deslocamento-registro-deslocamento-module~pages-registro-final-hora-extra-reg~a32f17ce",
 		"common",
 		"pages-relatorio-hora-extra-relatorio-hora-extra-module"
+	],
+	"./pages/teste-data/teste-data.module": [
+		"./src/app/pages/teste-data/teste-data.module.ts",
+		"pages-teste-data-teste-data-module"
 	]
 };
 function webpackAsyncContext(req) {
@@ -549,7 +555,8 @@ var routes = [
         path: 'relatorio-detalhado',
         loadChildren: './pages/relatorio-detalhado/relatorio-detalhado.module#RelatorioDetalhadoPageModule',
         canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_4__["AuthGuard"]]
-    }
+    },
+    { path: 'teste-data', loadChildren: './pages/teste-data/teste-data.module#TesteDataPageModule' }
 ];
 var AppRoutingModule = /** @class */ (function () {
     function AppRoutingModule() {
@@ -907,13 +914,28 @@ var HoraExtraService = /** @class */ (function () {
         var userId = authService.getAuth().currentUser.uid;
         this.colecaoCidades = this.afs.collection('Cidades');
         this.colecaoHoraExtraRegistro = this.afs.collection('HoraExtra');
-        this.colecaoHoraExtra = this.afs.collection('HoraExtra', function (ref) { return ref.where('userId', '==', userId); });
+        //this.colecaoHoraExtra = this.afs.collection('HoraExtra', ref => ref.where('userId', '==', userId).where('dataIniciaç','>=',dataInicial))
+        this.colecaoHoraExtra60porCento = this.afs.collection('HoraExtra', function (ref) { return ref.where('userId', '==', userId).where('diaSemana', '<', 7).where('diaSemana', '>', 0); });
+        this.colecaoHoraExtra100porCento = this.afs.collection('HoraExtra', function (ref) { return ref.where('userId', '==', userId).where('diaSemana', '==', 0); });
+        this.colecaoHorasExtrasRealizadas = this.afs.collection('HoraExtra', function (ref) { return ref.where('userId', '==', userId); });
     }
     HoraExtraService.prototype.registrarHoraExtra = function (horaExtra) {
         return this.colecaoHoraExtraRegistro.add(horaExtra);
     };
-    HoraExtraService.prototype.getHorasExtras = function () {
+    HoraExtraService.prototype.getHorasExtras = function (dataInicial, dataFinal) {
+        var userId = this.authService.getAuth().currentUser.uid;
+        this.colecaoHoraExtra = this.afs.collection('HoraExtra', function (ref) { return ref.where('userId', '==', userId)
+            .where('dataInicial', '>=', dataInicial).where('dataInicial', '<=', dataFinal); });
         return this.horasExtras = this.colecaoHoraExtra.valueChanges();
+    };
+    HoraExtraService.prototype.getHorasExtras60porCento = function () {
+        return this.horasExtras = this.colecaoHoraExtra60porCento.valueChanges();
+    };
+    HoraExtraService.prototype.getHorasExtras100porCento = function () {
+        return this.horasExtras = this.colecaoHoraExtra100porCento.valueChanges();
+    };
+    HoraExtraService.prototype.getHorasExtrasTotais = function () {
+        return this.horasExtras = this.colecaoHorasExtrasRealizadas.valueChanges();
     };
     HoraExtraService.prototype.update = function (horaExtra) {
         var _this = this;
@@ -923,7 +945,6 @@ var HoraExtraService = /** @class */ (function () {
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (horasOb) { return horasOb; }));
         query.subscribe(function (doc) {
             _this.horas = doc.payload.doc.ref;
-            console.log(_this.horas);
             return _this.horas.update(horaExtra);
         });
     };
@@ -941,6 +962,14 @@ var HoraExtraService = /** @class */ (function () {
     };
     HoraExtraService.prototype.buscarCidades = function () {
         return this.cidades = this.colecaoCidades.valueChanges();
+    };
+    HoraExtraService.prototype.buscarFuncionario = function () {
+        var email = this.authService.getAuth().currentUser.email;
+        return this.funcionario = this.afs.collection('Funcionario', function (ref) { return (ref.where('email', '==', email)); }).valueChanges();
+    };
+    HoraExtraService.prototype.filtrarDatas = function (dataInicio, dataFinal) {
+        this.colecaoDatas = this.afs.collection('HoraExtra', function (ref) { return ref.where('dataInicial', '>=', dataInicio).where('dataInicial', '<=', dataFinal); });
+        return this.colecaoDatas.valueChanges();
     };
     HoraExtraService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({

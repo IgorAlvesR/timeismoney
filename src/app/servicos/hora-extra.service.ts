@@ -25,24 +25,34 @@ export class HoraExtraService {
   private horas: DocumentReference
   public cidades: Observable<Cidade[]>
   public funcionario: Observable<Funcionario[]>
+  public colecaoDatas: AngularFirestoreCollection<HoraExtra>
+  public colecaoHoraExtraTotal: AngularFirestoreCollection<HoraExtra>
    
   constructor(private afs: AngularFirestore, private authService: AutenticacaoService) {
     //cria uma referencia da coleção HoraExtraInicio e HoraExtraFinal
     let userId = authService.getAuth().currentUser.uid
     this.colecaoCidades = this.afs.collection('Cidades')
     this.colecaoHoraExtraRegistro = this.afs.collection<HoraExtra>('HoraExtra')
-    this.colecaoHoraExtra = this.afs.collection('HoraExtra', ref => ref.where('userId', '==', userId))
+    //this.colecaoHoraExtra = this.afs.collection('HoraExtra', ref => ref.where('userId', '==', userId).where('dataIniciaç','>=',dataInicial))
     this.colecaoHoraExtra60porCento = this.afs.collection('HoraExtra', ref => ref.where('userId','==',userId).where('diaSemana','<',7).where('diaSemana','>',0))
     this.colecaoHoraExtra100porCento = this.afs.collection('HoraExtra', ref => ref.where('userId','==',userId).where('diaSemana','==',0))
     this.colecaoHorasExtrasRealizadas = this.afs.collection('HoraExtra', ref => ref.where('userId','==',userId))
+    this.colecaoHoraExtraTotal = this.afs.collection('HoraExtra', ref => ref.where('userId','==',userId))
   }
 
   registrarHoraExtra(horaExtra: HoraExtra) {
     return this.colecaoHoraExtraRegistro.add(horaExtra)
   }
 
-  getHorasExtras() {
+  getHorasExtras(dataInicial,dataFinal) {
+    let userId = this.authService.getAuth().currentUser.uid
+    this.colecaoHoraExtra = this.afs.collection('HoraExtra', ref => ref.where('userId', '==', userId)
+    .where('dataInicial','>=',dataInicial).where('dataInicial','<=',dataFinal))
     return this.horasExtras = this.colecaoHoraExtra.valueChanges()
+  }
+
+  getHoras(){
+    return this.horasExtras = this.colecaoHoraExtraTotal.valueChanges()
   }
 
   getHorasExtras60porCento(){
@@ -92,6 +102,6 @@ export class HoraExtraService {
     return this.funcionario =  this.afs.collection('Funcionario', ref => (ref.where('email','==',email))).valueChanges()
   }
 
- 
+
 
 }

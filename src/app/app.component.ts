@@ -22,7 +22,7 @@ export class AppComponent {
   initializeApp() {
     this.platform.ready().then(() => {
       this.networkService.verificaConexao()
-      this.statusBar.styleDefault();
+      //this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
   }

@@ -1,6 +1,10 @@
 <ion-header>
   <ion-toolbar>
-    <p class="ion-text-center">REGISTRO INÍCIO <span (click)='logout()'>SAIR</span></p>
+    <!-- <p id="sair" class="ion-text-center">REGISTRO INÍCIO <span (click)='logout()'>SAIR </span></p> -->
+    <div id="registroInicial">
+    <p>REGISTRO INICIAL</p>
+    <span (click)='logout()'><ion-icon name="exit"></ion-icon></span>
+  </div>
   </ion-toolbar>
 </ion-header>
 
@@ -26,10 +30,10 @@
 
 <ion-toolbar class="footer">
   <div class="menu">
-    <ion-icon name="clock" [routerLink]="['/relatorio-hora-extra']"></ion-icon>
-    <ion-icon name="paper"  [routerLink]="['/relatorio-deslocamento']"></ion-icon>
-    <ion-icon name="navigate" [routerLink]="['/registro-deslocamento']" ></ion-icon>
-    <ion-icon name="person" [routerLink]="['/relatorio-detalhado']" ></ion-icon>
+    <ion-icon class="icones" name="clock" [routerLink]="['/relatorio-hora-extra']"></ion-icon>
+    <ion-icon class="icones" name="paper"  [routerLink]="['/relatorio-deslocamento']"></ion-icon>
+    <ion-icon class="icones" name="navigate" [routerLink]="['/registro-deslocamento']" ></ion-icon>
+    <ion-icon class="icones" name="person" [routerLink]="['/relatorio-detalhado']" ></ion-icon>
   </div>
 </ion-toolbar>
 

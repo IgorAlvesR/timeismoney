@@ -8,6 +8,11 @@
 </ion-header>
 
 <ion-content>
+  <div id="filtroData">
+    <ion-input placeholder='Data Início' class='data' [(ngModel)]="data.dataInicial" type="date"></ion-input>
+    <ion-input placeholder='Data Início' class='data' [(ngModel)]="data.dataFinal" type="date"></ion-input>
+    <ion-icon class="buscarData" name="list-box" (click)="getHoras(data.dataInicial,data.dataFinal)"></ion-icon>
+  </div>
   <ion-grid>
     <ion-row>
       <ion-col>
@@ -19,19 +24,19 @@
       <ion-col size="1">
       </ion-col>
     </ion-row>
-    <ion-row *ngFor='let h of horasExtras' >
+    <ion-row *ngFor='let h of horasExtras'>
       <ion-col *ngIf='h.horaFinal == null'>
         {{h.horaInicial}} - <span class="horaPendente">Hora Pendente</span>
       </ion-col>
       <ion-col *ngIf='h.horaFinal != ""' (click)='mostrarDescricaoCidade(h.descricao,h.localizacao)'>
         {{h.horaInicial}} - {{h.horaFinal}} <br>
-        <span>{{h.dataInicial}}</span>
+        <span>{{h.dataInicial | date: 'dd/MM/y'}}</span>
       </ion-col>
       <ion-col *ngIf='h.horaFinal == ""'>
         {{h.horaInicial}} - <span class="horaPendente">PENDENTE</span> <br>
-        <span>{{h.dataInicial}}</span>
+        <span>{{h.dataInicial | date: 'dd/MM/y'}}</span>
       </ion-col>
-      
+
       <ion-col class="ion-text-center total" *ngIf='h.horaFinal != ""'>
         {{h.total}}
       </ion-col>

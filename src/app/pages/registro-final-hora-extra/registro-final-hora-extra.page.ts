@@ -65,9 +65,10 @@ export class RegistroFinalHoraExtraPage implements OnInit {
     this.horaExtraFinal.minutoCalculoFinal = minutos
     this.horaExtraFinal.horaFinal = this.hora
     this.horaExtraFinal.userId = this.authService.getAuth().currentUser.uid
-    this.horaExtraFinal.dataFinal = moment().locale('pt-br').format('L')
+    this.horaExtraFinal.dataFinal = moment().locale('pt-br').format('YYYY-MM-DD')
     this.horaExtraFinal.horaDataCalculoFinal = moment().locale('pt-br').format('DD/MM/YYYY HH:mm:ss')
-
+    
+    
     try {
       if (this.horaExtraFinal.descricao == null || this.horaExtraFinal.descricao == '' || this.horaExtraFinal.localizacao == null || this.horaExtraFinal.localizacao == '') {
         this.presentToast("Preenha todos os campos!")

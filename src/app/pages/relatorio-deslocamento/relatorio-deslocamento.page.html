@@ -8,6 +8,11 @@
 </ion-header>
 
 <ion-content>
+    <div id="filtroData">
+        <ion-input placeholder='Data Início' class='data' [(ngModel)]="data.dataInicial" type="date"></ion-input>
+        <ion-input placeholder='Data Início' class='data' [(ngModel)]="data.dataFinal" type="date"></ion-input>
+        <ion-icon class="buscarData" name="list-box" (click)="getDeslocamentosComFiltro(data.dataInicial,data.dataFinal)"></ion-icon>
+      </div>
   <ion-grid>
     <ion-row>
       <ion-col>
@@ -22,7 +27,7 @@
     <ion-row *ngFor='let d of deslocamentos'>
       <ion-col class="dados" (click)='mostrarHora(d.hora)'>
         {{d.descricao}}<br>
-        <span>{{d.data}}</span>
+        <span>{{d.data | date: 'dd/MM/y'}}</span>
       </ion-col>
       <ion-col class="ion-text-center dados">
         {{d.localizacao}}
@@ -30,6 +35,9 @@
       <ion-col size="1">
         <ion-icon class="delete" name='trash' (click)="deleteConfirm(d.id)"></ion-icon>
       </ion-col>
+    </ion-row>
+    <ion-row *ngIf='deslocamentos == null'>
+      <p>Não possui deslocamentos</p>
     </ion-row>
   </ion-grid>
 </ion-content>

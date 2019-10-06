@@ -3,6 +3,8 @@ import { DeslocamentoService } from 'src/app/servicos/deslocamento.service';
 import { Deslocamento } from 'src/app/Models/deslocamento';
 import { Subscription } from 'rxjs';
 import { ToastController, AlertController } from '@ionic/angular';
+import { nullSafeIsEquivalent } from '@angular/compiler/src/output/output_ast';
+import { HoraExtra } from 'src/app/Models/hora-extra';
 
 @Component({
   selector: 'app-relatorio-deslocamento',
@@ -14,24 +16,39 @@ export class RelatorioDeslocamentoPage implements OnInit {
   public deslocamentos = new Array<Deslocamento>()
   private deslocamentoSubscription: Subscription
   private toastCtrl: ToastController
-  
-  constructor(private deslocamentoService: DeslocamentoService, private alertController: AlertController) 
-  {
+  public data = {}
+  constructor(private deslocamentoService: DeslocamentoService, private alertController: AlertController, private toastController: ToastController) {
     this.deslocamentoService.getDeslocamentos()
   }
 
-  ngOnInit() {
-    this.getDeslocamentos()
+  async ngOnInit() {
+    await this.getDeslocamentos()
   }
 
   ngOnDestroy() {
-    this.deslocamentoSubscription.unsubscribe()
+    if (this.deslocamentoSubscription) {
+      this.deslocamentoSubscription.unsubscribe()
+    }
   }
 
 
-  getDeslocamentos(){
+  getDeslocamentos() {
     this.deslocamentoSubscription = this.deslocamentoService.getDeslocamentos().subscribe(result => {
       return this.deslocamentos = result
+    })
+  }
+
+
+  async getDeslocamentosComFiltro(dataInicial, dataFinal) {
+    if (this.data.dataInicial == '' || this.data.dataFinal == null || this.data.dataFinal == '' || this.data.dataFinal == null) {
+      this.presentToast('Preencha todos os campos')
+      return
+    }
+    this.deslocamentoSubscription = await this.deslocamentoService.getDeslocamentosComFiltro(dataInicial, dataFinal).subscribe(dados => {
+      if (dados.length == 0) {
+        this.presentToast('Não possui horas extras realizadas nessa data')
+      }
+      return this.deslocamentos = dados
     })
   }
 
@@ -39,11 +56,11 @@ export class RelatorioDeslocamentoPage implements OnInit {
     try {
       await this.deslocamentoService.deleteDeslocamento(id);
     } catch (error) {
-      this.toastCtrl.create({message:'Erro ao tentar excluir deslocamento'});
+      this.toastCtrl.create({ message: 'Erro ao tentar excluir deslocamento' });
     }
   }
 
-  async deleteConfirm(id: string){
+  async deleteConfirm(id: string) {
     const alert = await this.alertController.create({
       header: 'Você deseja realmente excluir esse registro?',
       buttons: [
@@ -60,10 +77,15 @@ export class RelatorioDeslocamentoPage implements OnInit {
     await alert.present()
   }
 
-  async mostrarHora(hora: string){
+  async mostrarHora(hora: string) {
     const alert = await this.alertController.create({
-      subHeader: "Horário do registro: "+hora,
+      subHeader: "Horário do registro: " + hora,
     })
     await alert.present()
+  }
+
+  async presentToast(mensagem: string) {
+    const toast = await this.toastController.create({ message: mensagem, duration: 3000 })
+    toast.present()
   }
 }

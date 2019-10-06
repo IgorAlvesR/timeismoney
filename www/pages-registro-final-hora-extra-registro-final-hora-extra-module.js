@@ -144,7 +144,7 @@ var RegistroFinalHoraExtraPage = /** @class */ (function () {
                         this.horaExtraFinal.minutoCalculoFinal = minutos;
                         this.horaExtraFinal.horaFinal = this.hora;
                         this.horaExtraFinal.userId = this.authService.getAuth().currentUser.uid;
-                        this.horaExtraFinal.dataFinal = moment__WEBPACK_IMPORTED_MODULE_2__().locale('pt-br').format('L');
+                        this.horaExtraFinal.dataFinal = moment__WEBPACK_IMPORTED_MODULE_2__().locale('pt-br').format('YYYY-MM-DD');
                         this.horaExtraFinal.horaDataCalculoFinal = moment__WEBPACK_IMPORTED_MODULE_2__().locale('pt-br').format('DD/MM/YYYY HH:mm:ss');
                         _a.label = 2;
                     case 2:
@@ -156,10 +156,10 @@ var RegistroFinalHoraExtraPage = /** @class */ (function () {
                     case 3: return [4 /*yield*/, this.horaSevice.update(this.horaExtraFinal)];
                     case 4:
                         _a.sent();
-                        return [4 /*yield*/, window.location.replace('registro-hora-extra')];
+                        return [4 /*yield*/, this.carregando.dismiss()];
                     case 5:
                         _a.sent();
-                        return [4 /*yield*/, this.carregando.dismiss()];
+                        return [4 /*yield*/, window.location.replace('registro-hora-extra')];
                     case 6:
                         _a.sent();
                         _a.label = 7;

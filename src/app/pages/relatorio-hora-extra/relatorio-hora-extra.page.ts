@@ -15,32 +15,58 @@ export class RelatorioHoraExtraPage implements OnInit {
 
   public horasExtras = new Array<HoraExtra>()
   private horasExtrasSubscription: Subscription
+  public data:HoraExtra = {}
 
   constructor(
     private authService: AutenticacaoService,
     private horaService: HoraExtraService,
     private toastCtrl: ToastController,
     private alertController: AlertController
-  ) {}
+  ) { }
 
   ngOnInit() {
-    this.getHoras()
+    this.getHorasExtras()
   }
 
   ngOnDestroy() {
-    this.horasExtrasSubscription.unsubscribe()
+    if (this.horasExtrasSubscription) {
+      this.horasExtrasSubscription.unsubscribe()
+    }
   }
 
-  getHoras() {
-    this.horasExtrasSubscription = this.horaService.getHorasExtras().subscribe(dados => {
-      dados.forEach(element => {
-        var horaFinal = element.horaDataCalculoFinal
-        var horaInicial = element.horaDataCalculoInicio
-        var ms = moment(horaFinal, "DD/MM/YYYY HH:mm:ss").diff(moment(horaInicial, "DD/MM/YYYY HH:mm:ss"));
-        var d = moment.duration(ms);
-        var s = Math.floor(d.asHours()) + moment.utc(ms).format(":mm:ss");
-        element.total = s
-      })
+  async getHoras(dataInicial, dataFinal) {
+    if(this.data.dataInicial == '' || this.data.dataInicial == null || this.data.dataFinal == '' || this.data.dataFinal == null){
+      await this.presentToast('Preencha os campos com as datas')
+      return
+    }
+     this.horasExtrasSubscription = await this.horaService.getHorasExtras(dataInicial, dataFinal).subscribe(dados => {
+      if (dados.length == 0) {
+        this.presentToast('Não possui horas extras realizadas nessa data')
+      } else {
+        dados.forEach(element => {
+          var horaFinal = element.horaDataCalculoFinal
+          var horaInicial = element.horaDataCalculoInicio
+          var ms = moment(horaFinal, "DD/MM/YYYY HH:mm:ss").diff(moment(horaInicial, "DD/MM/YYYY HH:mm:ss"));
+          var d = moment.duration(ms);
+          var s = Math.floor(d.asHours()) + moment.utc(ms).format(":mm:ss");
+          element.total = s
+        })
+      }
+      return this.horasExtras = dados
+    })
+  }
+
+
+  async getHorasExtras() {
+     this.horasExtrasSubscription = await this.horaService.getHoras().subscribe(dados => {
+        dados.forEach(element => {
+          var horaFinal = element.horaDataCalculoFinal
+          var horaInicial = element.horaDataCalculoInicio
+          var ms = moment(horaFinal, "DD/MM/YYYY HH:mm:ss").diff(moment(horaInicial, "DD/MM/YYYY HH:mm:ss"));
+          var d = moment.duration(ms);
+          var s = Math.floor(d.asHours()) + moment.utc(ms).format(":mm:ss");
+          element.total = s
+        })
       return this.horasExtras = dados
     })
   }
@@ -49,11 +75,11 @@ export class RelatorioHoraExtraPage implements OnInit {
     try {
       await this.horaService.deleteHoraExtra(id);
     } catch (error) {
-      this.toastCtrl.create({message:'Erro ao tentar excluir hora extra'});
+      this.toastCtrl.create({ message: 'Erro ao tentar excluir hora extra' });
     }
   }
 
-  async deleteConfirm(id: string){
+  async deleteConfirm(id: string) {
     const alert = await this.alertController.create({
       header: 'Você deseja realmente excluir esse registro?',
       buttons: [
@@ -70,12 +96,18 @@ export class RelatorioHoraExtraPage implements OnInit {
     await alert.present()
   }
 
-  async mostrarDescricaoCidade(descricao: string, cidade: string){
+  async mostrarDescricaoCidade(descricao: string, cidade: string) {
     const alert = await this.alertController.create({
       subHeader: cidade,
       message: descricao
     })
     await alert.present()
+  }
+
+
+  async presentToast(mensagem: string) {
+    const toast = await this.toastCtrl.create({ message: mensagem, duration: 3000 })
+    toast.present()
   }
 }
 

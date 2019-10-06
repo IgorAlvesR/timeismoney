@@ -66,7 +66,7 @@ export class RegistroDeslocamentoPage implements OnInit {
       this.reverseGeocoding(latitude, longitude)
     })
     this.deslocamento.id = this.angularFirestore.createId();
-    this.deslocamento.data = moment().locale('pt-br').format('L')
+    this.deslocamento.data = moment().locale('pt-br').format('YYYY-MM-DD')
     this.deslocamento.hora = moment().locale('pt-br').format('LTS')
     this.deslocamento.userId = this.authService.getAuth().currentUser.uid
 

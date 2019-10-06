@@ -14,6 +14,7 @@ export class DeslocamentoService {
   private deslocamento: AngularFirestoreCollection<Deslocamento>
   public deslocamentos:  Observable<Deslocamento[]>
   private colecaoDeslocamento: AngularFirestoreCollection<Deslocamento>
+  private colecaoDeslocamentoFiltro: AngularFirestoreCollection<Deslocamento>
   private deslocamentoReference: DocumentReference
 
   constructor(private afs: AngularFirestore, private authService: AutenticacaoService) { 
@@ -28,6 +29,13 @@ export class DeslocamentoService {
 
   getDeslocamentos() {
     return this.deslocamentos = this.colecaoDeslocamento.valueChanges()
+  }
+
+  getDeslocamentosComFiltro(dataInicial,dataFinal) {
+    let userId = this.authService.getAuth().currentUser.uid
+    this.colecaoDeslocamentoFiltro = this.afs.collection('Deslocamento', ref => ref.where('userId', '==', userId)
+    .where('data','>=',dataInicial).where('data','<=',dataFinal))
+    return this.deslocamentos = this.colecaoDeslocamentoFiltro.valueChanges()
   }
 
   deleteDeslocamento(id: string) {

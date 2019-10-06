@@ -97,11 +97,11 @@ export class RegistroHoraExtraPage implements OnInit {
     this.horaExtraInicio.horaInicial = this.hora
     this.horaExtraInicio.horaFinal = ''
     this.horaExtraInicio.userId = this.authService.getAuth().currentUser.uid
-    this.horaExtraInicio.dataInicial = moment().locale('pt-br').format('L')
+    this.horaExtraInicio.dataInicial = moment().locale('pt-br').format('YYYY-MM-DD')
     this.horaExtraInicio.cont = new Date().getTime()
     this.horaExtraInicio.diaSemana = moment().day()
     this.horaExtraInicio.horaDataCalculoInicio = moment().locale('pt-br').format('DD/MM/YYYY HH:mm:ss')
-   
+
     try {
       if (this.horaExtraInicio.diaSemana != 6 && this.horaExtraInicio.diaSemana != 0) {
         if ((this.horaExtraInicio.horaCalculoInicial >= 8 && this.horaExtraInicio.horaCalculoInicial < 12)
