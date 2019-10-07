@@ -11,6 +11,6 @@
   <div #map></div>
   <div class="ion-text-center">
     <ion-textarea rows="6" cols="20" placeholder="Descrição..." [(ngModel)]='deslocamento.descricao'></ion-textarea>
-    <ion-button color="primary" (click)='registrarDeslocamento()'>Registrar Deslocamento</ion-button>
+    <ion-button disabled=true color="primary" (click)='registrarDeslocamento()' #botao>Registrar Deslocamento</ion-button>
   </div>
 </ion-content>

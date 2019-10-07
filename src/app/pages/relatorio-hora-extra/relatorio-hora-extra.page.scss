@@ -51,15 +51,31 @@ ion-col{
 
 #filtroData{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
+}
+
+#filtroDataDescricao{
+    display: flex;
+    justify-content: space-around;
 }
 
 .data{
-    width: 10%;
+    /* width: 10%;
     margin: 5px;
     padding: 5px;
     border-bottom: 2px solid  var(--ion-color-padraoApp);
+    color: gray; */
+
+    border-bottom: 2px solid  var(--ion-color-padraoApp);
     color: gray;
+    padding-bottom: 5px;
+    width: 40%;
+}
+
+label{
+    color: gray;
+    padding-right: 0px;
+    font-size: 10pt;
 }
 
 .buscarData{

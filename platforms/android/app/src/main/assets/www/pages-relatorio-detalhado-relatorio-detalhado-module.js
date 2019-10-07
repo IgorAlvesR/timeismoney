@@ -88,13 +88,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var src_app_servicos_hora_extra_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/servicos/hora-extra.service */ "./src/app/servicos/hora-extra.service.ts");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _ionic_native_status_bar_ngx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic-native/status-bar/ngx */ "./node_modules/@ionic-native/status-bar/ngx/index.js");
+
 
 
 
 
 var RelatorioDetalhadoPage = /** @class */ (function () {
-    function RelatorioDetalhadoPage(horasService) {
+    function RelatorioDetalhadoPage(horasService, statusBar) {
         this.horasService = horasService;
+        this.statusBar = statusBar;
         this.totalDeHorasExtras = 0;
         this.horaFormatada = '';
         this.totalDeHorasExtrasEmHoras = 0;
@@ -111,6 +114,7 @@ var RelatorioDetalhadoPage = /** @class */ (function () {
         this.nomeFuncionario = '';
         this.funcao = '';
         this.hora = {};
+        this.statusBar.backgroundColorByName('#1106ac');
     }
     RelatorioDetalhadoPage.prototype.ngOnInit = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
@@ -346,7 +350,7 @@ var RelatorioDetalhadoPage = /** @class */ (function () {
             template: __webpack_require__(/*! ./relatorio-detalhado.page.html */ "./src/app/pages/relatorio-detalhado/relatorio-detalhado.page.html"),
             styles: [__webpack_require__(/*! ./relatorio-detalhado.page.scss */ "./src/app/pages/relatorio-detalhado/relatorio-detalhado.page.scss")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [src_app_servicos_hora_extra_service__WEBPACK_IMPORTED_MODULE_2__["HoraExtraService"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [src_app_servicos_hora_extra_service__WEBPACK_IMPORTED_MODULE_2__["HoraExtraService"], _ionic_native_status_bar_ngx__WEBPACK_IMPORTED_MODULE_4__["StatusBar"]])
     ], RelatorioDetalhadoPage);
     return RelatorioDetalhadoPage;
 }());

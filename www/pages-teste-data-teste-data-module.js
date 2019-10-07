@@ -58,7 +58,7 @@ var TesteDataPageModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\n  <ion-toolbar>\n    <ion-title>testeData</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n    <ion-input [(ngModel)]=\"teste.dataInicial\" type=\"date\"></ion-input>\n    <ion-input [(ngModel)]=\"teste.dataFinal\" type=\"date\"></ion-input>\n    <ion-button id=\"botao\" (click)='filtrarData(teste.dataInicial, teste.dataFinal)'>click</ion-button>\n</ion-content>\n"
+module.exports = "<ion-header>\n  <ion-toolbar>\n    <ion-title>testeData</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n\n</ion-content>\n"
 
 /***/ }),
 
@@ -85,22 +85,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TesteDataPage", function() { return TesteDataPage; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var src_app_servicos_hora_extra_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/servicos/hora-extra.service */ "./src/app/servicos/hora-extra.service.ts");
-
 
 
 var TesteDataPage = /** @class */ (function () {
-    function TesteDataPage(horaService) {
-        this.horaService = horaService;
-        this.teste = {};
+    function TesteDataPage() {
     }
     TesteDataPage.prototype.ngOnInit = function () {
-    };
-    TesteDataPage.prototype.filtrarData = function (dataInicio, dataFinal) {
-        var result = this.horaService.filtrarDatas(dataInicio, dataFinal);
-        result.subscribe(function (r) {
-            console.log(r);
-        });
     };
     TesteDataPage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -108,7 +98,7 @@ var TesteDataPage = /** @class */ (function () {
             template: __webpack_require__(/*! ./teste-data.page.html */ "./src/app/pages/teste-data/teste-data.page.html"),
             styles: [__webpack_require__(/*! ./teste-data.page.scss */ "./src/app/pages/teste-data/teste-data.page.scss")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [src_app_servicos_hora_extra_service__WEBPACK_IMPORTED_MODULE_2__["HoraExtraService"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])
     ], TesteDataPage);
     return TesteDataPage;
 }());

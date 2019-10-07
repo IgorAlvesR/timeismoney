@@ -172,7 +172,7 @@ var RegistroDeslocamentoPage = /** @class */ (function () {
                     case 3:
                         _b.sent();
                         this.deslocamento.id = this.angularFirestore.createId();
-                        this.deslocamento.data = moment__WEBPACK_IMPORTED_MODULE_7__().locale('pt-br').format('L');
+                        this.deslocamento.data = moment__WEBPACK_IMPORTED_MODULE_7__().locale('pt-br').format('YYYY-MM-DD');
                         this.deslocamento.hora = moment__WEBPACK_IMPORTED_MODULE_7__().locale('pt-br').format('LTS');
                         this.deslocamento.userId = this.authService.getAuth().currentUser.uid;
                         _b.label = 4;

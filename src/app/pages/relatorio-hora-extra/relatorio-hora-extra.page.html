@@ -8,10 +8,16 @@
 </ion-header>
 
 <ion-content>
+
   <div id="filtroData">
-    <ion-input placeholder='Data Início' class='data' [(ngModel)]="data.dataInicial" type="date"></ion-input>
-    <ion-input placeholder='Data Início' class='data' [(ngModel)]="data.dataFinal" type="date"></ion-input>
-    <ion-icon class="buscarData" name="list-box" (click)="getHoras(data.dataInicial,data.dataFinal)"></ion-icon>
+    <ion-datetime class='data' done-text='OK' cancelText='Cancelar' displayFormat="DD/MM/YY" placeholder='dd/mm/aaaa'
+      [(ngModel)]="data.dataInicial"></ion-datetime>
+    <ion-datetime class='data' done-text='OK' cancelText='Cancelar' displayFormat="DD/MM/YY" placeholder='dd/mm/aaaa'
+      [(ngModel)]="data.dataFinal" (ionBlur)='getHoras(data.dataInicial,data.dataFinal)'></ion-datetime>
+  </div>
+  <div id="filtroDataDescricao">
+    <label for="">Data Início</label>
+    <label for="">Data Fim</label>
   </div>
   <ion-grid>
     <ion-row>

@@ -131,6 +131,6 @@
     <preference name="SplashScreenDelay" value="3000" />
     <preference name="GOOGLE_MAPS_ANDROID_API_KEY" value="AIzaSyClpig7cd7BKXZTeN93Xi7mUn57uzSFcqc" />
     <preference name="GOOGLE_MAPS_IOS_API_KEY" value="AIzaSyClpig7cd7BKXZTeN93Xi7mUn57uzSFcqc" />
-    <preference name="StatusBarBackgroundColor" value="#000" />
-    <preference name="StatusBarStyle" value="#FFFFF" />
+    <preference name="StatusBarBackgroundColor" value="#1f80ff" />
+    <preference name="StatusBarStyle" value="#ffffff" />
 </widget>

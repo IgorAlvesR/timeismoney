@@ -621,7 +621,7 @@ var AppComponent = /** @class */ (function () {
         var _this = this;
         this.platform.ready().then(function () {
             _this.networkService.verificaConexao();
-            _this.statusBar.styleDefault();
+            //this.statusBar.styleDefault();
             _this.splashScreen.hide();
         });
     };
@@ -918,6 +918,7 @@ var HoraExtraService = /** @class */ (function () {
         this.colecaoHoraExtra60porCento = this.afs.collection('HoraExtra', function (ref) { return ref.where('userId', '==', userId).where('diaSemana', '<', 7).where('diaSemana', '>', 0); });
         this.colecaoHoraExtra100porCento = this.afs.collection('HoraExtra', function (ref) { return ref.where('userId', '==', userId).where('diaSemana', '==', 0); });
         this.colecaoHorasExtrasRealizadas = this.afs.collection('HoraExtra', function (ref) { return ref.where('userId', '==', userId); });
+        this.colecaoHoraExtraTotal = this.afs.collection('HoraExtra', function (ref) { return ref.where('userId', '==', userId); });
     }
     HoraExtraService.prototype.registrarHoraExtra = function (horaExtra) {
         return this.colecaoHoraExtraRegistro.add(horaExtra);
@@ -927,6 +928,9 @@ var HoraExtraService = /** @class */ (function () {
         this.colecaoHoraExtra = this.afs.collection('HoraExtra', function (ref) { return ref.where('userId', '==', userId)
             .where('dataInicial', '>=', dataInicial).where('dataInicial', '<=', dataFinal); });
         return this.horasExtras = this.colecaoHoraExtra.valueChanges();
+    };
+    HoraExtraService.prototype.getHoras = function () {
+        return this.horasExtras = this.colecaoHoraExtraTotal.valueChanges();
     };
     HoraExtraService.prototype.getHorasExtras60porCento = function () {
         return this.horasExtras = this.colecaoHoraExtra60porCento.valueChanges();
@@ -966,10 +970,6 @@ var HoraExtraService = /** @class */ (function () {
     HoraExtraService.prototype.buscarFuncionario = function () {
         var email = this.authService.getAuth().currentUser.email;
         return this.funcionario = this.afs.collection('Funcionario', function (ref) { return (ref.where('email', '==', email)); }).valueChanges();
-    };
-    HoraExtraService.prototype.filtrarDatas = function (dataInicio, dataFinal) {
-        this.colecaoDatas = this.afs.collection('HoraExtra', function (ref) { return ref.where('dataInicial', '>=', dataInicio).where('dataInicial', '<=', dataFinal); });
-        return this.colecaoDatas.valueChanges();
     };
     HoraExtraService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({

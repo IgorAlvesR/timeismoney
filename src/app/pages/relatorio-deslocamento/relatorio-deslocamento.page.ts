@@ -4,7 +4,8 @@ import { Deslocamento } from 'src/app/Models/deslocamento';
 import { Subscription } from 'rxjs';
 import { ToastController, AlertController } from '@ionic/angular';
 import { nullSafeIsEquivalent } from '@angular/compiler/src/output/output_ast';
-import { HoraExtra } from 'src/app/Models/hora-extra';
+import * as moment from 'moment'
+
 
 @Component({
   selector: 'app-relatorio-deslocamento',
@@ -40,11 +41,9 @@ export class RelatorioDeslocamentoPage implements OnInit {
 
 
   async getDeslocamentosComFiltro(dataInicial, dataFinal) {
-    if (this.data.dataInicial == '' || this.data.dataFinal == null || this.data.dataFinal == '' || this.data.dataFinal == null) {
-      this.presentToast('Preencha todos os campos')
-      return
-    }
-    this.deslocamentoSubscription = await this.deslocamentoService.getDeslocamentosComFiltro(dataInicial, dataFinal).subscribe(dados => {
+    let di = moment(dataInicial).format('YYYY-MM-DD')
+    let df = moment(dataFinal).format('YYYY-MM-DD')
+    this.deslocamentoSubscription = await this.deslocamentoService.getDeslocamentosComFiltro(di, df).subscribe(dados => {
       if (dados.length == 0) {
         this.presentToast('Não possui horas extras realizadas nessa data')
       }

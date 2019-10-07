@@ -35,11 +35,10 @@ export class RelatorioHoraExtraPage implements OnInit {
   }
 
   async getHoras(dataInicial, dataFinal) {
-    if(this.data.dataInicial == '' || this.data.dataInicial == null || this.data.dataFinal == '' || this.data.dataFinal == null){
-      await this.presentToast('Preencha os campos com as datas')
-      return
-    }
-     this.horasExtrasSubscription = await this.horaService.getHorasExtras(dataInicial, dataFinal).subscribe(dados => {
+     let di = moment(dataInicial).format('YYYY-MM-DD')
+     let df = moment(dataFinal).format('YYYY-MM-DD')
+     
+     this.horasExtrasSubscription = await this.horaService.getHorasExtras(di, df).subscribe(dados => {
       if (dados.length == 0) {
         this.presentToast('Não possui horas extras realizadas nessa data')
       } else {

@@ -411,6 +411,12 @@ var DeslocamentoService = /** @class */ (function () {
     DeslocamentoService.prototype.getDeslocamentos = function () {
         return this.deslocamentos = this.colecaoDeslocamento.valueChanges();
     };
+    DeslocamentoService.prototype.getDeslocamentosComFiltro = function (dataInicial, dataFinal) {
+        var userId = this.authService.getAuth().currentUser.uid;
+        this.colecaoDeslocamentoFiltro = this.afs.collection('Deslocamento', function (ref) { return ref.where('userId', '==', userId)
+            .where('data', '>=', dataInicial).where('data', '<=', dataFinal); });
+        return this.deslocamentos = this.colecaoDeslocamentoFiltro.valueChanges();
+    };
     DeslocamentoService.prototype.deleteDeslocamento = function (id) {
         var _this = this;
         var colection = this.afs.collection('Deslocamento', function (ref) { return (ref.where('id', '==', id)); }).snapshotChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (deslocamento) { return deslocamento; }));
