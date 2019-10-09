@@ -58,7 +58,7 @@ var RegistroDeslocamentoPageModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\n  <ion-toolbar>\n    <div class=\"header\">\n      <ion-icon name=\"arrow-round-back\" button [routerLink]=\"['/registro-hora-extra']\"></ion-icon>\n      <p class=\"ion-text-center\">REGISTRO DESLOCAMENTOS</p>\n    </div>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <div #map></div>\n  <div class=\"ion-text-center\">\n    <ion-textarea rows=\"6\" cols=\"20\" placeholder=\"Descrição...\" [(ngModel)]='deslocamento.descricao'></ion-textarea>\n    <ion-button color=\"primary\" (click)='registrarDeslocamento()'>Registrar Deslocamento</ion-button>\n  </div>\n</ion-content>"
+module.exports = "<ion-header>\n  <ion-toolbar>\n    <div class=\"header\">\n      <ion-icon name=\"arrow-round-back\" button [routerLink]=\"['/registro-hora-extra']\"></ion-icon>\n      <p class=\"ion-text-center\">REGISTRO DESLOCAMENTOS</p>\n    </div>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <div #map></div>\n  <div class=\"ion-text-center\">\n    <ion-textarea rows=\"6\" cols=\"20\" placeholder=\"Descrição...\" [(ngModel)]='deslocamento.descricao'></ion-textarea>\n    <ion-button disabled=true color=\"primary\" (click)='registrarDeslocamento()' #botao>Registrar Deslocamento</ion-button>\n  </div>\n</ion-content>"
 
 /***/ }),
 
@@ -302,11 +302,16 @@ var RegistroDeslocamentoPage = /** @class */ (function () {
     };
     RegistroDeslocamentoPage.prototype.askToTurnOnGPS = function () {
         this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY);
+        this.botaoElement.disabled = false;
     };
     tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])('map'),
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Object)
     ], RegistroDeslocamentoPage.prototype, "mapElement", void 0);
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])('botao'),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Object)
+    ], RegistroDeslocamentoPage.prototype, "botaoElement", void 0);
     RegistroDeslocamentoPage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
             selector: 'app-registro-deslocamento',

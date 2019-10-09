@@ -442,36 +442,37 @@ var map = {
 	],
 	"./pages/registro-deslocamento/registro-deslocamento.module": [
 		"./src/app/pages/registro-deslocamento/registro-deslocamento.module.ts",
-		"default~pages-registro-deslocamento-registro-deslocamento-module~pages-registro-final-hora-extra-reg~a32f17ce",
+		"default~pages-registro-deslocamento-registro-deslocamento-module~pages-registro-final-hora-extra-reg~3e98e0d8",
 		"common",
 		"pages-registro-deslocamento-registro-deslocamento-module"
 	],
 	"./pages/registro-final-hora-extra/registro-final-hora-extra.module": [
 		"./src/app/pages/registro-final-hora-extra/registro-final-hora-extra.module.ts",
-		"default~pages-registro-deslocamento-registro-deslocamento-module~pages-registro-final-hora-extra-reg~a32f17ce",
+		"default~pages-registro-deslocamento-registro-deslocamento-module~pages-registro-final-hora-extra-reg~3e98e0d8",
 		"common",
 		"pages-registro-final-hora-extra-registro-final-hora-extra-module"
 	],
 	"./pages/registro-hora-extra/registro-hora-extra.module": [
 		"./src/app/pages/registro-hora-extra/registro-hora-extra.module.ts",
-		"default~pages-registro-deslocamento-registro-deslocamento-module~pages-registro-final-hora-extra-reg~a32f17ce",
+		"default~pages-registro-deslocamento-registro-deslocamento-module~pages-registro-final-hora-extra-reg~3e98e0d8",
 		"common",
 		"pages-registro-hora-extra-registro-hora-extra-module"
 	],
 	"./pages/relatorio-deslocamento/relatorio-deslocamento.module": [
 		"./src/app/pages/relatorio-deslocamento/relatorio-deslocamento.module.ts",
+		"default~pages-registro-deslocamento-registro-deslocamento-module~pages-registro-final-hora-extra-reg~3e98e0d8",
 		"common",
 		"pages-relatorio-deslocamento-relatorio-deslocamento-module"
 	],
 	"./pages/relatorio-detalhado/relatorio-detalhado.module": [
 		"./src/app/pages/relatorio-detalhado/relatorio-detalhado.module.ts",
-		"default~pages-registro-deslocamento-registro-deslocamento-module~pages-registro-final-hora-extra-reg~a32f17ce",
+		"default~pages-registro-deslocamento-registro-deslocamento-module~pages-registro-final-hora-extra-reg~3e98e0d8",
 		"common",
 		"pages-relatorio-detalhado-relatorio-detalhado-module"
 	],
 	"./pages/relatorio-hora-extra/relatorio-hora-extra.module": [
 		"./src/app/pages/relatorio-hora-extra/relatorio-hora-extra.module.ts",
-		"default~pages-registro-deslocamento-registro-deslocamento-module~pages-registro-final-hora-extra-reg~a32f17ce",
+		"default~pages-registro-deslocamento-registro-deslocamento-module~pages-registro-final-hora-extra-reg~3e98e0d8",
 		"common",
 		"pages-relatorio-hora-extra-relatorio-hora-extra-module"
 	],

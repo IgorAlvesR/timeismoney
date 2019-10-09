@@ -20,7 +20,6 @@ import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 export class RegistroDeslocamentoPage implements OnInit {
 
   @ViewChild('map') mapElement: any
-  @ViewChild('botao') botaoElement: any
   private loading: any
   private map: GoogleMap
   reserveGeocodingResults: string = ""
@@ -68,15 +67,16 @@ export class RegistroDeslocamentoPage implements OnInit {
       var longitude = position.coords.longitude
       this.reverseGeocoding(latitude, longitude)
     })
-    this.deslocamento.id = this.angularFirestore.createId();
-    this.deslocamento.data = moment().locale('pt-br').format('YYYY-MM-DD')
-    this.deslocamento.hora = moment().locale('pt-br').format('LTS')
-    this.deslocamento.userId = this.authService.getAuth().currentUser.uid
+    this.deslocamento.id = await this.angularFirestore.createId();
+    this.deslocamento.data = await moment().locale('pt-br').format('YYYY-MM-DD')
+    this.deslocamento.hora = await moment().locale('pt-br').format('LTS')
+    this.deslocamento.userId = await this.authService.getAuth().currentUser.uid
 
     try {
       await this.deslocamentoService.registrar(this.deslocamento)
-      await this.navCtrl.navigateRoot('registro-hora-extra')
       await this.loading.dismiss()
+      await this.navCtrl.navigateRoot('registro-hora-extra')
+      
     } catch (error) {
       this.toastCtrl.create({ message: error, duration: 2000 })
     }
@@ -84,8 +84,8 @@ export class RegistroDeslocamentoPage implements OnInit {
   }
 
   async loadMap() {
-    //this.loading = await this.loadingCtrl.create({ message: 'Por favor, aguarde...' })
-    //await this.loading.present()
+    this.loading = await this.loadingCtrl.create({ message: 'Por favor, aguarde...' })
+    await this.loading.present()
     const mapOptions: GoogleMapOptions = {
       controls: {
         zoom: false
@@ -108,7 +108,7 @@ export class RegistroDeslocamentoPage implements OnInit {
         target: myLocation.latLng,
         zoom: 18
       })
-      this.map.addMarkerSync({
+      await this.map.addMarkerSync({
         title: 'Localização Atual',
         icon: '#000',
         animation: GoogleMapsAnimation.DROP,
@@ -152,6 +152,5 @@ export class RegistroDeslocamentoPage implements OnInit {
   }
   askToTurnOnGPS() {    
     this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY)
-    this.botaoElement.disabled = false 
   }
 }

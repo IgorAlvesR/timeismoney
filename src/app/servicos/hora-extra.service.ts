@@ -37,7 +37,7 @@ export class HoraExtraService {
     this.colecaoHoraExtra60porCento = this.afs.collection('HoraExtra', ref => ref.where('userId','==',userId).where('diaSemana','<',7).where('diaSemana','>',0))
     this.colecaoHoraExtra100porCento = this.afs.collection('HoraExtra', ref => ref.where('userId','==',userId).where('diaSemana','==',0))
     this.colecaoHorasExtrasRealizadas = this.afs.collection('HoraExtra', ref => ref.where('userId','==',userId))
-    this.colecaoHoraExtraTotal = this.afs.collection('HoraExtra', ref => ref.where('userId','==',userId))
+    this.colecaoHoraExtraTotal = this.afs.collection('HoraExtra', ref => ref.where('userId','==',userId).orderBy('horaInicial','asc'))
   }
 
   registrarHoraExtra(horaExtra: HoraExtra) {
@@ -67,21 +67,21 @@ export class HoraExtraService {
     return this.horasExtras = this.colecaoHorasExtrasRealizadas.valueChanges()
   }
 
-  update(horaExtra: HoraExtra) {
-    let userId = this.authService.getAuth().currentUser.uid
-    let query = this.afs.collection('HoraExtra', ref => (ref.where('userId', '==', userId).limit(1).orderBy('cont', 'desc')))
+  async update(horaExtra: HoraExtra) {
+    let userId = await this.authService.getAuth().currentUser.uid
+    let query = await this.afs.collection('HoraExtra', ref => (ref.where('userId', '==', userId).limit(1).orderBy('cont', 'desc')))
       .snapshotChanges()
       .pipe(flatMap(horasOb => horasOb))
   
-    query.subscribe((doc) => {
+    await query.subscribe((doc) => {
       this.horas = doc.payload.doc.ref
       return this.horas.update(horaExtra)
     })
     
   }
 
-  buscarHoraPendente() {
-    let userId = this.authService.getAuth().currentUser.uid
+  async buscarHoraPendente() {
+    let userId = await this.authService.getAuth().currentUser.uid
     return this.afs.collection('HoraExtra', ref => (ref.where('userId','==',userId).where('horaFinal','==',''))).valueChanges() 
   }
 

@@ -35,8 +35,8 @@ export class RegistroFinalHoraExtraPage implements OnInit {
     private route: Router
   ) {}
 
-  ngOnInit() {
-    this.buscarCidades()
+  async ngOnInit() {
+    await this.buscarCidades()
   }
   
   customAlertOptions: any = {
@@ -59,28 +59,28 @@ export class RegistroFinalHoraExtraPage implements OnInit {
   async registrarFinalHoraExtra() {
 
     await this.presentLoading()
-    let horas = moment().hour()
-    let minutos = moment().minute()
+    let horas = await moment().hour()
+    let minutos = await moment().minute()
     this.horaExtraFinal.horaCalculoFinal = horas
     this.horaExtraFinal.minutoCalculoFinal = minutos
     this.horaExtraFinal.horaFinal = this.hora
-    this.horaExtraFinal.userId = this.authService.getAuth().currentUser.uid
-    this.horaExtraFinal.dataFinal = moment().locale('pt-br').format('YYYY-MM-DD')
-    this.horaExtraFinal.horaDataCalculoFinal = moment().locale('pt-br').format('DD/MM/YYYY HH:mm:ss')
+    this.horaExtraFinal.userId = await this.authService.getAuth().currentUser.uid
+    this.horaExtraFinal.dataFinal = await moment().locale('pt-br').format('YYYY-MM-DD')
+    this.horaExtraFinal.horaDataCalculoFinal = await moment().locale('pt-br').format('DD/MM/YYYY HH:mm:ss')
     
     
     try {
       if (this.horaExtraFinal.descricao == null || this.horaExtraFinal.descricao == '' || this.horaExtraFinal.localizacao == null || this.horaExtraFinal.localizacao == '') {
-        this.presentToast("Preenha todos os campos!")
-        this.carregando.dismiss()
+        await this.presentToast("Preenha todos os campos!")
+        await this.carregando.dismiss()
       } else {
         await this.horaSevice.update(this.horaExtraFinal)
         await this.carregando.dismiss()
         await window.location.replace('registro-hora-extra')
       }
     } catch (error) {
-      this.presentToast(error)
-      this.carregando.dismiss()
+      await this.presentToast(error)
+      await this.carregando.dismiss()
     }
   }
 
@@ -94,8 +94,8 @@ export class RegistroFinalHoraExtraPage implements OnInit {
     toast.present()
   }
 
-  buscarCidades(){
-    this.deslocamentoSubscription = this.horaSevice.buscarCidades().subscribe(result => {
+  async buscarCidades(){
+    this.deslocamentoSubscription = await this.horaSevice.buscarCidades().subscribe(result => {
        return this.cidades = result
     })
   }

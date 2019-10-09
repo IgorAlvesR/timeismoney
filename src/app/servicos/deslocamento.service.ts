@@ -20,7 +20,7 @@ export class DeslocamentoService {
   constructor(private afs: AngularFirestore, private authService: AutenticacaoService) { 
     let userId = this.authService.getAuth().currentUser.uid
     this.deslocamento = this.afs.collection<Deslocamento>('Deslocamento')
-    this.colecaoDeslocamento = this.afs.collection('Deslocamento', ref => ref.where('userId', '==', userId))
+    this.colecaoDeslocamento = this.afs.collection('Deslocamento', ref => ref.where('userId', '==', userId).orderBy('data','asc'))
   }
 
   registrar(deslocamento: Deslocamento){

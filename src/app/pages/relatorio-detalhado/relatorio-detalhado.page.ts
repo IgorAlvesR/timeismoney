@@ -35,14 +35,13 @@ export class RelatorioDetalhadoPage implements OnInit {
   public hora = {}
 
 
-  constructor(private horasService: HoraExtraService, public statusBar: StatusBar) 
+  constructor(private horasService: HoraExtraService) 
   {
-    this.statusBar.backgroundColorByName('#1106ac')
+    
   }
 
   async ngOnInit() {
     try {
-      
       await this.calculototalDeHoras()
       await this.calculototalDeHoras100PorCento()
       await this.calculoValorTotalHorasExtras60PorCento()
