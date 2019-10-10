@@ -31,14 +31,14 @@
       </ion-col>
     </ion-row>
     <ion-row *ngFor='let h of horasExtras'>
-      <ion-col size="6" *ngIf='h.horaFinal == null'>
+      <ion-col *ngIf='h.horaFinal == null'>
         {{h.horaInicial}} - <span class="horaPendente">Hora Pendente</span>
       </ion-col>
       <ion-col size="6" *ngIf='h.horaFinal != ""' (click)='mostrarDescricaoCidade(h.descricao,h.localizacao)'>
         {{h.horaInicial}} - {{h.horaFinal}} <br>
         <span>{{h.dataInicial | date: 'dd/MM/y'}}</span>
       </ion-col>
-      <ion-col size="6" *ngIf='h.horaFinal == ""'>
+      <ion-col *ngIf='h.horaFinal == ""'>
         {{h.horaInicial}} - <span class="horaPendente">PENDENTE</span> <br>
         <span>{{h.dataInicial | date: 'dd/MM/y'}}</span>
       </ion-col>
