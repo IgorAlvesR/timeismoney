@@ -9,10 +9,10 @@
 
 <ion-content>
   <div id="filtroData">
-    <ion-datetime class='data' done-text='OK' cancelText='Cancelar' displayFormat="DD/MM/YY" placeholder='dd/mm/aaaa'
-      [(ngModel)]="data.dataInicial"></ion-datetime>
-    <ion-datetime class='data' done-text='OK' cancelText='Cancelar' displayFormat="DD/MM/YY" placeholder='dd/mm/aaaa'
-      [(ngModel)]="data.dataFinal" (ionBlur)='getDeslocamentosComFiltro(data.dataInicial,data.dataFinal)'>
+    <ion-datetime value='DD/MM/YY' id="inicio" class='data' done-text='OK' cancelText='Cancelar' displayFormat="DD/MM/YY" placeholder='dd/mm/aaaa'
+      [(ngModel)]="dataInicial"></ion-datetime>
+    <ion-datetime value='DD/MM/YY' id="fim" class='data' done-text='OK' cancelText='Cancelar' displayFormat="DD/MM/YY" placeholder='dd/mm/aaaa'
+      [(ngModel)]="dataFinal" (ionBlur)='getDeslocamentosComFiltro(dataInicial,dataFinal)'>
     </ion-datetime>
   </div>
   <div id="filtroDataDescricao">

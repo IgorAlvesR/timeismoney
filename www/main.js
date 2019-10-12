@@ -913,13 +913,13 @@ var HoraExtraService = /** @class */ (function () {
         this.authService = authService;
         //cria uma referencia da coleção HoraExtraInicio e HoraExtraFinal
         var userId = authService.getAuth().currentUser.uid;
+        this.colecaoHoraExtra60porCentoSemFiltro = this.afs.collection('HoraExtra', function (ref) { return ref.where('userId', '==', userId).where('diaSemana', '>', 0); });
+        this.colecaoHoraExtra100porCentoSemFiltro = this.afs.collection('HoraExtra', function (ref) { return ref.where('userId', '==', userId).where('diaSemana', '==', 0); });
         this.colecaoCidades = this.afs.collection('Cidades');
         this.colecaoHoraExtraRegistro = this.afs.collection('HoraExtra');
         //this.colecaoHoraExtra = this.afs.collection('HoraExtra', ref => ref.where('userId', '==', userId).where('dataIniciaç','>=',dataInicial))
-        this.colecaoHoraExtra60porCento = this.afs.collection('HoraExtra', function (ref) { return ref.where('userId', '==', userId).where('diaSemana', '<', 7).where('diaSemana', '>', 0); });
-        this.colecaoHoraExtra100porCento = this.afs.collection('HoraExtra', function (ref) { return ref.where('userId', '==', userId).where('diaSemana', '==', 0); });
-        this.colecaoHorasExtrasRealizadas = this.afs.collection('HoraExtra', function (ref) { return ref.where('userId', '==', userId); });
-        this.colecaoHoraExtraTotal = this.afs.collection('HoraExtra', function (ref) { return ref.where('userId', '==', userId); });
+        this.colecaoHorasExtrasRealizadasSemFiltro = this.afs.collection('HoraExtra', function (ref) { return ref.where('userId', '==', userId); });
+        this.colecaoHoraExtraTotal = this.afs.collection('HoraExtra', function (ref) { return ref.where('userId', '==', userId).orderBy('horaInicial', 'asc'); });
     }
     HoraExtraService.prototype.registrarHoraExtra = function (horaExtra) {
         return this.colecaoHoraExtraRegistro.add(horaExtra);
@@ -933,29 +933,67 @@ var HoraExtraService = /** @class */ (function () {
     HoraExtraService.prototype.getHoras = function () {
         return this.horasExtras = this.colecaoHoraExtraTotal.valueChanges();
     };
-    HoraExtraService.prototype.getHorasExtras60porCento = function () {
+    HoraExtraService.prototype.getHorasExtras60porCento = function (dataInicial, dataFinal) {
+        var userId = this.authService.getAuth().currentUser.uid;
+        this.colecaoHoraExtra60porCento = this.afs.collection('HoraExtra', function (ref) { return ref.where('userId', '==', userId).where('dataInicial', '>=', dataInicial).where('dataInicial', '<=', dataFinal); });
         return this.horasExtras = this.colecaoHoraExtra60porCento.valueChanges();
     };
-    HoraExtraService.prototype.getHorasExtras100porCento = function () {
+    HoraExtraService.prototype.getHorasExtras100porCento = function (dataInicial, dataFinal) {
+        var userId = this.authService.getAuth().currentUser.uid;
+        this.colecaoHoraExtra100porCento = this.afs.collection('HoraExtra', function (ref) { return ref.where('userId', '==', userId).where('dataInicial', '>=', dataInicial).where('dataInicial', '<=', dataFinal); });
         return this.horasExtras = this.colecaoHoraExtra100porCento.valueChanges();
     };
-    HoraExtraService.prototype.getHorasExtrasTotais = function () {
+    HoraExtraService.prototype.getHorasExtras60porCentoSemFiltro = function () {
+        return this.horasExtras = this.colecaoHoraExtra60porCentoSemFiltro.valueChanges();
+    };
+    HoraExtraService.prototype.getHorasExtras100porCentoSemFiltro = function () {
+        return this.horasExtras = this.colecaoHoraExtra100porCentoSemFiltro.valueChanges();
+    };
+    HoraExtraService.prototype.getHorasExtrasTotaisSemFiltro = function () {
+        return this.horasExtras = this.colecaoHorasExtrasRealizadasSemFiltro.valueChanges();
+    };
+    HoraExtraService.prototype.getHorasExtrasTotais = function (dataInicial, dataFinal) {
+        var userId = this.authService.getAuth().currentUser.uid;
+        this.colecaoHorasExtrasRealizadas = this.afs.collection('HoraExtra', function (ref) { return ref.where('userId', '==', userId).where('dataInicial', '>=', dataInicial).where('dataInicial', '<=', dataFinal); });
         return this.horasExtras = this.colecaoHorasExtrasRealizadas.valueChanges();
     };
     HoraExtraService.prototype.update = function (horaExtra) {
-        var _this = this;
-        var userId = this.authService.getAuth().currentUser.uid;
-        var query = this.afs.collection('HoraExtra', function (ref) { return (ref.where('userId', '==', userId).limit(1).orderBy('cont', 'desc')); })
-            .snapshotChanges()
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (horasOb) { return horasOb; }));
-        query.subscribe(function (doc) {
-            _this.horas = doc.payload.doc.ref;
-            return _this.horas.update(horaExtra);
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var userId, query;
+            var _this = this;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.authService.getAuth().currentUser.uid];
+                    case 1:
+                        userId = _a.sent();
+                        return [4 /*yield*/, this.afs.collection('HoraExtra', function (ref) { return (ref.where('userId', '==', userId).limit(1).orderBy('cont', 'desc')); })
+                                .snapshotChanges()
+                                .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (horasOb) { return horasOb; }))];
+                    case 2:
+                        query = _a.sent();
+                        return [4 /*yield*/, query.subscribe(function (doc) {
+                                _this.horas = doc.payload.doc.ref;
+                                return _this.horas.update(horaExtra);
+                            })];
+                    case 3:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
         });
     };
     HoraExtraService.prototype.buscarHoraPendente = function () {
-        var userId = this.authService.getAuth().currentUser.uid;
-        return this.afs.collection('HoraExtra', function (ref) { return (ref.where('userId', '==', userId).where('horaFinal', '==', '')); }).valueChanges();
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var userId;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.authService.getAuth().currentUser.uid];
+                    case 1:
+                        userId = _a.sent();
+                        return [2 /*return*/, this.afs.collection('HoraExtra', function (ref) { return (ref.where('userId', '==', userId).where('horaFinal', '==', '')); }).valueChanges()];
+                }
+            });
+        });
     };
     HoraExtraService.prototype.deleteHoraExtra = function (id) {
         var _this = this;

@@ -58,7 +58,7 @@ var RelatorioDeslocamentoPageModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\n  <ion-toolbar>\n    <div class=\"header-top\">\n      <ion-icon name=\"arrow-round-back\" button [routerLink]=\"['/registro-hora-extra']\"></ion-icon>\n      <p text-center>RELATÓRIO DE DESLOCAMENTO</p>\n    </div>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <div id=\"filtroData\">\n    <ion-datetime class='data' done-text='OK' cancelText='Cancelar' displayFormat=\"DD/MM/YY\" placeholder='dd/mm/aaaa'\n      [(ngModel)]=\"data.dataInicial\"></ion-datetime>\n    <ion-datetime class='data' done-text='OK' cancelText='Cancelar' displayFormat=\"DD/MM/YY\" placeholder='dd/mm/aaaa'\n      [(ngModel)]=\"data.dataFinal\" (ionBlur)='getDeslocamentosComFiltro(data.dataInicial,data.dataFinal)'>\n    </ion-datetime>\n  </div>\n  <div id=\"filtroDataDescricao\">\n    <label for=\"\">Data Início</label>\n    <label for=\"\">Data Fim</label>\n  </div>\n  <ion-grid>\n    <ion-row>\n      <ion-col size='6'>\n        <strong>Descrição/Data</strong>\n      </ion-col>\n      <ion-col size='4' class=\"ion-text-center\">\n        <strong>Cidade</strong>\n      </ion-col>\n      <ion-col size=\"2\">\n      </ion-col>\n    </ion-row>\n    <ion-row *ngFor='let d of deslocamentos'>\n      <ion-row *ngIf='d == null'>\n            <p>Não possui deslocamentos</p>\n      </ion-row>\n      <ion-col size='6' class=\"dados\" (click)='mostrarHora(d.hora)'>\n        {{d.descricao}}<br>\n        <span>{{d.data | date: 'dd/MM/y'}}</span>\n      </ion-col>\n      <ion-col size='4' class=\"ion-text-center dados\">\n        {{d.localizacao}}\n      </ion-col>\n      <ion-col size=\"2\">\n        <ion-icon class=\"delete\" name='trash' (click)=\"deleteConfirm(d.id)\"></ion-icon>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n</ion-content>"
+module.exports = "<ion-header>\n  <ion-toolbar>\n    <div class=\"header-top\">\n      <ion-icon name=\"arrow-round-back\" button [routerLink]=\"['/registro-hora-extra']\"></ion-icon>\n      <p text-center>RELATÓRIO DE DESLOCAMENTO</p>\n    </div>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <div id=\"filtroData\">\n    <ion-datetime value='DD/MM/YY' id=\"inicio\" class='data' done-text='OK' cancelText='Cancelar' displayFormat=\"DD/MM/YY\" placeholder='dd/mm/aaaa'\n      [(ngModel)]=\"dataInicial\"></ion-datetime>\n    <ion-datetime value='DD/MM/YY' id=\"fim\" class='data' done-text='OK' cancelText='Cancelar' displayFormat=\"DD/MM/YY\" placeholder='dd/mm/aaaa'\n      [(ngModel)]=\"dataFinal\" (ionBlur)='getDeslocamentosComFiltro(dataInicial,dataFinal)'>\n    </ion-datetime>\n  </div>\n  <div id=\"filtroDataDescricao\">\n    <label for=\"\">Data Início</label>\n    <label for=\"\">Data Fim</label>\n  </div>\n  <ion-grid>\n    <ion-row>\n      <ion-col size='6'>\n        <strong>Descrição/Data</strong>\n      </ion-col>\n      <ion-col size='4' class=\"ion-text-center\">\n        <strong>Cidade</strong>\n      </ion-col>\n      <ion-col size=\"2\">\n      </ion-col>\n    </ion-row>\n    <ion-row *ngFor='let d of deslocamentos'>\n      <ion-row *ngIf='d == null'>\n            <p>Não possui deslocamentos</p>\n      </ion-row>\n      <ion-col size='6' class=\"dados\" (click)='mostrarHora(d.hora)'>\n        {{d.descricao}}<br>\n        <span>{{d.data | date: 'dd/MM/y'}}</span>\n      </ion-col>\n      <ion-col size='4' class=\"ion-text-center dados\">\n        {{d.localizacao}}\n      </ion-col>\n      <ion-col size=\"2\">\n        <ion-icon class=\"delete\" name='trash' (click)=\"deleteConfirm(d.id)\"></ion-icon>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n</ion-content>"
 
 /***/ }),
 
@@ -100,16 +100,29 @@ var RelatorioDeslocamentoPage = /** @class */ (function () {
         this.alertController = alertController;
         this.toastController = toastController;
         this.deslocamentos = new Array();
-        this.data = {};
+        this.dataInicial = '';
+        this.dataFinal = '';
         this.deslocamentoService.getDeslocamentos();
     }
     RelatorioDeslocamentoPage.prototype.ngOnInit = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
-                switch (_a.label) {
+            var _a, _b;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_c) {
+                switch (_c.label) {
                     case 0: return [4 /*yield*/, this.getDeslocamentos()];
                     case 1:
-                        _a.sent();
+                        _c.sent();
+                        _a = this;
+                        return [4 /*yield*/, moment__WEBPACK_IMPORTED_MODULE_4__().subtract(30, 'days').format("YYYY-MM-26")];
+                    case 2:
+                        _a.dataInicial = _c.sent();
+                        _b = this;
+                        return [4 /*yield*/, moment__WEBPACK_IMPORTED_MODULE_4__().format("YYYY-MM-25")];
+                    case 3:
+                        _b.dataFinal = _c.sent();
+                        return [4 /*yield*/, this.getDeslocamentosComFiltro(this.dataInicial, this.dataFinal)];
+                    case 4:
+                        _c.sent();
                         return [2 /*return*/];
                 }
             });

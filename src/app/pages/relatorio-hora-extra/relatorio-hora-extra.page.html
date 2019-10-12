@@ -11,9 +11,9 @@
 
   <div id="filtroData">
     <ion-datetime class='data' done-text='OK' cancelText='Cancelar' displayFormat="DD/MM/YY" placeholder='dd/mm/aaaa'
-      [(ngModel)]="data.dataInicial"></ion-datetime>
+      [(ngModel)]="dataInicial"></ion-datetime>
     <ion-datetime class='data' done-text='OK' cancelText='Cancelar' displayFormat="DD/MM/YY" placeholder='dd/mm/aaaa'
-      [(ngModel)]="data.dataFinal" (ionBlur)='getHoras(data.dataInicial,data.dataFinal)'></ion-datetime>
+      [(ngModel)]="dataFinal" (ionBlur)='getHoras(dataInicial,dataFinal)'></ion-datetime>
   </div>
   <div id="filtroDataDescricao">
     <label for="">Data Início</label>

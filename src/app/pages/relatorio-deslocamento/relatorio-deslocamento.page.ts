@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { ToastController, AlertController } from '@ionic/angular';
 import { nullSafeIsEquivalent } from '@angular/compiler/src/output/output_ast';
 import * as moment from 'moment'
+import { HoraExtra } from 'src/app/Models/hora-extra';
 
 
 @Component({
@@ -17,13 +18,17 @@ export class RelatorioDeslocamentoPage implements OnInit {
   public deslocamentos = new Array<Deslocamento>()
   private deslocamentoSubscription: Subscription
   private toastCtrl: ToastController
-  public data = {}
+  public dataInicial = ''
+  public dataFinal = ''
   constructor(private deslocamentoService: DeslocamentoService, private alertController: AlertController, private toastController: ToastController) {
     this.deslocamentoService.getDeslocamentos()
   }
 
   async ngOnInit() {
     await this.getDeslocamentos()
+    this.dataInicial = await moment().subtract(30,'days').format("YYYY-MM-26")
+    this.dataFinal = await moment().format("YYYY-MM-25")
+    await this.getDeslocamentosComFiltro(this.dataInicial,this.dataFinal)
   }
 
   ngOnDestroy() {

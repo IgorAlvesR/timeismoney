@@ -152,47 +152,59 @@ var RegistroDeslocamentoPage = /** @class */ (function () {
     };
     RegistroDeslocamentoPage.prototype.registrarDeslocamento = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-            var _a, error_1;
+            var _a, _b, _c, _d, _e, error_1;
             var _this = this;
-            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_b) {
-                switch (_b.label) {
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_f) {
+                switch (_f.label) {
                     case 0:
                         _a = this;
                         return [4 /*yield*/, this.loadingCtrl.create({ message: 'Por favor, aguarde...' })];
                     case 1:
-                        _a.loading = _b.sent();
+                        _a.loading = _f.sent();
                         return [4 /*yield*/, this.loading.present()];
                     case 2:
-                        _b.sent();
+                        _f.sent();
                         return [4 /*yield*/, this.geolocation.getCurrentPosition().then(function (position) {
                                 var latitude = position.coords.latitude;
                                 var longitude = position.coords.longitude;
                                 _this.reverseGeocoding(latitude, longitude);
                             })];
                     case 3:
-                        _b.sent();
-                        this.deslocamento.id = this.angularFirestore.createId();
-                        this.deslocamento.data = moment__WEBPACK_IMPORTED_MODULE_7__().locale('pt-br').format('YYYY-MM-DD');
-                        this.deslocamento.hora = moment__WEBPACK_IMPORTED_MODULE_7__().locale('pt-br').format('LTS');
-                        this.deslocamento.userId = this.authService.getAuth().currentUser.uid;
-                        _b.label = 4;
+                        _f.sent();
+                        _b = this.deslocamento;
+                        return [4 /*yield*/, this.angularFirestore.createId()];
                     case 4:
-                        _b.trys.push([4, 8, , 9]);
-                        return [4 /*yield*/, this.deslocamentoService.registrar(this.deslocamento)];
+                        _b.id = _f.sent();
+                        _c = this.deslocamento;
+                        return [4 /*yield*/, moment__WEBPACK_IMPORTED_MODULE_7__().locale('pt-br').format('YYYY-MM-DD')];
                     case 5:
-                        _b.sent();
-                        return [4 /*yield*/, this.navCtrl.navigateRoot('registro-hora-extra')];
+                        _c.data = _f.sent();
+                        _d = this.deslocamento;
+                        return [4 /*yield*/, moment__WEBPACK_IMPORTED_MODULE_7__().locale('pt-br').format('LTS')];
                     case 6:
-                        _b.sent();
-                        return [4 /*yield*/, this.loading.dismiss()];
+                        _d.hora = _f.sent();
+                        _e = this.deslocamento;
+                        return [4 /*yield*/, this.authService.getAuth().currentUser.uid];
                     case 7:
-                        _b.sent();
-                        return [3 /*break*/, 9];
+                        _e.userId = _f.sent();
+                        _f.label = 8;
                     case 8:
-                        error_1 = _b.sent();
+                        _f.trys.push([8, 12, , 13]);
+                        return [4 /*yield*/, this.deslocamentoService.registrar(this.deslocamento)];
+                    case 9:
+                        _f.sent();
+                        return [4 /*yield*/, this.loading.dismiss()];
+                    case 10:
+                        _f.sent();
+                        return [4 /*yield*/, this.navCtrl.navigateRoot('registro-hora-extra')];
+                    case 11:
+                        _f.sent();
+                        return [3 /*break*/, 13];
+                    case 12:
+                        error_1 = _f.sent();
                         this.toastCtrl.create({ message: error_1, duration: 2000 });
-                        return [3 /*break*/, 9];
-                    case 9: return [2 /*return*/];
+                        return [3 /*break*/, 13];
+                    case 13: return [2 /*return*/];
                 }
             });
         });
@@ -244,7 +256,7 @@ var RegistroDeslocamentoPage = /** @class */ (function () {
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 3, 4, 5]);
+                        _a.trys.push([0, 4, 5, 6]);
                         return [4 /*yield*/, this.map.getMyLocation()];
                     case 1:
                         myLocation = _a.sent();
@@ -254,21 +266,23 @@ var RegistroDeslocamentoPage = /** @class */ (function () {
                             })];
                     case 2:
                         _a.sent();
-                        this.map.addMarkerSync({
-                            title: 'Localização Atual',
-                            icon: '#000',
-                            animation: _ionic_native_google_maps__WEBPACK_IMPORTED_MODULE_3__["GoogleMapsAnimation"].DROP,
-                            position: myLocation.latLng
-                        });
-                        return [3 /*break*/, 5];
+                        return [4 /*yield*/, this.map.addMarkerSync({
+                                title: 'Localização Atual',
+                                icon: '#000',
+                                animation: _ionic_native_google_maps__WEBPACK_IMPORTED_MODULE_3__["GoogleMapsAnimation"].DROP,
+                                position: myLocation.latLng
+                            })];
                     case 3:
+                        _a.sent();
+                        return [3 /*break*/, 6];
+                    case 4:
                         error_3 = _a.sent();
                         console.error(error_3);
-                        return [3 /*break*/, 5];
-                    case 4:
+                        return [3 /*break*/, 6];
+                    case 5:
                         this.loading.dismiss();
                         return [7 /*endfinally*/];
-                    case 5: return [2 /*return*/];
+                    case 6: return [2 /*return*/];
                 }
             });
         });
@@ -302,16 +316,11 @@ var RegistroDeslocamentoPage = /** @class */ (function () {
     };
     RegistroDeslocamentoPage.prototype.askToTurnOnGPS = function () {
         this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY);
-        this.botaoElement.disabled = false;
     };
     tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])('map'),
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Object)
     ], RegistroDeslocamentoPage.prototype, "mapElement", void 0);
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])('botao'),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Object)
-    ], RegistroDeslocamentoPage.prototype, "botaoElement", void 0);
     RegistroDeslocamentoPage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
             selector: 'app-registro-deslocamento',

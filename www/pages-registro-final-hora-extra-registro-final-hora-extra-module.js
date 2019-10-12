@@ -116,7 +116,16 @@ var RegistroFinalHoraExtraPage = /** @class */ (function () {
         };
     }
     RegistroFinalHoraExtraPage.prototype.ngOnInit = function () {
-        this.buscarCidades();
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.buscarCidades()];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
     };
     RegistroFinalHoraExtraPage.prototype.criarRelogio = function () {
         var _this = this;
@@ -132,44 +141,65 @@ var RegistroFinalHoraExtraPage = /** @class */ (function () {
     };
     RegistroFinalHoraExtraPage.prototype.registrarFinalHoraExtra = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-            var horas, minutos, error_1;
-            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
-                switch (_a.label) {
+            var horas, minutos, _a, _b, _c, error_1;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_d) {
+                switch (_d.label) {
                     case 0: return [4 /*yield*/, this.presentLoading()];
                     case 1:
-                        _a.sent();
-                        horas = moment__WEBPACK_IMPORTED_MODULE_2__().hour();
-                        minutos = moment__WEBPACK_IMPORTED_MODULE_2__().minute();
+                        _d.sent();
+                        return [4 /*yield*/, moment__WEBPACK_IMPORTED_MODULE_2__().hour()];
+                    case 2:
+                        horas = _d.sent();
+                        return [4 /*yield*/, moment__WEBPACK_IMPORTED_MODULE_2__().minute()];
+                    case 3:
+                        minutos = _d.sent();
                         this.horaExtraFinal.horaCalculoFinal = horas;
                         this.horaExtraFinal.minutoCalculoFinal = minutos;
                         this.horaExtraFinal.horaFinal = this.hora;
-                        this.horaExtraFinal.userId = this.authService.getAuth().currentUser.uid;
-                        this.horaExtraFinal.dataFinal = moment__WEBPACK_IMPORTED_MODULE_2__().locale('pt-br').format('YYYY-MM-DD');
-                        this.horaExtraFinal.horaDataCalculoFinal = moment__WEBPACK_IMPORTED_MODULE_2__().locale('pt-br').format('DD/MM/YYYY HH:mm:ss');
-                        _a.label = 2;
-                    case 2:
-                        _a.trys.push([2, 8, , 9]);
-                        if (!(this.horaExtraFinal.descricao == null || this.horaExtraFinal.descricao == '' || this.horaExtraFinal.localizacao == null || this.horaExtraFinal.localizacao == '')) return [3 /*break*/, 3];
-                        this.presentToast("Preenha todos os campos!");
-                        this.carregando.dismiss();
-                        return [3 /*break*/, 7];
-                    case 3: return [4 /*yield*/, this.horaSevice.update(this.horaExtraFinal)];
+                        _a = this.horaExtraFinal;
+                        return [4 /*yield*/, this.authService.getAuth().currentUser.uid];
                     case 4:
-                        _a.sent();
-                        return [4 /*yield*/, this.carregando.dismiss()];
+                        _a.userId = _d.sent();
+                        _b = this.horaExtraFinal;
+                        return [4 /*yield*/, moment__WEBPACK_IMPORTED_MODULE_2__().locale('pt-br').format('YYYY-MM-DD')];
                     case 5:
-                        _a.sent();
-                        return [4 /*yield*/, window.location.replace('registro-hora-extra')];
+                        _b.dataFinal = _d.sent();
+                        _c = this.horaExtraFinal;
+                        return [4 /*yield*/, moment__WEBPACK_IMPORTED_MODULE_2__().locale('pt-br').format('DD/MM/YYYY HH:mm:ss')];
                     case 6:
-                        _a.sent();
-                        _a.label = 7;
-                    case 7: return [3 /*break*/, 9];
+                        _c.horaDataCalculoFinal = _d.sent();
+                        _d.label = 7;
+                    case 7:
+                        _d.trys.push([7, 15, , 18]);
+                        if (!(this.horaExtraFinal.descricao == null || this.horaExtraFinal.descricao == '' || this.horaExtraFinal.localizacao == null || this.horaExtraFinal.localizacao == '')) return [3 /*break*/, 10];
+                        return [4 /*yield*/, this.presentToast("Preenha todos os campos!")];
                     case 8:
-                        error_1 = _a.sent();
-                        this.presentToast(error_1);
-                        this.carregando.dismiss();
-                        return [3 /*break*/, 9];
-                    case 9: return [2 /*return*/];
+                        _d.sent();
+                        return [4 /*yield*/, this.carregando.dismiss()];
+                    case 9:
+                        _d.sent();
+                        return [3 /*break*/, 14];
+                    case 10: return [4 /*yield*/, this.horaSevice.update(this.horaExtraFinal)];
+                    case 11:
+                        _d.sent();
+                        return [4 /*yield*/, this.carregando.dismiss()];
+                    case 12:
+                        _d.sent();
+                        return [4 /*yield*/, window.location.replace('registro-hora-extra')];
+                    case 13:
+                        _d.sent();
+                        _d.label = 14;
+                    case 14: return [3 /*break*/, 18];
+                    case 15:
+                        error_1 = _d.sent();
+                        return [4 /*yield*/, this.presentToast(error_1)];
+                    case 16:
+                        _d.sent();
+                        return [4 /*yield*/, this.carregando.dismiss()];
+                    case 17:
+                        _d.sent();
+                        return [3 /*break*/, 18];
+                    case 18: return [2 /*return*/];
                 }
             });
         });
@@ -204,9 +234,21 @@ var RegistroFinalHoraExtraPage = /** @class */ (function () {
         });
     };
     RegistroFinalHoraExtraPage.prototype.buscarCidades = function () {
-        var _this = this;
-        this.deslocamentoSubscription = this.horaSevice.buscarCidades().subscribe(function (result) {
-            return _this.cidades = result;
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var _a;
+            var _this = this;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        _a = this;
+                        return [4 /*yield*/, this.horaSevice.buscarCidades().subscribe(function (result) {
+                                return _this.cidades = result;
+                            })];
+                    case 1:
+                        _a.deslocamentoSubscription = _b.sent();
+                        return [2 /*return*/];
+                }
+            });
         });
     };
     RegistroFinalHoraExtraPage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([

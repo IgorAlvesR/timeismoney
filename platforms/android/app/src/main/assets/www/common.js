@@ -403,7 +403,7 @@ var DeslocamentoService = /** @class */ (function () {
         this.authService = authService;
         var userId = this.authService.getAuth().currentUser.uid;
         this.deslocamento = this.afs.collection('Deslocamento');
-        this.colecaoDeslocamento = this.afs.collection('Deslocamento', function (ref) { return ref.where('userId', '==', userId); });
+        this.colecaoDeslocamento = this.afs.collection('Deslocamento', function (ref) { return ref.where('userId', '==', userId).orderBy('data', 'asc'); });
     }
     DeslocamentoService.prototype.registrar = function (deslocamento) {
         return this.deslocamento.add(deslocamento);

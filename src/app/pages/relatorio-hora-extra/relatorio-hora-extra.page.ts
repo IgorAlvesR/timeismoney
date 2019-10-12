@@ -15,7 +15,8 @@ export class RelatorioHoraExtraPage implements OnInit {
 
   public horasExtras = new Array<HoraExtra>()
   private horasExtrasSubscription: Subscription
-  public data:HoraExtra = {}
+  public dataInicial = ''
+  public dataFinal = ''
 
   constructor(
     private authService: AutenticacaoService,
@@ -24,8 +25,11 @@ export class RelatorioHoraExtraPage implements OnInit {
     private alertController: AlertController
   ) { }
 
-  ngOnInit() {
-    this.getHorasExtras()
+  async ngOnInit() {
+    await this.getHorasExtras()
+    this.dataInicial = await moment().subtract(30,'days').format("YYYY-MM-26")
+    this.dataFinal = await moment().format("YYYY-MM-25")
+    await this.getHoras(this.dataInicial,this.dataFinal)
   }
 
   ngOnDestroy() {
@@ -43,11 +47,11 @@ export class RelatorioHoraExtraPage implements OnInit {
         this.presentToast('Não possui horas extras realizadas nessa data')
       } else {
         dados.forEach(element => {
-          var horaFinal = element.horaDataCalculoFinal
-          var horaInicial = element.horaDataCalculoInicio
-          var ms = moment(horaFinal, "DD/MM/YYYY HH:mm:ss").diff(moment(horaInicial, "DD/MM/YYYY HH:mm:ss"));
-          var d = moment.duration(ms);
-          var s = Math.floor(d.asHours()) + moment.utc(ms).format(":mm:ss");
+          let horaFinal = element.horaDataCalculoFinal
+          let horaInicial = element.horaDataCalculoInicio
+          let ms = moment(horaFinal, "DD/MM/YYYY HH:mm:ss").diff(moment(horaInicial, "DD/MM/YYYY HH:mm:ss"));
+          let d = moment.duration(ms);
+          let s = Math.floor(d.asHours()) + moment.utc(ms).format(":mm:ss");
           element.total = s
         })
       }
@@ -59,11 +63,11 @@ export class RelatorioHoraExtraPage implements OnInit {
   async getHorasExtras() {
      this.horasExtrasSubscription = await this.horaService.getHoras().subscribe(dados => {
         dados.forEach(element => {
-          var horaFinal = element.horaDataCalculoFinal
-          var horaInicial = element.horaDataCalculoInicio
-          var ms = moment(horaFinal, "DD/MM/YYYY HH:mm:ss").diff(moment(horaInicial, "DD/MM/YYYY HH:mm:ss"));
-          var d = moment.duration(ms);
-          var s = Math.floor(d.asHours()) + moment.utc(ms).format(":mm:ss");
+          let horaFinal = element.horaDataCalculoFinal
+          let horaInicial = element.horaDataCalculoInicio
+          let ms = moment(horaFinal, "DD/MM/YYYY HH:mm:ss").diff(moment(horaInicial, "DD/MM/YYYY HH:mm:ss"));
+          let d = moment.duration(ms);
+          let s = Math.floor(d.asHours()) + moment.utc(ms).format(":mm:ss");
           element.total = s
         })
       return this.horasExtras = dados
