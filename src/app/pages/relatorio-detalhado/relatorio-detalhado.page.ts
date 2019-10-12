@@ -1,11 +1,12 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { HoraExtraService } from 'src/app/servicos/hora-extra.service';
 import { Observable } from 'rxjs';
 import { Funcionario } from 'src/app/Models/funcionario';
 import * as moment from 'moment'
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { ToastController } from '@ionic/angular';
+import { ToastController, AlertController } from '@ionic/angular';
 import { HoraExtra } from 'src/app/Models/hora-extra';
+import { AutenticacaoService } from 'src/app/servicos/autenticacao.service';
 
 
 
@@ -15,10 +16,10 @@ import { HoraExtra } from 'src/app/Models/hora-extra';
   templateUrl: './relatorio-detalhado.page.html',
   styleUrls: ['./relatorio-detalhado.page.scss'],
 })
-export class RelatorioDetalhadoPage implements OnInit,OnDestroy {
+export class RelatorioDetalhadoPage implements OnInit, OnDestroy {
 
   public totalDeHorasExtras: number = 0
-  public salarioFunc: number
+  public salarioFunc: number = 0
   public horaFormatada: string = ''
   public totalDeHorasExtrasEmHoras: number = 0
   public valorEmReais: number = 0
@@ -37,36 +38,70 @@ export class RelatorioDetalhadoPage implements OnInit,OnDestroy {
   public hora = {}
   public dataInicial = ''
   public dataFinal = ''
-  public resultFuncionario: Observable<Funcionario[]> 
+  public resultFuncionario: Observable<Funcionario[]>
   public adionalNoturno: number = 0
+  public funcionario: Funcionario = {}
 
-  constructor(private horasService: HoraExtraService, private toastController: ToastController) {
+  constructor(
+    private horasService: HoraExtraService,
+    private toastController: ToastController,
+    private alertController: AlertController,
+    private authService: AutenticacaoService
+  ) {
 
   }
 
   async ionViewWillEnter() {
     try {
-      this.dataInicial = await moment().subtract(30,'days').format("YYYY-MM-26")
+      this.dataInicial = await moment().subtract(30, 'days').format("YYYY-MM-26")
       this.dataFinal = await moment().format("YYYY-MM-25")
-      await this.calculaValoresHorasExtras(this.dataInicial,this.dataFinal)
+      await this.calculaValoresHorasExtras(this.dataInicial, this.dataFinal)
     } catch (e) {
       console.log(e)
     }
 
   }
 
-  ngOnInit(){
-    
+  ngOnInit() {
+
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.zera()
   }
 
-  zera(){
+
+  alterarSalario() {
+    this.presentAlert()
+  }
+
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      header: 'Atualizar Salário Base',
+      inputs: [
+        {
+          name: 'salarioBruto',
+          type: 'number',
+          placeholder: 'Informe o salário base',
+        }
+      ],
+      buttons: [
+        {
+          text: 'Atualizar',
+          handler: data => {
+            this.funcionario.salarioBruto = data.salarioBruto
+            this.authService.update(this.funcionario)
+          }
+        }
+      ]
+    })
+    await alert.present()
+  }
+
+  zera() {
     this.valorEmReaisDeTodasHorasRealizadas = 0
-    this.totalDeHorasExtras =  0
-    this.horaFormatada =  ''
+    this.totalDeHorasExtras = 0
+    this.horaFormatada = ''
     this.totalDeHorasExtrasEmHoras = 0
     this.valorEmReais = 0
     this.horas100PorcentoFormatada = ''
@@ -87,23 +122,23 @@ export class RelatorioDetalhadoPage implements OnInit,OnDestroy {
     let di = await moment(dataInicial).format('YYYY-MM-DD')
     let df = await moment(dataFinal).format('YYYY-MM-DD')
     await this.calculototalDeHoras(di, df)
-    await this.calculototalDeHoras100PorCento(di,df)
+    await this.calculototalDeHoras100PorCento(di, df)
     await this.calculoValorTotalHorasExtras60PorCento(di, df)
-    await this.calculoValorTotalHorasExtras100PorCento(di,df)
-    await this.calculoTotalHorasRealizadas(di,df)
-    await this.calculoAdicionalNoturno(di,df)
-    await  this.calculoValorTotalHorasRealizadas()
+    await this.calculoValorTotalHorasExtras100PorCento(di, df)
+    await this.calculoTotalHorasRealizadas(di, df)
+    await this.calculoAdicionalNoturno(di, df)
+    await this.calculoValorTotalHorasRealizadas()
   }
 
-  async calculoAdicionalNoturno(dataInicial,dataFinal){  
-    let horas = await this.horasService.getHorasExtras(dataInicial,dataFinal)
+  async calculoAdicionalNoturno(dataInicial, dataFinal) {
+    let horas = await this.horasService.getHorasExtras(dataInicial, dataFinal)
 
     horas.subscribe(result => {
       result.forEach(element => {
-        if(element.horaCalculoInicial >= 22 && element.horaCalculoFinal <= 6){
+        if (element.horaCalculoInicial >= 22 && element.horaCalculoFinal <= 6) {
           this.adionalNoturno = 0.20
-        }else {
-          this.adionalNoturno = 0   
+        } else {
+          this.adionalNoturno = 0
         }
       })
     })
@@ -114,30 +149,31 @@ export class RelatorioDetalhadoPage implements OnInit,OnDestroy {
 
     let resultFuncionario: Observable<Funcionario[]> = await this.horasService.buscarFuncionario()
     resultFuncionario.subscribe(result => {
-      this.valorEmReais = ((result[0].salarioBruto / 220) * 1.6 + this.adionalNoturno ) * this.totalDeHorasExtrasEmHoras
+      this.valorEmReais = ((result[0].salarioBruto / 220) * 1.6 + this.adionalNoturno) * this.totalDeHorasExtrasEmHoras
     })
     return this.valorEmReais
   }
 
-  async calculoValorTotalHorasRealizadas(){
+  async calculoValorTotalHorasRealizadas() {
     this.resultFuncionario = await this.horasService.buscarFuncionario()
     await this.resultFuncionario.subscribe(() => {
-      this.valorEmReaisDeTodasHorasRealizadas =  this.valorEmReais + this.valorHora100PorCentoEmReais
+      this.valorEmReaisDeTodasHorasRealizadas = this.valorEmReais + this.valorHora100PorCentoEmReais
     })
-  } 
+  }
 
 
-  
 
-  async calculoValorTotalHorasExtras100PorCento(dataInicial,dataFinal) {
+
+  async calculoValorTotalHorasExtras100PorCento(dataInicial, dataFinal) {
     this.valorHora100PorCentoEmReais = 0
     let di = moment(dataInicial).format('YYYY-MM-DD')
     let df = moment(dataFinal).format('YYYY-MM-DD')
 
-    await this.getQuantidadeHorasExtras100PorCentoEmHoras(di,df)
+    await this.getQuantidadeHorasExtras100PorCentoEmHoras(di, df)
 
     let resultFuncionario: Observable<Funcionario[]> = await this.horasService.buscarFuncionario()
     await resultFuncionario.subscribe(result => {
+      this.salarioFunc = result[0].salarioBruto
       this.funcao = result[0].funcao
       this.nomeFuncionario = result[0].nome
       this.valorHora100PorCentoEmReais = ((result[0].salarioBruto / 220) * 2 + this.adionalNoturno) * this.totalDeHorasExtras100PorCentoEmHoras
@@ -244,13 +280,13 @@ export class RelatorioDetalhadoPage implements OnInit,OnDestroy {
     })
   }
 
-  async calculoTotalHorasRealizadas(dataInicial,dataFinal) {
+  async calculoTotalHorasRealizadas(dataInicial, dataFinal) {
     let di = moment(dataInicial).format('YYYY-MM-DD')
     let df = moment(dataFinal).format('YYYY-MM-DD')
     let duracaoMilisegundos: number = 0
     var milisegundos: number = 0
     let somaMilisegundos: number = 0
-    await this.horasService.getHorasExtrasTotais(di,df).subscribe(dados => {
+    await this.horasService.getHorasExtrasTotais(di, df).subscribe(dados => {
       dados.forEach(element => {
         if (dados.length == 0) {
           this.presentToast('Não possui horas extras realizadas nessa data')

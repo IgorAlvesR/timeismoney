@@ -3,6 +3,7 @@
     <div class="header-top">
       <ion-icon id="back" name="arrow-round-back" button [routerLink]="['/registro-hora-extra']"></ion-icon>
       <p text-center>RELATÓRIO DETALHADO</p>
+      <ion-icon id="atualizarSalario" (click)='alterarSalario()' name="cash"></ion-icon>
     </div>
   </ion-toolbar>
 </ion-header>
@@ -10,14 +11,16 @@
 <ion-content>
 
 
-  <h1 id="nome" class="ion-text-center">{{nomeFuncionario}}</h1>
+  <h1 id="nome" class="ion-text-center">{{nomeFuncionario}} </h1> 
+  
   <p id="funcao" class="ion-text-center">{{funcao}}</p>
+  <p id="salarioBaseTexto" class="ion-text-center">{{salarioFunc | currency:'BRL'}}</p>
 
   <div id="filtroData">
     <ion-datetime class='data' done-text='OK' cancelText='Cancelar' displayFormat="DD/MM/YY" placeholder='dd/mm/aaaa'
       [(ngModel)]="dataInicial"></ion-datetime>
     <ion-datetime class='data' done-text='OK' cancelText='Cancelar' displayFormat="DD/MM/YY" placeholder='dd/mm/aaaa'
-      [(ngModel)]="dataFinal" (ionChange)='calculaValoresHorasExtras(dataInicial,dataFinal)'>
+      [(ngModel)]="dataFinal" (ionBlur)='calculaValoresHorasExtras(dataInicial,dataFinal)'>
     </ion-datetime>
   </div>
   <div id="filtroDataDescricao">
@@ -54,10 +57,12 @@
     </div>
 
   </ion-grid>
-
+  
   <div id="totalHoras">
     <h4>Total</h4>
     <h1>{{valorEmReaisDeTodasHorasRealizadas | currency:'BRL'}}</h1>
   </div>
+
+  
 
 </ion-content>

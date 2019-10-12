@@ -42,7 +42,7 @@ span{
 
 #quantidadeHoras{
     margin-top: 5%;
-    margin-bottom: 20%;
+    margin-bottom: 10%;
 }
 
 #cash{
@@ -61,7 +61,6 @@ h1{
     color: white;
 }
 #funcao{
-    margin-bottom: 10%;
     color: white;
 }
 
@@ -72,7 +71,7 @@ h1{
     border: 5px solid #4BE25A;
     border-radius: 100%;
     margin: 0 auto;
-    padding-top: 15px;
+    padding-top: 10px;
 }
 
 ion-content{
@@ -131,5 +130,17 @@ label{
     margin-bottom: 20px;
 }
 
+#atualizarSalario{
+    color: green;
+    margin: 0 auto;
+}
+
+
+
+#salarioBaseTexto{
+    color: white;
+    text-align: center;
+    margin-bottom: 10%;
+}
 
 
