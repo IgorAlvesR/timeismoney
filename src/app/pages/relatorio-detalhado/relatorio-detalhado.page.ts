@@ -39,8 +39,9 @@ export class RelatorioDetalhadoPage implements OnInit, OnDestroy {
   public dataInicial = ''
   public dataFinal = ''
   public resultFuncionario: Observable<Funcionario[]>
-  public adionalNoturno: number = 0
+  public adicionalNoturno: number = 0
   public funcionario: Funcionario = {}
+  public valorAdicionalNoturno: number = 0
 
   constructor(
     private horasService: HoraExtraService,
@@ -62,8 +63,14 @@ export class RelatorioDetalhadoPage implements OnInit, OnDestroy {
 
   }
 
-  ngOnInit() {
-
+  async ngOnInit() {
+    try {
+      this.dataInicial = await moment().subtract(30, 'days').format("YYYY-MM-26")
+      this.dataFinal = await moment().format("YYYY-MM-25")
+      await this.calculaValoresHorasExtras(this.dataInicial, this.dataFinal)
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   ngOnDestroy() {
@@ -114,7 +121,9 @@ export class RelatorioDetalhadoPage implements OnInit, OnDestroy {
     this.valorEmReaisDeTodasHorasRealizadas = 0
     this.valorEmReaisDeTodasHorasRealizadasSemFiltro = 0
     this.totalDeHorasRealizadasFormatadas = ''
-    this.adionalNoturno = 0
+    this.funcionario = {}
+    this.adicionalNoturno = 0
+    this.valorAdicionalNoturno = 0
   }
 
   async calculaValoresHorasExtras(dataInicial, dataFinal) {
@@ -123,33 +132,48 @@ export class RelatorioDetalhadoPage implements OnInit, OnDestroy {
     let df = await moment(dataFinal).format('YYYY-MM-DD')
     await this.calculototalDeHoras(di, df)
     await this.calculototalDeHoras100PorCento(di, df)
+    await this.calculoAdicionalNoturno(di, df)
     await this.calculoValorTotalHorasExtras60PorCento(di, df)
     await this.calculoValorTotalHorasExtras100PorCento(di, df)
     await this.calculoTotalHorasRealizadas(di, df)
-    await this.calculoAdicionalNoturno(di, df)
     await this.calculoValorTotalHorasRealizadas()
+    
   }
 
   async calculoAdicionalNoturno(dataInicial, dataFinal) {
-    let horas = await this.horasService.getHorasExtras(dataInicial, dataFinal)
+    let di = await moment(dataInicial).format('YYYY-MM-DD')
+    let df = await moment(dataFinal).format('YYYY-MM-DD')
+    let milisegundos: number = 0
+    let duracaoMilisegundos: number = 0
 
-    horas.subscribe(result => {
+    let resultHoras: Observable<HoraExtra[]> = await this.horasService.getHorasExtras(di, df)
+    await resultHoras.subscribe(result => {
       result.forEach(element => {
         if (element.horaCalculoInicial >= 22 && element.horaCalculoFinal <= 6) {
-          this.adionalNoturno = 0.20
-        } else {
-          this.adionalNoturno = 0
+          let horaFinal = element.horaDataCalculoFinal
+          let horaInicial = element.horaDataCalculoInicio
+          milisegundos = moment(horaFinal, "DD/MM/YYYY HH:mm:ss").diff(moment(horaInicial, "DD/MM/YYYY HH:mm:ss"));
+          duracaoMilisegundos = moment.duration(milisegundos).asHours()
+          this.valorAdicionalNoturno+= duracaoMilisegundos
+          this.adicionalNoturno = (this.salarioFunc / 220) * 1.6 * 0.20
         }
       })
+      return this.adicionalNoturno
+      
     })
+    
   }
+
+  
+
+
   async calculoValorTotalHorasExtras60PorCento(dataInicial, dataFinal) {
 
     await this.getQuantidadeHorasExtrasEmHoras(dataInicial, dataFinal)
 
     let resultFuncionario: Observable<Funcionario[]> = await this.horasService.buscarFuncionario()
-    resultFuncionario.subscribe(result => {
-      this.valorEmReais = ((result[0].salarioBruto / 220) * 1.6 + this.adionalNoturno) * this.totalDeHorasExtrasEmHoras
+    await resultFuncionario.subscribe(result => {
+      this.valorEmReais = ((result[0].salarioBruto / 220) * 1.6 + this.adicionalNoturno) * this.totalDeHorasExtrasEmHoras
     })
     return this.valorEmReais
   }
@@ -160,9 +184,6 @@ export class RelatorioDetalhadoPage implements OnInit, OnDestroy {
       this.valorEmReaisDeTodasHorasRealizadas = this.valorEmReais + this.valorHora100PorCentoEmReais
     })
   }
-
-
-
 
   async calculoValorTotalHorasExtras100PorCento(dataInicial, dataFinal) {
     this.valorHora100PorCentoEmReais = 0
@@ -176,7 +197,7 @@ export class RelatorioDetalhadoPage implements OnInit, OnDestroy {
       this.salarioFunc = result[0].salarioBruto
       this.funcao = result[0].funcao
       this.nomeFuncionario = result[0].nome
-      this.valorHora100PorCentoEmReais = ((result[0].salarioBruto / 220) * 2 + this.adionalNoturno) * this.totalDeHorasExtras100PorCentoEmHoras
+      this.valorHora100PorCentoEmReais = ((result[0].salarioBruto / 220) * 2 + this.adicionalNoturno) * this.totalDeHorasExtras100PorCentoEmHoras
     })
     return this.valorHora100PorCentoEmReais
   }
@@ -233,6 +254,8 @@ export class RelatorioDetalhadoPage implements OnInit, OnDestroy {
   async calculototalDeHoras(dataInicial, dataFinal) {
     let di = moment(dataInicial).format('YYYY-MM-DD')
     let df = moment(dataFinal).format('YYYY-MM-DD')
+    
+    
     let duracaoMilisegundos: number = 0
     var milisegundos: number = 0
     let somaMilisegundos: number = 0
@@ -248,9 +271,10 @@ export class RelatorioDetalhadoPage implements OnInit, OnDestroy {
           duracaoMilisegundos = moment.duration(milisegundos).asHours();
           this.totalDeHorasExtras += duracaoMilisegundos
           somaMilisegundos += milisegundos
+          
         }
       })
-      this.horaFormatada = Math.floor(duracaoMilisegundos) + moment.utc(somaMilisegundos).format(":mm:ss");
+      this.horaFormatada = Math.floor(this.totalDeHorasExtras) + moment.utc(somaMilisegundos).format(":mm:ss");
     })
   }
 
@@ -276,7 +300,7 @@ export class RelatorioDetalhadoPage implements OnInit, OnDestroy {
           somaMilisegundos += milisegundos
         }
       })
-      this.horas100PorcentoFormatada = Math.floor(duracaoMilisegundos) + moment.utc(somaMilisegundos).format(":mm:ss");
+      this.horas100PorcentoFormatada = Math.floor(this.totalDeHorasExtras100PoCento) + moment.utc(somaMilisegundos).format(":mm:ss");
     })
   }
 
@@ -298,13 +322,13 @@ export class RelatorioDetalhadoPage implements OnInit, OnDestroy {
         this.totalDeHorasExtrasRealizadas += duracaoMilisegundos
         somaMilisegundos += milisegundos
       })
-      this.totalDeHorasRealizadasFormatadas = Math.floor(duracaoMilisegundos) + moment.utc(somaMilisegundos).format(":mm:ss");
+      this.totalDeHorasRealizadasFormatadas = Math.floor(this.totalDeHorasExtrasRealizadas) + moment.utc(somaMilisegundos).format(":mm:ss");
     })
   }
 
 
   async presentToast(mensagem: string) {
-    const toast = await this.toastController.create({ message: mensagem, duration: 3000 })
+    const toast = await this.toastController.create({ message: mensagem, duration: 2000 })
     toast.present()
   }
 }

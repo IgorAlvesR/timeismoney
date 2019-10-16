@@ -16,6 +16,8 @@ export class CadastroUsuarioPage implements OnInit {
   public funcionario: Funcionario = {}
   public usuario: Usuario = {}
   private carregando: any
+  private validadorEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
+
   
   constructor(
     private loadingCtrl: LoadingController,
@@ -36,9 +38,9 @@ export class CadastroUsuarioPage implements OnInit {
     this.funcionario.email = this.usuario.email
     try {
       if(this.funcionario.nome == "" || this.funcionario.salarioBruto == null || this.funcionario.funcao == ""
-      || this.usuario.email.length <=4 || this.usuario.email.search("@") == 1 ||
-      this.usuario.email.search(" ") == 1 ){
-        this.presentToast('Preencha todos os campos!')
+      || this.funcionario.email.length <=4 || this.funcionario.email.search("@") == 1 ||
+      this.funcionario.email.search(" ") == 1 ){
+        this.presentToast('Preencha todos os campos corretamente!')
       }else {
         await this.servicoAutenticacao.registrarFuncionario(this.funcionario)
         await this.servicoAutenticacao.registrarUsuario(this.usuario)

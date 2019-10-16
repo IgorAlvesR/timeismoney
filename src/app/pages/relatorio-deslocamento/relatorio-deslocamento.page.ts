@@ -29,6 +29,7 @@ export class RelatorioDeslocamentoPage implements OnInit {
     this.dataInicial = await moment().subtract(30,'days').format("YYYY-MM-26")
     this.dataFinal = await moment().format("YYYY-MM-25")
     await this.getDeslocamentosComFiltro(this.dataInicial,this.dataFinal)
+    await this.getDeslocamentosComFiltro(this.dataInicial,this.dataFinal)
   }
 
   ngOnDestroy() {
@@ -50,7 +51,7 @@ export class RelatorioDeslocamentoPage implements OnInit {
     let df = moment(dataFinal).format('YYYY-MM-DD')
     this.deslocamentoSubscription = await this.deslocamentoService.getDeslocamentosComFiltro(di, df).subscribe(dados => {
       if (dados.length == 0) {
-        this.presentToast('Não possui horas extras realizadas nessa data')
+        this.presentToast('Não possui deslocamentos nesse período!')
       }
       return this.deslocamentos = dados
     })

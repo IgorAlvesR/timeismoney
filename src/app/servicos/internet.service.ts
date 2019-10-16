@@ -17,7 +17,7 @@ export class InternetService {
 
   
   async verificaConexao() {
-    this.networdListener = Network.addListener(
+    this.networdListener = await Network.addListener(
       'networkStatusChange',
       status => {
         this.networkStatus = status

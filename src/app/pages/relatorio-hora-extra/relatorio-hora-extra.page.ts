@@ -44,7 +44,7 @@ export class RelatorioHoraExtraPage implements OnInit {
      
      this.horasExtrasSubscription = await this.horaService.getHorasExtras(di, df).subscribe(dados => {
       if (dados.length == 0) {
-        this.presentToast('Não possui horas extras realizadas nessa data')
+        this.presentToast('Não possui horas extras nesse período!')
       } else {
         dados.forEach(element => {
           let horaFinal = element.horaDataCalculoFinal
@@ -109,7 +109,7 @@ export class RelatorioHoraExtraPage implements OnInit {
 
 
   async presentToast(mensagem: string) {
-    const toast = await this.toastCtrl.create({ message: mensagem, duration: 3000 })
+    const toast = await this.toastCtrl.create({ message: mensagem, duration: 2000 })
     toast.present()
   }
 }

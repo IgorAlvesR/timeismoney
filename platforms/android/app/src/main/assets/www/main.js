@@ -475,6 +475,10 @@ var map = {
 		"default~pages-registro-deslocamento-registro-deslocamento-module~pages-registro-final-hora-extra-reg~3e98e0d8",
 		"common",
 		"pages-relatorio-hora-extra-relatorio-hora-extra-module"
+	],
+	"./pages/teste-data/teste-data.module": [
+		"./src/app/pages/teste-data/teste-data.module.ts",
+		"pages-teste-data-teste-data-module"
 	]
 };
 function webpackAsyncContext(req) {
@@ -552,7 +556,8 @@ var routes = [
         path: 'relatorio-detalhado',
         loadChildren: './pages/relatorio-detalhado/relatorio-detalhado.module#RelatorioDetalhadoPageModule',
         canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_4__["AuthGuard"]]
-    }
+    },
+    { path: 'teste-data', loadChildren: './pages/teste-data/teste-data.module#TesteDataPageModule' }
 ];
 var AppRoutingModule = /** @class */ (function () {
     function AppRoutingModule() {
@@ -844,6 +849,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_fire_auth__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/fire/auth */ "./node_modules/@angular/fire/auth/index.js");
 /* harmony import */ var _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/fire/firestore */ "./node_modules/@angular/fire/firestore/index.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
 
 
 
@@ -868,6 +875,31 @@ var AutenticacaoService = /** @class */ (function () {
     };
     AutenticacaoService.prototype.getAuth = function () {
         return this.afa.auth;
+    };
+    AutenticacaoService.prototype.update = function (salarioBase) {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var email, query;
+            var _this = this;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.getAuth().currentUser.email];
+                    case 1:
+                        email = _a.sent();
+                        return [4 /*yield*/, this.afs.collection('Funcionario', function (ref) { return (ref.where('email', '==', email).limit(1)); })
+                                .snapshotChanges()
+                                .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (horasOb) { return horasOb; }))];
+                    case 2:
+                        query = _a.sent();
+                        return [4 /*yield*/, query.subscribe(function (doc) {
+                                _this.funcionario = doc.payload.doc.ref;
+                                return _this.funcionario.update(salarioBase);
+                            })];
+                    case 3:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
     };
     AutenticacaoService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
