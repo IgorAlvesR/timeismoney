@@ -29,7 +29,7 @@ span{
     display: flex;
     align-items: center;
     p{
-        margin-left: 10%;
+        margin-left: 6%;
     }
 }
 
@@ -52,6 +52,13 @@ ion-col{
 #filtroData{
     display: flex;
     justify-content: space-around;
+}
+
+#atualizarSalario{
+    color: green;
+    margin: 0 auto;
+    width: 35px;
+    height: 35px;
 }
 
 #filtroDataDescricao{

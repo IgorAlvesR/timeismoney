@@ -5,6 +5,7 @@ import { AutenticacaoService } from 'src/app/servicos/autenticacao.service'
 import { Subscription } from 'rxjs'
 import * as moment from 'moment'
 import { ToastController, AlertController } from '@ionic/angular'
+import { Funcionario } from 'src/app/Models/funcionario'
 
 @Component({
   selector: 'app-relatorio-hora-extra',
@@ -17,12 +18,16 @@ export class RelatorioHoraExtraPage implements OnInit {
   private horasExtrasSubscription: Subscription
   public dataInicial = ''
   public dataFinal = ''
+  public funcionario: Funcionario = {}
+
+
 
   constructor(
     private authService: AutenticacaoService,
     private horaService: HoraExtraService,
     private toastCtrl: ToastController,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private toastController: ToastController
   ) { }
 
   async ngOnInit() {
@@ -37,6 +42,38 @@ export class RelatorioHoraExtraPage implements OnInit {
       this.horasExtrasSubscription.unsubscribe()
     }
   }
+
+  
+
+  async presentAlert() {
+
+    const alert = await this.alertController.create({
+      header: 'Atualizar Salário Base',
+      inputs: [
+        {
+          name: 'salarioBruto',
+          type: 'number',
+          placeholder: 'Informe o salário base',
+        }
+      ],
+      buttons: [
+        {
+          text: 'Atualizar',
+          handler: data => {
+            this.funcionario.salarioBruto = data.salarioBruto
+            this.authService.update(this.funcionario)
+            this.presentToast('Salário base atualizado com sucesso...')
+          }
+        }
+      ]
+    })
+    await alert.present()
+  }
+
+  alterarSalario() {
+    this.presentAlert()
+  }
+
 
   async getHoras(dataInicial, dataFinal) {
      let di = moment(dataInicial).format('YYYY-MM-DD')
@@ -109,8 +146,10 @@ export class RelatorioHoraExtraPage implements OnInit {
 
 
   async presentToast(mensagem: string) {
-    const toast = await this.toastCtrl.create({ message: mensagem, duration: 2000 })
+    const toast = await this.toastCtrl.create({ message: mensagem, duration: 1000 })
     toast.present()
   }
+
+
 }
 

@@ -1078,27 +1078,30 @@ var InternetService = /** @class */ (function () {
     }
     InternetService.prototype.verificaConexao = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-            var _a;
+            var _a, _b;
             var _this = this;
-            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_b) {
-                switch (_b.label) {
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_c) {
+                switch (_c.label) {
                     case 0:
-                        this.networdListener = Network.addListener('networkStatusChange', function (status) {
-                            _this.networkStatus = status;
-                        });
                         _a = this;
-                        return [4 /*yield*/, Network.getStatus()];
+                        return [4 /*yield*/, Network.addListener('networkStatusChange', function (status) {
+                                _this.networkStatus = status;
+                            })];
                     case 1:
-                        _a.networkStatus = _b.sent();
-                        if (!(this.networkStatus.connected == false)) return [3 /*break*/, 4];
-                        return [4 /*yield*/, this.toastCtrl.create({ message: 'Você está sem conexao com a Internet', duration: 3000 })];
+                        _a.networdListener = _c.sent();
+                        _b = this;
+                        return [4 /*yield*/, Network.getStatus()];
                     case 2:
-                        _b.sent();
-                        return [4 /*yield*/, this.authService.logout()];
+                        _b.networkStatus = _c.sent();
+                        if (!(this.networkStatus.connected == false)) return [3 /*break*/, 5];
+                        return [4 /*yield*/, this.toastCtrl.create({ message: 'Você está sem conexao com a Internet', duration: 3000 })];
                     case 3:
-                        _b.sent();
-                        _b.label = 4;
-                    case 4: return [2 /*return*/];
+                        _c.sent();
+                        return [4 /*yield*/, this.authService.logout()];
+                    case 4:
+                        _c.sent();
+                        _c.label = 5;
+                    case 5: return [2 /*return*/];
                 }
             });
         });

@@ -47,7 +47,6 @@ export class RelatorioDetalhadoPage implements OnInit, OnDestroy {
   public status: boolean = false
   public statusNulo: boolean = false
   public carregando: any;
-  
 
   constructor(
     private horasService: HoraExtraService,
@@ -60,32 +59,22 @@ export class RelatorioDetalhadoPage implements OnInit, OnDestroy {
 
   }
 
-  async ionViewDidEnter() {
-    let total = document.getElementById('totalHorasValor')
-    total.hidden = true
+  async ionViewWillEnter() {
     try {
-      await this.zera()
       this.dataInicial = await moment().subtract(30, 'days').format("YYYY-MM-26")
       this.dataFinal = await moment().format("YYYY-MM-25")
       await this.calculaValoresHorasExtras(this.dataInicial, this.dataFinal)
-      total.hidden = false
     } catch (e) {
       console.log(e.message)
     }
 
   }
 
-  
-
   async ngOnInit() {
-    let total = document.getElementById('totalHorasValor')
-    total.hidden = true
     try {
-      await this.zera()
       this.dataInicial = await moment().subtract(30, 'days').format("YYYY-MM-26")
       this.dataFinal = await moment().format("YYYY-MM-25")
       await this.calculaValoresHorasExtras(this.dataInicial, this.dataFinal)
-      total.hidden = false
     } catch (e) {
       console.log(e.message)
     }
@@ -94,43 +83,6 @@ export class RelatorioDetalhadoPage implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.zera()
-  }
-
-
-  async alterarSalario() {
-    await this.presentAlert()
-  }
-
-  async presentAlert() {
-    const alert = await this.alertController.create({
-      header: 'Atualizar Salário Base',
-      inputs: [
-        {
-          name: 'salarioBruto',
-          type: 'number',
-          placeholder: 'Informe o salário base',
-        }
-      ],
-      buttons: [
-        {
-          text: 'Atualizar',
-          handler: async data => {
-            this.salarioFunc = data.salarioBruto
-            this.funcionario.salarioBruto = data.salarioBruto
-            let total = document.getElementById('totalHorasValor')
-            total.hidden = true
-            try {
-              await this.authService.update(this.funcionario)
-              await window.location.reload()
-            } catch (e) {
-              console.log(e.message)
-            }
-
-          }
-        }
-      ]
-    })
-    await alert.present()
   }
 
   zera() {
@@ -152,8 +104,6 @@ export class RelatorioDetalhadoPage implements OnInit, OnDestroy {
     this.funcionario = {}
     this.adicionalNoturno = 0
     this.valorAdicionalNoturno = 0
-    this.status = false
-    this.statusNulo = false
   }
 
   async calculaValoresHorasExtras(dataInicial, dataFinal) {
@@ -193,7 +143,6 @@ export class RelatorioDetalhadoPage implements OnInit, OnDestroy {
         }
       })
       return this.adicionalNoturno * this.valorAdicionalNoturno
-
     })
 
   }

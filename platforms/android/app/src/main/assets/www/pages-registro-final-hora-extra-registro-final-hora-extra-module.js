@@ -170,7 +170,7 @@ var RegistroFinalHoraExtraPage = /** @class */ (function () {
                         _c.horaDataCalculoFinal = _d.sent();
                         _d.label = 7;
                     case 7:
-                        _d.trys.push([7, 15, , 18]);
+                        _d.trys.push([7, 18, , 21]);
                         if (!(this.horaExtraFinal.descricao == null || this.horaExtraFinal.descricao == '' || this.horaExtraFinal.localizacao == null || this.horaExtraFinal.localizacao == '')) return [3 /*break*/, 10];
                         return [4 /*yield*/, this.presentToast("Preenha todos os campos!")];
                     case 8:
@@ -178,28 +178,39 @@ var RegistroFinalHoraExtraPage = /** @class */ (function () {
                         return [4 /*yield*/, this.carregando.dismiss()];
                     case 9:
                         _d.sent();
-                        return [3 /*break*/, 14];
-                    case 10: return [4 /*yield*/, this.horaSevice.update(this.horaExtraFinal)];
+                        _d.label = 10;
+                    case 10:
+                        if (!((this.horaExtraFinal.horaCalculoFinal >= 8 && this.horaExtraFinal.horaCalculoFinal < 12)
+                            || (this.horaExtraFinal.horaCalculoFinal == 13 && this.horaExtraFinal.minutoCalculoFinal > 30)
+                            || (this.horaExtraFinal.horaCalculoFinal > 13 && this.horaExtraFinal.horaCalculoFinal < 18))) return [3 /*break*/, 13];
+                        return [4 /*yield*/, this.presentToast("Não é possível realizar hora extra no período normal!")];
                     case 11:
                         _d.sent();
                         return [4 /*yield*/, this.carregando.dismiss()];
                     case 12:
                         _d.sent();
-                        return [4 /*yield*/, window.location.replace('registro-hora-extra')];
-                    case 13:
-                        _d.sent();
-                        _d.label = 14;
-                    case 14: return [3 /*break*/, 18];
-                    case 15:
-                        error_1 = _d.sent();
-                        return [4 /*yield*/, this.presentToast(error_1)];
-                    case 16:
+                        return [3 /*break*/, 17];
+                    case 13: return [4 /*yield*/, this.horaSevice.update(this.horaExtraFinal)];
+                    case 14:
                         _d.sent();
                         return [4 /*yield*/, this.carregando.dismiss()];
-                    case 17:
+                    case 15:
                         _d.sent();
-                        return [3 /*break*/, 18];
-                    case 18: return [2 /*return*/];
+                        return [4 /*yield*/, window.location.replace('registro-hora-extra')];
+                    case 16:
+                        _d.sent();
+                        _d.label = 17;
+                    case 17: return [3 /*break*/, 21];
+                    case 18:
+                        error_1 = _d.sent();
+                        return [4 /*yield*/, this.presentToast(error_1)];
+                    case 19:
+                        _d.sent();
+                        return [4 /*yield*/, this.carregando.dismiss()];
+                    case 20:
+                        _d.sent();
+                        return [3 /*break*/, 21];
+                    case 21: return [2 /*return*/];
                 }
             });
         });

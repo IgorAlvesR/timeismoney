@@ -3,6 +3,7 @@
     <div class="header-top">
       <ion-icon name="arrow-round-back" button [routerLink]="['/registro-hora-extra']"></ion-icon>
       <p text-center>RELATÓRIO DE HORAS EXTRAS</p>
+      <ion-icon id="atualizarSalario" (click)='alterarSalario()' name="cash"></ion-icon>
     </div>
   </ion-toolbar>
 </ion-header>
@@ -50,5 +51,5 @@
         <ion-icon class="delete" name='trash' (click)="deleteConfirm(h.id)"></ion-icon>
       </ion-col>
     </ion-row>
-  </ion-grid>
+  </ion-grid> 
 </ion-content>

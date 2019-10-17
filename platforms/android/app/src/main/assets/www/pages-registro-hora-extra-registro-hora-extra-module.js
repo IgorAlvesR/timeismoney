@@ -103,7 +103,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var RegistroHoraExtraPage = /** @class */ (function () {
-    function RegistroHoraExtraPage(authService, horaSevice, loadingCtrl, toastCtrl, navCtrl, alertController, angularFirestore, route, internetService) {
+    function RegistroHoraExtraPage(authService, horaSevice, loadingCtrl, toastCtrl, navCtrl, alertController, angularFirestore, route, internetService, verificaConexao) {
         this.authService = authService;
         this.horaSevice = horaSevice;
         this.loadingCtrl = loadingCtrl;
@@ -113,6 +113,7 @@ var RegistroHoraExtraPage = /** @class */ (function () {
         this.angularFirestore = angularFirestore;
         this.route = route;
         this.internetService = internetService;
+        this.verificaConexao = verificaConexao;
         this.horaExtraInicio = {};
     }
     RegistroHoraExtraPage.prototype.criarRelógio = function () {
@@ -138,6 +139,7 @@ var RegistroHoraExtraPage = /** @class */ (function () {
         this.criarRelógio();
     };
     RegistroHoraExtraPage.prototype.ngOnInit = function () {
+        this.verificaConexao.verificaConexao();
         this.verificarHoraExtraPendente();
     };
     RegistroHoraExtraPage.prototype.verificarHoraExtraPendente = function () {
@@ -333,6 +335,7 @@ var RegistroHoraExtraPage = /** @class */ (function () {
             _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["AlertController"],
             _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_6__["AngularFirestore"],
             _angular_router__WEBPACK_IMPORTED_MODULE_7__["Router"],
+            src_app_servicos_internet_service__WEBPACK_IMPORTED_MODULE_8__["InternetService"],
             src_app_servicos_internet_service__WEBPACK_IMPORTED_MODULE_8__["InternetService"]])
     ], RegistroHoraExtraPage);
     return RegistroHoraExtraPage;

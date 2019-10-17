@@ -101,6 +101,7 @@ var CadastroUsuarioPage = /** @class */ (function () {
         this.keyboard = keyboard;
         this.funcionario = {};
         this.usuario = {};
+        this.validadorEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
     }
     CadastroUsuarioPage.prototype.ngOnInit = function () {
         if (this.keyboard.isVisible) {
@@ -121,9 +122,9 @@ var CadastroUsuarioPage = /** @class */ (function () {
                     case 2:
                         _a.trys.push([2, 7, 8, 9]);
                         if (!(this.funcionario.nome == "" || this.funcionario.salarioBruto == null || this.funcionario.funcao == ""
-                            || this.usuario.email.length <= 4 || this.usuario.email.search("@") == 1 ||
-                            this.usuario.email.search(" ") == 1)) return [3 /*break*/, 3];
-                        this.presentToast('Preencha todos os campos!');
+                            || this.funcionario.email.length <= 4 || this.funcionario.email.search("@") == 1 ||
+                            this.funcionario.email.search(" ") == 1)) return [3 /*break*/, 3];
+                        this.presentToast('Preencha todos os campos corretamente!');
                         return [3 /*break*/, 6];
                     case 3: return [4 /*yield*/, this.servicoAutenticacao.registrarFuncionario(this.funcionario)];
                     case 4:

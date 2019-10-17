@@ -147,7 +147,7 @@ var RelatorioHoraExtraPage = /** @class */ (function () {
                         _a = this;
                         return [4 /*yield*/, this.horaService.getHorasExtras(di, df).subscribe(function (dados) {
                                 if (dados.length == 0) {
-                                    _this.presentToast('Não possui horas extras realizadas nessa data');
+                                    _this.presentToast('Não possui horas extras nesse período!');
                                 }
                                 else {
                                     dados.forEach(function (element) {
@@ -267,7 +267,7 @@ var RelatorioHoraExtraPage = /** @class */ (function () {
             var toast;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.toastCtrl.create({ message: mensagem, duration: 3000 })];
+                    case 0: return [4 /*yield*/, this.toastCtrl.create({ message: mensagem, duration: 2000 })];
                     case 1:
                         toast = _a.sent();
                         toast.present();

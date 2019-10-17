@@ -123,6 +123,9 @@ var RelatorioDeslocamentoPage = /** @class */ (function () {
                         return [4 /*yield*/, this.getDeslocamentosComFiltro(this.dataInicial, this.dataFinal)];
                     case 4:
                         _c.sent();
+                        return [4 /*yield*/, this.getDeslocamentosComFiltro(this.dataInicial, this.dataFinal)];
+                    case 5:
+                        _c.sent();
                         return [2 /*return*/];
                 }
             });
@@ -151,7 +154,7 @@ var RelatorioDeslocamentoPage = /** @class */ (function () {
                         _a = this;
                         return [4 /*yield*/, this.deslocamentoService.getDeslocamentosComFiltro(di, df).subscribe(function (dados) {
                                 if (dados.length == 0) {
-                                    _this.presentToast('Não possui horas extras realizadas nessa data');
+                                    _this.presentToast('Não possui deslocamentos nesse período!');
                                 }
                                 return _this.deslocamentos = dados;
                             })];
