@@ -93,8 +93,8 @@ export class RegistroHoraExtraPage implements OnInit {
     let horas = moment().hours()
     let minutos = moment().minute()
     this.horaExtraInicio.id = this.angularFirestore.createId();
-    this.horaExtraInicio.horaCalculoInicial = 22/* horas */
-    this.horaExtraInicio.minutoCalculoInicial = 0/* minutos */
+    this.horaExtraInicio.horaCalculoInicial = horas
+    this.horaExtraInicio.minutoCalculoInicial = minutos
     this.horaExtraInicio.horaInicial = this.hora
     this.horaExtraInicio.horaFinal = ''
     this.horaExtraInicio.userId = this.authService.getAuth().currentUser.uid

@@ -61,8 +61,8 @@ export class RegistroFinalHoraExtraPage implements OnInit {
     await this.presentLoading()
     let horas = await moment().hour()
     let minutos = await moment().minute()
-    this.horaExtraFinal.horaCalculoFinal = 5/* horas */
-    this.horaExtraFinal.minutoCalculoFinal = 0/* minutos */
+    this.horaExtraFinal.horaCalculoFinal = horas
+    this.horaExtraFinal.minutoCalculoFinal = minutos
     this.horaExtraFinal.horaFinal = this.hora
     this.horaExtraFinal.userId = await this.authService.getAuth().currentUser.uid
     this.horaExtraFinal.dataFinal = await moment().locale('pt-br').format('YYYY-MM-DD')
