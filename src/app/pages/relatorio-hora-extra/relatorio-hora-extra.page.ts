@@ -32,9 +32,9 @@ export class RelatorioHoraExtraPage implements OnInit {
 
   async ngOnInit() {
     await this.getHorasExtras()
-    this.dataInicial = await moment().subtract(30,'days').format("YYYY-MM-26")
+    this.dataInicial = await moment().subtract(30, 'days').format("YYYY-MM-26")
     this.dataFinal = await moment().format("YYYY-MM-25")
-    await this.getHoras(this.dataInicial,this.dataFinal)
+    await this.getHoras(this.dataInicial, this.dataFinal)
   }
 
   ngOnDestroy() {
@@ -43,7 +43,7 @@ export class RelatorioHoraExtraPage implements OnInit {
     }
   }
 
-  
+
 
   async presentAlert() {
 
@@ -60,9 +60,14 @@ export class RelatorioHoraExtraPage implements OnInit {
         {
           text: 'Atualizar',
           handler: data => {
-            this.funcionario.salarioBruto = data.salarioBruto
-            this.authService.update(this.funcionario)
-            this.presentToast('Salário base atualizado com sucesso...')
+            if (data.salarioBruto > 0) {
+              this.funcionario.salarioBruto = Number(data.salarioBruto)
+              this.authService.update(this.funcionario)
+              this.presentToast('Salário base atualizado com sucesso...')
+            }else {
+              this.presentToast("O valor deve ser maior que zero! ")
+            }
+
           }
         }
       ]
@@ -76,10 +81,10 @@ export class RelatorioHoraExtraPage implements OnInit {
 
 
   async getHoras(dataInicial, dataFinal) {
-     let di = moment(dataInicial).format('YYYY-MM-DD')
-     let df = moment(dataFinal).format('YYYY-MM-DD')
-     
-     this.horasExtrasSubscription = await this.horaService.getHorasExtras(di, df).subscribe(dados => {
+    let di = moment(dataInicial).format('YYYY-MM-DD')
+    let df = moment(dataFinal).format('YYYY-MM-DD')
+
+    this.horasExtrasSubscription = await this.horaService.getHorasExtras(di, df).subscribe(dados => {
       if (dados.length == 0) {
         this.presentToast('Não possui horas extras nesse período!')
       } else {
@@ -98,15 +103,15 @@ export class RelatorioHoraExtraPage implements OnInit {
 
 
   async getHorasExtras() {
-     this.horasExtrasSubscription = await this.horaService.getHoras().subscribe(dados => {
-        dados.forEach(element => {
-          let horaFinal = element.horaDataCalculoFinal
-          let horaInicial = element.horaDataCalculoInicio
-          let ms = moment(horaFinal, "DD/MM/YYYY HH:mm:ss").diff(moment(horaInicial, "DD/MM/YYYY HH:mm:ss"));
-          let d = moment.duration(ms);
-          let s = Math.floor(d.asHours()) + moment.utc(ms).format(":mm:ss");
-          element.total = s
-        })
+    this.horasExtrasSubscription = await this.horaService.getHoras().subscribe(dados => {
+      dados.forEach(element => {
+        let horaFinal = element.horaDataCalculoFinal
+        let horaInicial = element.horaDataCalculoInicio
+        let ms = moment(horaFinal, "DD/MM/YYYY HH:mm:ss").diff(moment(horaInicial, "DD/MM/YYYY HH:mm:ss"));
+        let d = moment.duration(ms);
+        let s = Math.floor(d.asHours()) + moment.utc(ms).format(":mm:ss");
+        element.total = s
+      })
       return this.horasExtras = dados
     })
   }

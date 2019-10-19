@@ -58,7 +58,7 @@ var RelatorioDetalhadoPageModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\n  <ion-toolbar>\n    <div class=\"header-top\">\n      <ion-icon id=\"back\" name=\"arrow-round-back\" button [routerLink]=\"['/registro-hora-extra']\"></ion-icon>\n      <p text-center>RELATÓRIO DETALHADO</p>\n      <ion-icon id=\"atualizarSalario\" (click)='alterarSalario()' name=\"cash\"></ion-icon>\n    </div>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n\n\n  <h1 id=\"nome\" class=\"ion-text-center\">{{nomeFuncionario}} </h1> \n  \n  <p id=\"funcao\" class=\"ion-text-center\">{{funcao}}</p>\n  <p id=\"salarioBaseTexto\" class=\"ion-text-center\">{{salarioFunc | currency:'BRL'}}</p>\n\n  <div id=\"filtroData\">\n    <ion-datetime class='data' done-text='OK' cancelText='Cancelar' displayFormat=\"DD/MM/YY\" placeholder='dd/mm/aaaa'\n      [(ngModel)]=\"dataInicial\"></ion-datetime>\n    <ion-datetime class='data' done-text='OK' cancelText='Cancelar' displayFormat=\"DD/MM/YY\" placeholder='dd/mm/aaaa'\n      [(ngModel)]=\"dataFinal\" (ionBlur)='calculaValoresHorasExtras(dataInicial,dataFinal)'>\n    </ion-datetime>\n  </div>\n  <div id=\"filtroDataDescricao\">\n    <label for=\"\">Data Início</label>\n    <label for=\"\">Data Fim</label>\n  </div>\n\n\n  <ion-grid>\n    <div id=\"quantidadeHoras\">\n      <ion-row>\n        <ion-col>\n          <ion-icon name=\"time\"></ion-icon>\n        </ion-col>\n        <ion-col>\n          <ion-icon name=\"time\"></ion-icon>\n        </ion-col>\n        <ion-col>\n          <ion-icon name=\"time\"></ion-icon>\n        </ion-col>\n      </ion-row>\n\n      <ion-row>\n        <ion-col><span class=\"descricao\">60%</span></ion-col>\n        <ion-col><span class=\"descricao\">100%</span></ion-col>\n        <ion-col><span class=\"descricao\">Total</span></ion-col>\n      </ion-row>\n\n      <ion-row>\n        <ion-col *ngIf='totalDeHorasExtrasEmHoras == 0'><span class=\"horas60\"></span></ion-col>\n        <ion-col *ngIf='totalDeHorasExtrasEmHoras > 0'><span class=\"horas60\">{{horaFormatada}}</span></ion-col>\n        <ion-col *ngIf='totalDeHorasExtras100PoCento == 0'><span class=\"horas100\"></span></ion-col>\n        <ion-col *ngIf='totalDeHorasExtras100PoCento > 0'><span class=\"horas100\">{{horas100PorcentoFormatada}}</span></ion-col>\n        <ion-col *ngIf='totalDeHorasExtrasRealizadas > 0' ><span id=\"total\">{{totalDeHorasRealizadasFormatadas}}</span></ion-col>\n        <ion-col *ngIf='totalDeHorasExtrasRealizadas == 0' ><span id=\"total\"></span></ion-col>\n      </ion-row>\n    </div>\n\n  </ion-grid>\n  \n  <div id=\"totalHoras\">\n    <h4>Total</h4>\n    <h1 id='totalHorasValor'>{{valorEmReaisDeTodasHorasRealizadas | currency:'BRL'}}</h1>\n  </div>\n\n  \n\n</ion-content>"
+module.exports = "<ion-header>\n  <ion-toolbar>\n    <div class=\"header-top\">\n      <ion-icon id=\"back\" name=\"arrow-round-back\" button [routerLink]=\"['/registro-hora-extra']\"></ion-icon>\n      <p text-center>RELATÓRIO DETALHADO</p>\n    </div>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n\n\n  <h1 id=\"nome\" class=\"ion-text-center\">{{nomeFuncionario}} </h1> \n  \n  <p id=\"funcao\" class=\"ion-text-center\">{{funcao}}</p>\n  <p id=\"salarioBaseTexto\" class=\"ion-text-center\">{{salarioFunc | currency:'BRL'}}</p>\n\n  <div id=\"filtroData\">\n    <ion-datetime class='data' done-text='OK' cancelText='Cancelar' displayFormat=\"DD/MM/YY\" placeholder='dd/mm/aaaa'\n      [(ngModel)]=\"dataInicial\"></ion-datetime>\n    <ion-datetime class='data' done-text='OK' cancelText='Cancelar' displayFormat=\"DD/MM/YY\" placeholder='dd/mm/aaaa'\n      [(ngModel)]=\"dataFinal\" (ionBlur)='calculaValoresHorasExtras(dataInicial,dataFinal)'>\n    </ion-datetime>\n  </div>\n  <div id=\"filtroDataDescricao\">\n    <label for=\"\">Data Início</label>\n    <label for=\"\">Data Fim</label>\n  </div>\n\n\n  <ion-grid>\n    <div id=\"quantidadeHoras\">\n      <ion-row>\n        <ion-col>\n          <ion-icon name=\"time\"></ion-icon>\n        </ion-col>\n        <ion-col>\n          <ion-icon name=\"time\"></ion-icon>\n        </ion-col>\n        <ion-col>\n          <ion-icon name=\"time\"></ion-icon>\n        </ion-col>\n      </ion-row>\n\n      <ion-row>\n        <ion-col><span class=\"descricao\">60%</span></ion-col>\n        <ion-col><span class=\"descricao\">100%</span></ion-col>\n        <ion-col><span class=\"descricao\">Total</span></ion-col>\n      </ion-row>\n\n      <ion-row>\n        <ion-col *ngIf='totalDeHorasExtrasEmHoras == 0'><span class=\"horas60\"></span></ion-col>\n        <ion-col *ngIf='totalDeHorasExtrasEmHoras > 0'><span class=\"horas60\">{{horaFormatada}}</span></ion-col>\n        <ion-col *ngIf='totalDeHorasExtras100PoCento == 0'><span class=\"horas100\"></span></ion-col>\n        <ion-col *ngIf='totalDeHorasExtras100PoCento > 0'><span class=\"horas100\">{{horas100PorcentoFormatada}}</span></ion-col>\n        <ion-col *ngIf='totalDeHorasExtrasRealizadas > 0' ><span id=\"total\">{{totalDeHorasRealizadasFormatadas}}</span></ion-col>\n        <ion-col *ngIf='totalDeHorasExtrasRealizadas == 0' ><span id=\"total\"></span></ion-col>\n      </ion-row>\n    </div>\n\n  </ion-grid>\n  \n  <div id=\"totalHoras\">\n    <h4>Total</h4>\n    <h1 id='totalHorasValor'>{{valorEmReaisDeTodasHorasRealizadas | currency:'BRL'}}</h1>\n  </div>\n\n  \n\n</ion-content>"
 
 /***/ }),
 
@@ -131,150 +131,64 @@ var RelatorioDetalhadoPage = /** @class */ (function () {
         this.status = false;
         this.statusNulo = false;
     }
-    RelatorioDetalhadoPage.prototype.ionViewDidEnter = function () {
+    RelatorioDetalhadoPage.prototype.ionViewWillEnter = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-            var total, _a, _b, e_1;
+            var _a, _b, e_1;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_c) {
                 switch (_c.label) {
                     case 0:
-                        total = document.getElementById('totalHorasValor');
-                        total.hidden = true;
-                        _c.label = 1;
-                    case 1:
-                        _c.trys.push([1, 6, , 7]);
-                        return [4 /*yield*/, this.zera()];
-                    case 2:
-                        _c.sent();
+                        _c.trys.push([0, 4, , 5]);
                         _a = this;
                         return [4 /*yield*/, moment__WEBPACK_IMPORTED_MODULE_3__().subtract(30, 'days').format("YYYY-MM-26")];
-                    case 3:
+                    case 1:
                         _a.dataInicial = _c.sent();
                         _b = this;
                         return [4 /*yield*/, moment__WEBPACK_IMPORTED_MODULE_3__().format("YYYY-MM-25")];
-                    case 4:
+                    case 2:
                         _b.dataFinal = _c.sent();
                         return [4 /*yield*/, this.calculaValoresHorasExtras(this.dataInicial, this.dataFinal)];
-                    case 5:
+                    case 3:
                         _c.sent();
-                        total.hidden = false;
-                        return [3 /*break*/, 7];
-                    case 6:
+                        return [3 /*break*/, 5];
+                    case 4:
                         e_1 = _c.sent();
                         console.log(e_1.message);
-                        return [3 /*break*/, 7];
-                    case 7: return [2 /*return*/];
+                        return [3 /*break*/, 5];
+                    case 5: return [2 /*return*/];
                 }
             });
         });
     };
     RelatorioDetalhadoPage.prototype.ngOnInit = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-            var total, _a, _b, e_2;
+            var _a, _b, e_2;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_c) {
                 switch (_c.label) {
                     case 0:
-                        total = document.getElementById('totalHorasValor');
-                        total.hidden = true;
-                        _c.label = 1;
-                    case 1:
-                        _c.trys.push([1, 6, , 7]);
-                        return [4 /*yield*/, this.zera()];
-                    case 2:
-                        _c.sent();
+                        _c.trys.push([0, 4, , 5]);
                         _a = this;
                         return [4 /*yield*/, moment__WEBPACK_IMPORTED_MODULE_3__().subtract(30, 'days').format("YYYY-MM-26")];
-                    case 3:
+                    case 1:
                         _a.dataInicial = _c.sent();
                         _b = this;
                         return [4 /*yield*/, moment__WEBPACK_IMPORTED_MODULE_3__().format("YYYY-MM-25")];
-                    case 4:
+                    case 2:
                         _b.dataFinal = _c.sent();
                         return [4 /*yield*/, this.calculaValoresHorasExtras(this.dataInicial, this.dataFinal)];
-                    case 5:
+                    case 3:
                         _c.sent();
-                        total.hidden = false;
-                        return [3 /*break*/, 7];
-                    case 6:
+                        return [3 /*break*/, 5];
+                    case 4:
                         e_2 = _c.sent();
                         console.log(e_2.message);
-                        return [3 /*break*/, 7];
-                    case 7: return [2 /*return*/];
+                        return [3 /*break*/, 5];
+                    case 5: return [2 /*return*/];
                 }
             });
         });
     };
     RelatorioDetalhadoPage.prototype.ngOnDestroy = function () {
         this.zera();
-    };
-    RelatorioDetalhadoPage.prototype.alterarSalario = function () {
-        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.presentAlert()];
-                    case 1:
-                        _a.sent();
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    RelatorioDetalhadoPage.prototype.presentAlert = function () {
-        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-            var alert;
-            var _this = this;
-            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.alertController.create({
-                            header: 'Atualizar Salário Base',
-                            inputs: [
-                                {
-                                    name: 'salarioBruto',
-                                    type: 'number',
-                                    placeholder: 'Informe o salário base',
-                                }
-                            ],
-                            buttons: [
-                                {
-                                    text: 'Atualizar',
-                                    handler: function (data) { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
-                                        var total, e_3;
-                                        return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
-                                            switch (_a.label) {
-                                                case 0:
-                                                    this.salarioFunc = data.salarioBruto;
-                                                    this.funcionario.salarioBruto = data.salarioBruto;
-                                                    total = document.getElementById('totalHorasValor');
-                                                    total.hidden = true;
-                                                    _a.label = 1;
-                                                case 1:
-                                                    _a.trys.push([1, 4, , 5]);
-                                                    return [4 /*yield*/, this.authService.update(this.funcionario)];
-                                                case 2:
-                                                    _a.sent();
-                                                    return [4 /*yield*/, window.location.reload()];
-                                                case 3:
-                                                    _a.sent();
-                                                    return [3 /*break*/, 5];
-                                                case 4:
-                                                    e_3 = _a.sent();
-                                                    console.log(e_3.message);
-                                                    return [3 /*break*/, 5];
-                                                case 5: return [2 /*return*/];
-                                            }
-                                        });
-                                    }); }
-                                }
-                            ]
-                        })];
-                    case 1:
-                        alert = _a.sent();
-                        return [4 /*yield*/, alert.present()];
-                    case 2:
-                        _a.sent();
-                        return [2 /*return*/];
-                }
-            });
-        });
     };
     RelatorioDetalhadoPage.prototype.zera = function () {
         this.valorEmReaisDeTodasHorasRealizadas = 0;
@@ -295,8 +209,6 @@ var RelatorioDetalhadoPage = /** @class */ (function () {
         this.funcionario = {};
         this.adicionalNoturno = 0;
         this.valorAdicionalNoturno = 0;
-        this.status = false;
-        this.statusNulo = false;
     };
     RelatorioDetalhadoPage.prototype.calculaValoresHorasExtras = function (dataInicial, dataFinal) {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {

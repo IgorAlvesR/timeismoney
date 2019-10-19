@@ -15,8 +15,8 @@ import { Subscription } from 'rxjs/internal/Subscription'
   styleUrls: ['./registro-final-hora-extra.page.scss'],
 })
 export class RegistroFinalHoraExtraPage implements OnInit {
- 
-  
+
+
   private horaExtraFinal: HoraExtra = {}
   public cidades = new Array<Cidade>()
   private carregando: any
@@ -33,12 +33,12 @@ export class RegistroFinalHoraExtraPage implements OnInit {
     private navCtrl: NavController,
     public keyboard: Keyboard,
     private route: Router
-  ) {}
+  ) { }
 
   async ngOnInit() {
     await this.buscarCidades()
   }
-  
+
   customAlertOptions: any = {
     header: 'Selecione a Cidade'
   }
@@ -52,7 +52,7 @@ export class RegistroFinalHoraExtraPage implements OnInit {
     }, 1000)
   }
 
-  ionViewWillEnter(){
+  ionViewWillEnter() {
     this.criarRelogio()
   }
 
@@ -67,19 +67,26 @@ export class RegistroFinalHoraExtraPage implements OnInit {
     this.horaExtraFinal.userId = await this.authService.getAuth().currentUser.uid
     this.horaExtraFinal.dataFinal = await moment().locale('pt-br').format('YYYY-MM-DD')
     this.horaExtraFinal.horaDataCalculoFinal = await moment().locale('pt-br').format('DD/MM/YYYY HH:mm:ss')
-    
-    
+    this.horaExtraFinal.diaSemana = moment().day()
+
+
     try {
       if (this.horaExtraFinal.descricao == null || this.horaExtraFinal.descricao == '' || this.horaExtraFinal.localizacao == null || this.horaExtraFinal.localizacao == '') {
         await this.presentToast("Preenha todos os campos!")
         await this.carregando.dismiss()
       }
-      if ((this.horaExtraFinal.horaCalculoFinal >= 8 && this.horaExtraFinal.horaCalculoFinal < 12)
+      if (this.horaExtraFinal.diaSemana != 6 && this.horaExtraFinal.diaSemana != 0) {
+        if ((this.horaExtraFinal.horaCalculoFinal >= 8 && this.horaExtraFinal.horaCalculoFinal < 12)
           || (this.horaExtraFinal.horaCalculoFinal == 13 && this.horaExtraFinal.minutoCalculoFinal > 30)
           || (this.horaExtraFinal.horaCalculoFinal > 13 && this.horaExtraFinal.horaCalculoFinal < 18)) {
-            await this.presentToast("Não é possível realizar hora extra no período normal!")
-            await this.carregando.dismiss()
-      }else {
+          await this.presentToast("Não é possível realizar hora extra no período normal!")
+          await this.carregando.dismiss()
+        } else {
+          await this.horaSevice.update(this.horaExtraFinal)
+          await this.carregando.dismiss()
+          await window.location.replace('registro-hora-extra')
+        }
+      } else {
         await this.horaSevice.update(this.horaExtraFinal)
         await this.carregando.dismiss()
         await window.location.replace('registro-hora-extra')
@@ -100,9 +107,9 @@ export class RegistroFinalHoraExtraPage implements OnInit {
     toast.present()
   }
 
-  async buscarCidades(){
+  async buscarCidades() {
     this.deslocamentoSubscription = await this.horaSevice.buscarCidades().subscribe(result => {
-       return this.cidades = result
+      return this.cidades = result
     })
   }
 

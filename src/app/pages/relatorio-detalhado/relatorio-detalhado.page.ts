@@ -55,12 +55,15 @@ export class RelatorioDetalhadoPage implements OnInit, OnDestroy {
     private authService: AutenticacaoService,
     private route: NavController,
     private loadingCtrl: LoadingController
-  ) {
-
+  ) 
+  {
+    
   }
 
-  async ionViewWillEnter() {
+
+  async zeraECalculaValoresNovamente(){
     try {
+      this.zera()
       this.dataInicial = await moment().subtract(30, 'days').format("YYYY-MM-26")
       this.dataFinal = await moment().format("YYYY-MM-25")
       await this.calculaValoresHorasExtras(this.dataInicial, this.dataFinal)
@@ -70,15 +73,12 @@ export class RelatorioDetalhadoPage implements OnInit, OnDestroy {
 
   }
 
-  async ngOnInit() {
-    try {
-      this.dataInicial = await moment().subtract(30, 'days').format("YYYY-MM-26")
-      this.dataFinal = await moment().format("YYYY-MM-25")
-      await this.calculaValoresHorasExtras(this.dataInicial, this.dataFinal)
-    } catch (e) {
-      console.log(e.message)
-    }
+  ionViewWillEnter() {
+    this.zeraECalculaValoresNovamente()
+  }
 
+  ngOnInit() {
+    
   }
 
   ngOnDestroy() {
@@ -101,9 +101,12 @@ export class RelatorioDetalhadoPage implements OnInit, OnDestroy {
     this.valorEmReaisDeTodasHorasRealizadas = 0
     this.valorEmReaisDeTodasHorasRealizadasSemFiltro = 0
     this.totalDeHorasRealizadasFormatadas = ''
-    this.funcionario = {}
     this.adicionalNoturno = 0
+    this.funcionario = {}
     this.valorAdicionalNoturno = 0
+    this.status = false
+    this.statusNulo = false
+    this.salarioFunc = 0
   }
 
   async calculaValoresHorasExtras(dataInicial, dataFinal) {
@@ -120,6 +123,7 @@ export class RelatorioDetalhadoPage implements OnInit, OnDestroy {
   }
 
   async calculoAdicionalNoturno(dataInicial, dataFinal) {
+    this.zera()
     let di = await moment(dataInicial).format('YYYY-MM-DD')
     let df = await moment(dataFinal).format('YYYY-MM-DD')
     let milisegundos: number = 0
