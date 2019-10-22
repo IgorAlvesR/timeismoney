@@ -36,6 +36,7 @@ ion-textarea{
 }
 
 ion-button{
-    border-radius: 20%;
+    --border-radius: 20px;
     width: 80%;
+    --background: #4F9AF5;
 }

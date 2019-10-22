@@ -44,12 +44,12 @@ export class AutenticacaoService {
     let email = await this.getAuth().currentUser.email
     let query = await this.afs.collection('Funcionario', ref => (ref.where('email', '==', email).limit(1)))
       .snapshotChanges()
-      .pipe(flatMap(horasOb => horasOb))
+      .pipe(flatMap(result => result))
   
     await query.subscribe((doc) => {
       this.funcionario = doc.payload.doc.ref
       return this.funcionario.update(salarioBase)
     })
-    
   }
+  
 }

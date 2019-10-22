@@ -19,6 +19,7 @@ export class RelatorioHoraExtraPage implements OnInit {
   public dataInicial = ''
   public dataFinal = ''
   public funcionario: Funcionario = {}
+  public salario = 0
 
 
 
@@ -43,8 +44,6 @@ export class RelatorioHoraExtraPage implements OnInit {
     }
   }
 
-
-
   async presentAlert() {
 
     const alert = await this.alertController.create({
@@ -59,15 +58,14 @@ export class RelatorioHoraExtraPage implements OnInit {
       buttons: [
         {
           text: 'Atualizar',
-          handler: data => {
+          handler:  async data => {
             if (data.salarioBruto > 0) {
-              this.funcionario.salarioBruto = Number(data.salarioBruto)
-              this.authService.update(this.funcionario)
-              this.presentToast('Salário base atualizado com sucesso...')
+               this.funcionario.salarioBruto = await Number(data.salarioBruto)
+               await this.authService.update(this.funcionario)
+               await this.presentToast('Salário base atualizado com sucesso...')
             }else {
-              this.presentToast("O valor deve ser maior que zero! ")
+               this.presentToast("O valor deve ser maior que zero! ")
             }
-
           }
         }
       ]

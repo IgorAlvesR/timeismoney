@@ -798,14 +798,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _servicos_autenticacao_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../servicos/autenticacao.service */ "./src/app/servicos/autenticacao.service.ts");
 /* harmony import */ var _ionic_native_network_ngx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ionic-native/network/ngx */ "./node_modules/@ionic-native/network/ngx/index.js");
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
+
 
 
 
 
 var LoginGuard = /** @class */ (function () {
-    function LoginGuard(servicoAutenticacao, network) {
+    function LoginGuard(servicoAutenticacao, network, route) {
         this.servicoAutenticacao = servicoAutenticacao;
         this.network = network;
+        this.route = route;
     }
     LoginGuard.prototype.canActivate = function () {
         var _this = this;
@@ -815,6 +818,7 @@ var LoginGuard = /** @class */ (function () {
         return new Promise(function (resolve) {
             _this.servicoAutenticacao.getAuth().onAuthStateChanged(function (funcionario) {
                 if (funcionario) {
+                    //this.route.navigateRoot('/registro-hora-extra')
                     window.location.replace('registro-hora-extra');
                 }
                 resolve(!funcionario ? true : false);
@@ -826,7 +830,8 @@ var LoginGuard = /** @class */ (function () {
             providedIn: 'root'
         }),
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_servicos_autenticacao_service__WEBPACK_IMPORTED_MODULE_2__["AutenticacaoService"],
-            _ionic_native_network_ngx__WEBPACK_IMPORTED_MODULE_3__["Network"]])
+            _ionic_native_network_ngx__WEBPACK_IMPORTED_MODULE_3__["Network"],
+            _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["NavController"]])
     ], LoginGuard);
     return LoginGuard;
 }());

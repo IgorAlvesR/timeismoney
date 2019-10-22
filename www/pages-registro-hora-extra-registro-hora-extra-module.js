@@ -117,23 +117,13 @@ var RegistroHoraExtraPage = /** @class */ (function () {
         this.horaExtraInicio = {};
     }
     RegistroHoraExtraPage.prototype.criarRelógio = function () {
-        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-            var _this = this;
-            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        this.hora = moment__WEBPACK_IMPORTED_MODULE_2__().locale('pt-br').format('LTS');
-                        this.data = moment__WEBPACK_IMPORTED_MODULE_2__().locale('pt-br').format('LL');
-                        return [4 /*yield*/, setInterval(function () {
-                                _this.hora = moment__WEBPACK_IMPORTED_MODULE_2__().locale('pt-br').format('LTS');
-                                _this.data = moment__WEBPACK_IMPORTED_MODULE_2__().locale('pt-br').format('LL');
-                            }, 1000)];
-                    case 1:
-                        _a.sent();
-                        return [2 /*return*/];
-                }
-            });
-        });
+        var _this = this;
+        this.hora = moment__WEBPACK_IMPORTED_MODULE_2__().locale('pt-br').format('LTS');
+        this.data = moment__WEBPACK_IMPORTED_MODULE_2__().locale('pt-br').format('LL');
+        setInterval(function () {
+            _this.hora = moment__WEBPACK_IMPORTED_MODULE_2__().locale('pt-br').format('LTS');
+            _this.data = moment__WEBPACK_IMPORTED_MODULE_2__().locale('pt-br').format('LL');
+        }, 1000);
     };
     RegistroHoraExtraPage.prototype.ionViewDidEnter = function () {
         this.criarRelógio();

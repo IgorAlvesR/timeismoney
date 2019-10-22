@@ -156,9 +156,14 @@ var RelatorioHoraExtraPage = /** @class */ (function () {
                                 {
                                     text: 'Atualizar',
                                     handler: function (data) {
-                                        _this.funcionario.salarioBruto = data.salarioBruto;
-                                        _this.authService.update(_this.funcionario);
-                                        _this.presentToast('Salário base atualizado com sucesso...');
+                                        if (data.salarioBruto > 0) {
+                                            _this.funcionario.salarioBruto = Number(data.salarioBruto);
+                                            _this.authService.update(_this.funcionario);
+                                            _this.presentToast('Salário base atualizado com sucesso...');
+                                        }
+                                        else {
+                                            _this.presentToast("O valor deve ser maior que zero! ");
+                                        }
                                     }
                                 }
                             ]

@@ -10,8 +10,8 @@
 <ion-content>
 
 
-  <h1 id="nome" class="ion-text-center">{{nomeFuncionario}} </h1> 
-  
+  <h1 id="nome" class="ion-text-center">{{nomeFuncionario}} </h1>
+
   <p id="funcao" class="ion-text-center">{{funcao}}</p>
   <p id="salarioBaseTexto" class="ion-text-center">{{salarioFunc | currency:'BRL'}}</p>
 
@@ -25,6 +25,10 @@
   <div id="filtroDataDescricao">
     <label for="">Data Início</label>
     <label for="">Data Fim</label>
+  </div>
+
+  <div class='ion-text-center' *ngIf='valorEmReaisDeTodasHorasRealizadas == 0 && totalDeHorasRealizadasFormatadas > "0:00:00"'>
+    <ion-button id='calculaTotal' (click)='calculaTotal(dataInicial,dataFinal)'>Calcular Total</ion-button>
   </div>
 
 
@@ -52,19 +56,19 @@
         <ion-col *ngIf='totalDeHorasExtrasEmHoras == 0'><span class="horas60"></span></ion-col>
         <ion-col *ngIf='totalDeHorasExtrasEmHoras > 0'><span class="horas60">{{horaFormatada}}</span></ion-col>
         <ion-col *ngIf='totalDeHorasExtras100PoCento == 0'><span class="horas100"></span></ion-col>
-        <ion-col *ngIf='totalDeHorasExtras100PoCento > 0'><span class="horas100">{{horas100PorcentoFormatada}}</span></ion-col>
-        <ion-col *ngIf='totalDeHorasExtrasRealizadas > 0' ><span id="total">{{totalDeHorasRealizadasFormatadas}}</span></ion-col>
-        <ion-col *ngIf='totalDeHorasExtrasRealizadas == 0' ><span id="total"></span></ion-col>
+        <ion-col *ngIf='totalDeHorasExtras100PoCento > 0'><span class="horas100">{{horas100PorcentoFormatada}}</span>
+        </ion-col>
+        <ion-col *ngIf='totalDeHorasExtrasRealizadas > 0'><span id="total">{{totalDeHorasRealizadasFormatadas}}</span>
+        </ion-col>
+        <ion-col *ngIf='totalDeHorasExtrasRealizadas == 0'><span id="total"></span></ion-col>
       </ion-row>
     </div>
 
   </ion-grid>
-  
+
   <div id="totalHoras">
     <h4>Total</h4>
     <h1 id='totalHorasValor'>{{valorEmReaisDeTodasHorasRealizadas | currency:'BRL'}}</h1>
   </div>
-
   
-
 </ion-content>
