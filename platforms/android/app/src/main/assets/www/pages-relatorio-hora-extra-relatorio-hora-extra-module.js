@@ -107,6 +107,7 @@ var RelatorioHoraExtraPage = /** @class */ (function () {
         this.dataInicial = '';
         this.dataFinal = '';
         this.funcionario = {};
+        this.salario = 0;
     }
     RelatorioHoraExtraPage.prototype.ngOnInit = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
@@ -155,16 +156,30 @@ var RelatorioHoraExtraPage = /** @class */ (function () {
                             buttons: [
                                 {
                                     text: 'Atualizar',
-                                    handler: function (data) {
-                                        if (data.salarioBruto > 0) {
-                                            _this.funcionario.salarioBruto = Number(data.salarioBruto);
-                                            _this.authService.update(_this.funcionario);
-                                            _this.presentToast('Salário base atualizado com sucesso...');
-                                        }
-                                        else {
-                                            _this.presentToast("O valor deve ser maior que zero! ");
-                                        }
-                                    }
+                                    handler: function (data) { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
+                                        var _a;
+                                        return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_b) {
+                                            switch (_b.label) {
+                                                case 0:
+                                                    if (!(data.salarioBruto > 0)) return [3 /*break*/, 4];
+                                                    _a = this.funcionario;
+                                                    return [4 /*yield*/, Number(data.salarioBruto)];
+                                                case 1:
+                                                    _a.salarioBruto = _b.sent();
+                                                    return [4 /*yield*/, this.authService.update(this.funcionario)];
+                                                case 2:
+                                                    _b.sent();
+                                                    return [4 /*yield*/, this.presentToast('Salário base atualizado com sucesso...')];
+                                                case 3:
+                                                    _b.sent();
+                                                    return [3 /*break*/, 5];
+                                                case 4:
+                                                    this.presentToast("O valor deve ser maior que zero! ");
+                                                    _b.label = 5;
+                                                case 5: return [2 /*return*/];
+                                            }
+                                        });
+                                    }); }
                                 }
                             ]
                         })];

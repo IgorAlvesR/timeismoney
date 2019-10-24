@@ -99,6 +99,8 @@ export class HoraExtraService {
       this.horas = doc.payload.doc.ref
       return this.horas.update(horaExtra)
     })
+
+    return true
     
   }
 

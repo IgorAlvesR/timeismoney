@@ -58,7 +58,7 @@ export class RegistroFinalHoraExtraPage implements OnInit {
 
   async registrarFinalHoraExtra() {
 
-    
+    await this.presentLoading()
     let horas = await moment().hour()
     let minutos = await moment().minute()
     this.horaExtraFinal.horaCalculoFinal = horas
@@ -72,7 +72,7 @@ export class RegistroFinalHoraExtraPage implements OnInit {
 
     try {
       if (this.horaExtraFinal.descricao == null || this.horaExtraFinal.descricao == '' || this.horaExtraFinal.localizacao == null || this.horaExtraFinal.localizacao == '') {
-        await this.presentLoading()
+
         await this.presentToast("Preenha todos os campos!")
         await this.carregando.dismiss()
       }
@@ -80,17 +80,21 @@ export class RegistroFinalHoraExtraPage implements OnInit {
         if ((this.horaExtraFinal.horaCalculoFinal >= 8 && this.horaExtraFinal.horaCalculoFinal < 12)
           || (this.horaExtraFinal.horaCalculoFinal == 13 && this.horaExtraFinal.minutoCalculoFinal > 30)
           || (this.horaExtraFinal.horaCalculoFinal > 13 && this.horaExtraFinal.horaCalculoFinal < 18)) {
-          await this.presentLoading()
+
           await this.presentToast("Não é possível realizar hora extra no período normal!")
           await this.carregando.dismiss()
         } else {
           await this.horaSevice.update(this.horaExtraFinal)
+          await this.carregando.dismiss()
           await window.location.replace('registro-hora-extra')
         }
       } else {
-        await this.horaSevice.update(this.horaExtraFinal)
-        await this.carregando.dismiss()
-        await window.location.replace('registro-hora-extra')
+        let result = await this.horaSevice.update(this.horaExtraFinal)
+        if (result) {
+          await this.carregando.dismiss()
+          await window.location.replace('registro-hora-extra')
+        }
+
       }
     } catch (error) {
       await this.presentToast(error)

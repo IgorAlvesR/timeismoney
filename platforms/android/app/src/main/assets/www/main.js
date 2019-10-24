@@ -892,7 +892,7 @@ var AutenticacaoService = /** @class */ (function () {
                         email = _a.sent();
                         return [4 /*yield*/, this.afs.collection('Funcionario', function (ref) { return (ref.where('email', '==', email).limit(1)); })
                                 .snapshotChanges()
-                                .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (horasOb) { return horasOb; }))];
+                                .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["flatMap"])(function (result) { return result; }))];
                     case 2:
                         query = _a.sent();
                         return [4 /*yield*/, query.subscribe(function (doc) {
@@ -1009,7 +1009,7 @@ var HoraExtraService = /** @class */ (function () {
                             })];
                     case 3:
                         _a.sent();
-                        return [2 /*return*/];
+                        return [2 /*return*/, true];
                 }
             });
         });
