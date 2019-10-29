@@ -24,6 +24,7 @@ export class HoraExtraService {
   private colecaoHoraExtraRegistro: AngularFirestoreCollection<HoraExtra>
   public horasExtras: Observable<HoraExtra[]>
   private horas: DocumentReference
+  private salario: DocumentReference
   public cidades: Observable<Cidade[]>
   public funcionario: Observable<Funcionario[]>
   public colecaoDatas: AngularFirestoreCollection<HoraExtra>
@@ -127,5 +128,17 @@ export class HoraExtraService {
   }
 
 
+  async updateSalario(salarioBase) {
+    let email = await this.authService.getAuth().currentUser.email
+    let query = await this.afs.collection('Funcionario', ref => (ref.where('email', '==', email).limit(1)))
+      .snapshotChanges()
+      .pipe(flatMap(result => result))
+  
+    await query.subscribe((doc) => {
+      this.salario = doc.payload.doc.ref
+      return this.salario.update(salarioBase)
+    })
 
+    return true
+  }
 }

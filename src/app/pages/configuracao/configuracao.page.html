@@ -11,7 +11,7 @@
   <div id='salario'>
     <label for="">Alterar Salário: </label>
     <ion-input [(ngModel)]="salario" type='number' placeholder='R$'></ion-input>
-    <ion-button  (click)='alterarSalario()' color="success" expand='block'  #botao>  <ion-icon name='md-checkmark'></ion-icon>  </ion-button>
+    <ion-icon id="botaoSalario" (click)='alterarSalario()' name='md-checkmark'></ion-icon>
   </div>
  
 </ion-content>

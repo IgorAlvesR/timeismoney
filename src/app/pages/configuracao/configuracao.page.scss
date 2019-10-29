@@ -18,16 +18,13 @@ ion-icon{
 }
 
 ion-input{
-    --padding-start: 20px;
+    --padding-start: 10px;
     border: 2px solid var(--ion-color-padraoApp);
-    border-radius: 10px;
+    border-radius: 20px;
 }
 
 
-ion-item{
-    padding-bottom: 15px;
-    padding-top: 15px;
-}
+
 
 label{
     padding-right: 5px;
@@ -39,8 +36,20 @@ label{
     display: flex;
     justify-content: space-around;
     align-items: center;
+
 }
 
 ion-button{
     margin-left: 5px;
+    border-radius: 20px;
+}
+
+#botaoSalario{
+    width: 35px;
+    height: 35px;
+    margin-left: 10px;
+    border-radius: 20px;
+    border: 1px solid var(--ion-color-padraoApp);
+    background: var(--ion-color-padraoApp);
+    color: white;
 }

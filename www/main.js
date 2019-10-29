@@ -436,6 +436,10 @@ var map = {
 		"./src/app/pages/cadastro-usuario/cadastro-usuario.module.ts",
 		"pages-cadastro-usuario-cadastro-usuario-module"
 	],
+	"./pages/configuracao/configuracao.module": [
+		"./src/app/pages/configuracao/configuracao.module.ts",
+		"pages-configuracao-configuracao-module"
+	],
 	"./pages/entrar/entrar.module": [
 		"./src/app/pages/entrar/entrar.module.ts",
 		"pages-entrar-entrar-module"
@@ -557,7 +561,12 @@ var routes = [
         loadChildren: './pages/relatorio-detalhado/relatorio-detalhado.module#RelatorioDetalhadoPageModule',
         canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_4__["AuthGuard"]]
     },
-    { path: 'teste-data', loadChildren: './pages/teste-data/teste-data.module#TesteDataPageModule' }
+    { path: 'teste-data', loadChildren: './pages/teste-data/teste-data.module#TesteDataPageModule' },
+    {
+        path: 'configuracao',
+        loadChildren: './pages/configuracao/configuracao.module#ConfiguracaoPageModule',
+        canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_4__["AuthGuard"]]
+    }
 ];
 var AppRoutingModule = /** @class */ (function () {
     function AppRoutingModule() {

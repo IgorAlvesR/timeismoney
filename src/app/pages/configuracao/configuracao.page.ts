@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Funcionario } from 'src/app/Models/funcionario';
 import { AutenticacaoService } from 'src/app/servicos/autenticacao.service';
-import { ToastController } from '@ionic/angular';
+import { ToastController, LoadingController } from '@ionic/angular';
+import { HoraExtraService } from 'src/app/servicos/hora-extra.service';
 
 @Component({
   selector: 'app-configuracao',
@@ -11,19 +12,28 @@ import { ToastController } from '@ionic/angular';
 export class ConfiguracaoPage implements OnInit {
 
 
-  salario: number = 0
+  salario: number
   public funcionario: Funcionario = {}
+  carregando: any
 
-  constructor(private authService: AutenticacaoService,private toastCtrl: ToastController,) { }
+  constructor(private authService: AutenticacaoService,private toastCtrl: ToastController,
+    private horaService: HoraExtraService,
+    private loadingCtrl: LoadingController,
+    ) { }
 
   ngOnInit() {
   }
 
   async alterarSalario(){
+    await this.presentLoading()
     if (this.salario > 0) {
-      this.funcionario.salarioBruto = await Number(this.salario)
-      await this.authService.update(this.funcionario)
-      await this.presentToast('Salário base atualizado com sucesso...')
+      this.funcionario.salarioBruto = Number(this.salario)
+      let result = await this.horaService.updateSalario(this.funcionario)
+      if(result == true){
+        await this.carregando.dismiss()
+        await window.location.replace('registro-hora-extra')
+      }
+      
    }else {
       this.presentToast("O valor deve ser maior que zero! ")
    }
@@ -33,6 +43,11 @@ export class ConfiguracaoPage implements OnInit {
   async presentToast(mensagem: string) {
     const toast = await this.toastCtrl.create({ message: mensagem, duration: 1000 })
     toast.present()
+  }
+
+  async presentLoading() {
+    this.carregando = await this.loadingCtrl.create({ message: 'Por favor, aguarde...' })
+    return this.carregando.present()
   }
 
 }

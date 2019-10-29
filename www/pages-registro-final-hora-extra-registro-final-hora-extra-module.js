@@ -141,7 +141,7 @@ var RegistroFinalHoraExtraPage = /** @class */ (function () {
     };
     RegistroFinalHoraExtraPage.prototype.registrarFinalHoraExtra = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-            var horas, minutos, _a, _b, _c, result, error_1;
+            var horas, minutos, _a, _b, _c, result, result, error_1;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_d) {
                 switch (_d.label) {
                     case 0: return [4 /*yield*/, this.presentLoading()];
@@ -194,7 +194,8 @@ var RegistroFinalHoraExtraPage = /** @class */ (function () {
                         return [3 /*break*/, 17];
                     case 13: return [4 /*yield*/, this.horaSevice.update(this.horaExtraFinal)];
                     case 14:
-                        _d.sent();
+                        result = _d.sent();
+                        if (!result) return [3 /*break*/, 17];
                         return [4 /*yield*/, this.carregando.dismiss()];
                     case 15:
                         _d.sent();
