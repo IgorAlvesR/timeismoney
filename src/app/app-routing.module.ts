@@ -37,7 +37,12 @@ const routes: Routes = [
     loadChildren: './pages/relatorio-detalhado/relatorio-detalhado.module#RelatorioDetalhadoPageModule',
     canActivate: [AuthGuard]
   },
-  { path: 'teste-data', loadChildren: './pages/teste-data/teste-data.module#TesteDataPageModule' }
+  { path: 'teste-data', loadChildren: './pages/teste-data/teste-data.module#TesteDataPageModule' },
+  {
+    path: 'configuracao', 
+    loadChildren: './pages/configuracao/configuracao.module#ConfiguracaoPageModule',
+    canActivate: [AuthGuard]
+  }
 ];
 
 @NgModule({

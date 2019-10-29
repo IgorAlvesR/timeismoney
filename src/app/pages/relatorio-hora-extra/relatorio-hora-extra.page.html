@@ -3,7 +3,7 @@
     <div class="header-top">
       <ion-icon name="arrow-round-back" button [routerLink]="['/registro-hora-extra']"></ion-icon>
       <p text-center>RELATÓRIO DE HORAS EXTRAS</p>
-      <ion-icon id="atualizarSalario" (click)='alterarSalario()' name="cash"></ion-icon>
+      <!-- <ion-icon id="atualizarSalario" (click)='alterarSalario()' name="cash"></ion-icon> -->
     </div>
   </ion-toolbar>
 </ion-header>
@@ -12,7 +12,7 @@
 
   <div id="filtroData">
     <ion-datetime class='data' done-text='OK' cancelText='Cancelar' displayFormat="DD/MM/YY" placeholder='dd/mm/aaaa'
-      [(ngModel)]="dataInicial"></ion-datetime>
+      [(ngModel)]="dataInicial" (ionBlur)='getHoras(dataInicial,dataFinal)'></ion-datetime>
     <ion-datetime class='data' done-text='OK' cancelText='Cancelar' displayFormat="DD/MM/YY" placeholder='dd/mm/aaaa'
       [(ngModel)]="dataFinal" (ionBlur)='getHoras(dataInicial,dataFinal)'></ion-datetime>
   </div>

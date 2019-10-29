@@ -65,8 +65,8 @@ export class RelatorioDetalhadoPage implements OnInit, OnDestroy {
   async zeraECalculaValoresNovamente() {
     try {
       await this.buscaDadosFuncionario()
-      this.dataInicial = moment().subtract(30, 'days').format("YYYY-MM-26")
-      this.dataFinal = moment().format("YYYY-MM-25")
+      this.dataInicial = moment().subtract(30, 'days').format("YYYY-MM-DD")
+      this.dataFinal = moment().format("YYYY-MM-DD")
       await this.calculaValoresHorasExtras(this.dataInicial, this.dataFinal)
     } catch (e) {
       console.log(e.message)

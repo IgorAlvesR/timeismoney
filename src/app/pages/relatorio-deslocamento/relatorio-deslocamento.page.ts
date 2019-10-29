@@ -26,8 +26,8 @@ export class RelatorioDeslocamentoPage implements OnInit {
 
   async ngOnInit() {
     await this.getDeslocamentos()
-    this.dataInicial = await moment().subtract(30,'days').format("YYYY-MM-26")
-    this.dataFinal = await moment().format("YYYY-MM-25")
+    this.dataInicial = await moment().subtract(30,'days').format("YYYY-MM-DD")
+    this.dataFinal = await moment().format("YYYY-MM-DD")
     await this.getDeslocamentosComFiltro(this.dataInicial,this.dataFinal)
     await this.getDeslocamentosComFiltro(this.dataInicial,this.dataFinal)
   }

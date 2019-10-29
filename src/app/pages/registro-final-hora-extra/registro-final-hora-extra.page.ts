@@ -84,9 +84,11 @@ export class RegistroFinalHoraExtraPage implements OnInit {
           await this.presentToast("Não é possível realizar hora extra no período normal!")
           await this.carregando.dismiss()
         } else {
-          await this.horaSevice.update(this.horaExtraFinal)
-          await this.carregando.dismiss()
-          await window.location.replace('registro-hora-extra')
+          let result = await this.horaSevice.update(this.horaExtraFinal)
+          if (result) {
+            await this.carregando.dismiss()
+            await window.location.replace('registro-hora-extra')
+          }
         }
       } else {
         let result = await this.horaSevice.update(this.horaExtraFinal)

@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-toolbar>
+    <div class="header-top">
+      <ion-icon name="arrow-round-back" button [routerLink]="['/registro-hora-extra']"></ion-icon>
+      <p text-center>CONFIGURAÇÕES</p>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div id='salario'>
+    <label for="">Alterar Salário: </label>
+    <ion-input [(ngModel)]="salario" type='number' placeholder='R$'></ion-input>
+    <ion-button  (click)='alterarSalario()' color="success" expand='block'  #botao>  <ion-icon name='md-checkmark'></ion-icon>  </ion-button>
+  </div>
+ 
+</ion-content>

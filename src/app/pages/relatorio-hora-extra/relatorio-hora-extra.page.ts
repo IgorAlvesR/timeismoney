@@ -33,8 +33,8 @@ export class RelatorioHoraExtraPage implements OnInit {
 
   async ngOnInit() {
     await this.getHorasExtras()
-    this.dataInicial = await moment().subtract(30, 'days').format("YYYY-MM-26")
-    this.dataFinal = await moment().format("YYYY-MM-25")
+    this.dataInicial = await moment().subtract(30, 'days').format("YYYY-MM-DD")
+    this.dataFinal = await moment().format("YYYY-MM-DD")
     await this.getHoras(this.dataInicial, this.dataFinal)
   }
 
